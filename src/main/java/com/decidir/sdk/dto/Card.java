@@ -1,0 +1,47 @@
+package com.decidir.sdk.dto;
+
+/**
+ * Created by ezequiel on 3/6/16.
+ */
+public enum Card {
+
+  MASTERCARD(1),
+  AMEX(2),
+  DINERS(3),
+  VISA(4),
+  TARSHOP(8),
+  TARJETANARANJA(9),
+  CABAL(12),
+  VISAMOBILE(13),
+  ITALCRED(14),
+  ARGENCARD(15),
+  VISADEBITO(16),
+  VISARECARGABLE(17),
+  VISADEBEXTERIOR(18),
+  COOPEPLUS(19),
+  ITALCREDMASTER(20),
+  ARCASH(21),
+  NEXO(22),
+  CREDIMAS(23),
+  NEVADA(24),
+  BANELCO(26),
+  NATIVA(27),
+  TARJETAMAS(28),
+  CETELEM(29),
+  NACIONPYMES(30),
+  PAYSAFECARD(31),
+  MONEDERO(32),
+  VISAAGRO(33),
+  PATAGONIA365(40),
+  PAGONIA365(41),
+  MUSICRED(42);
+
+
+
+  private final int cardId;
+
+  Card(int cardId) {
+
+    this.cardId = cardId;
+  }
+}

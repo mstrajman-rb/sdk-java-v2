@@ -28,6 +28,8 @@ public final class Payment implements Serializable {
   private String site_transaction_id;
   private String bin;
 
+  private Card card_brand = Card.VISA;
+
 
   public String payment_type; //single / distributed% / distributed$
 
