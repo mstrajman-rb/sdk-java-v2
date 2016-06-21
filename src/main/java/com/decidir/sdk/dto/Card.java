@@ -5,11 +5,11 @@ package com.decidir.sdk.dto;
  */
 public enum Card {
 
-  MASTERCARD(1),
-  AMEX(2),
-  DINERS(3),
-  VISA(4),
-  TARSHOP(8),
+  MASTERCARD("mastercard"),
+  AMEX("amex"),
+  //DINERS(3),
+  VISA("visa");
+  /*TARSHOP(8),
   TARJETANARANJA(9),
   CABAL(12),
   VISAMOBILE(13),
@@ -34,13 +34,13 @@ public enum Card {
   VISAAGRO(33),
   PATAGONIA365(40),
   PAGONIA365(41),
-  MUSICRED(42);
+  MUSICRED(42);*/
 
 
 
-  private final int cardId;
+  private final String cardId;
 
-  Card(int cardId) {
+  Card(String cardId) {
 
     this.cardId = cardId;
   }

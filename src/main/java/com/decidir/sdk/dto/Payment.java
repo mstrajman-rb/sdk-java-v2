@@ -20,7 +20,7 @@ public final class Payment implements Serializable {
   private Boolean binary_mode;
   private Boolean live_mode;
   private String description;
-  private String currency;
+  private Currency currency;
   private int amount;
   private String status;
   private int installments;
@@ -131,11 +131,11 @@ public final class Payment implements Serializable {
     this.description = description;
   }
 
-  public String getCurrency() {
+  public Currency getCurrency() {
     return currency;
   }
 
-  public void setCurrency(String currency) {
+  public void setCurrency(Currency currency) {
     this.currency = currency;
   }
 
@@ -193,5 +193,13 @@ public final class Payment implements Serializable {
 
   public void setBin(String bin) {
     this.bin = bin;
+  }
+
+  public Card getCard_brand() {
+    return card_brand;
+  }
+
+  public void setCard_brand(Card card_brand) {
+    this.card_brand = card_brand;
   }
 }
