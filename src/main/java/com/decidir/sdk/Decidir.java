@@ -92,7 +92,7 @@ public final class Decidir {
           Request request = chain.request().newBuilder()
             .header("Cache-Control", "max-age=0")
             //.header("Decidir-Access-Token", Decidir.secretAccessToken)
-            .header("X-Consumer-Custom-ID", Decidir.secretAccessToken)
+            .header("X-Consumer-Username", Decidir.secretAccessToken+"_private")
             .header("User-Agent", Decidir.getUserAgent())
             .build();
 
