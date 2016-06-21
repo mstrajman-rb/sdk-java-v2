@@ -43,7 +43,9 @@ public class DecidirResponse<T> {
       DecidirResponse dr = new DecidirResponse();
 
       dr.setStatus(500);
-      dr.setMessage("Network error");
+      dr.setMessage(ioe.getMessage());
+
+      ioe.printStackTrace();
 
       return dr;
     }

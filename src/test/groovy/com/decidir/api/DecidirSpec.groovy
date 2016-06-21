@@ -8,7 +8,7 @@ import com.decidir.sdk.dto.*
 class DecidirSpec extends Specification {
 
   def secretAccessToken = '00290815'
-  def apiUrl = 'http://172.17.10.59:9002'//"http://decidirapi.dev.redbee.io"
+  def apiUrl = "http://172.17.10.210:9002"//"http://decidirapi.dev.redbee.io"//'http://172.17.10.59:9002'
 
   def "test payment with token"() {
 
@@ -23,7 +23,7 @@ class DecidirSpec extends Specification {
       payment.currency = Currency.ARS
       payment.description = ""
       payment.amount = 10010
-      payment.token = "d4e861c2-2bb0-432a-8602-5ec582e6b3e5"
+      payment.token = "69a91905-c1f3-4393-a5d6-f1f4acdfd011"
       payment.installments = 1
       payment.sub_payments = []
       payment.site_transaction_id = UUID.randomUUID().toString()

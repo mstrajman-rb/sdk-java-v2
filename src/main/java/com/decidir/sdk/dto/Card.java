@@ -1,5 +1,8 @@
 package com.decidir.sdk.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Created by ezequiel on 3/6/16.
  */
@@ -43,5 +46,17 @@ public enum Card {
   Card(String cardId) {
 
     this.cardId = cardId;
+  }
+
+  @JsonCreator
+  public static Card forValue(String value) {
+
+    return Card.VISA;
+  }
+
+  @JsonValue
+  public String toValue() {
+
+    return Card.VISA.name();
   }
 }

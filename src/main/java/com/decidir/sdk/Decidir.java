@@ -51,7 +51,7 @@ public final class Decidir {
     return DecidirResponse.build(this.paymentApi.confirmPayment(payment));
   }
 
-  public DecidirResponse<Page> payments() throws IOException {
+  public DecidirResponse<Page> payments() {
 
     return DecidirResponse.build(this.paymentApi.payments());
   }
@@ -61,7 +61,7 @@ public final class Decidir {
     return DecidirResponse.build(this.paymentApi.getPayment(paymentId));
   }
 
-  public DecidirResponse<Payment> cancelPayment(int paymentId) throws IOException {
+  public DecidirResponse<Payment> cancelPayment(int paymentId) {
 
     return DecidirResponse.build(this.paymentApi.deletePayment(paymentId));
   }
