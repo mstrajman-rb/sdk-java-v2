@@ -9,7 +9,7 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00040407'
-  public static final String token = "061ee96d-467b-4b0c-8c94-f300a4b70f91"
+  public static final String token = "819adc8c-6adb-437f-8213-c51eb74bfb12"
   public static final String apiUrl = "http://localhost:9002"//"http://decidirapi.dev.redbee.io"//'http://172.17.10.59:9002'
   def decidir
   def billTo
@@ -57,7 +57,7 @@ class DecidirSpec extends Specification {
     ticketingTransactionData.items = Arrays.asList(ticketingTItem)
   }
 
-  def "test payment with token"() {
+  def "test payment with erro black"() {
     setup:
       def payment = new Payment()
       payment.payment_type = "single"
@@ -65,7 +65,7 @@ class DecidirSpec extends Specification {
       payment.description = ""
       payment.amount = 10010
       payment.token = token
-      payment.installments = 1
+      payment.installments = 7
       payment.sub_payments = []
       payment.site_transaction_id = UUID.randomUUID().toString()
       payment.bin = "450799"
@@ -76,17 +76,20 @@ class DecidirSpec extends Specification {
 
     then:
       result.status == 200
-      result.result.amount == 10010
       result.result.status == APPROVED
+    ((Payment)result.result).fraud_detection.status.decision == "black"
+    ((Payment)result.result).fraud_detection.status.reason_code == "X"
+    ((Payment)result.result).fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
   }
 
-  def "test payment with Fraud Detection"() {
+  def "test valid payment"() {
     setup:
     def fraudDetection = new FraudDetectionData()
     fraudDetection.bill_to = billTo
     fraudDetection.purchase_totals = purchaseTotals
     fraudDetection.channel = Channel.WEB
     fraudDetection.customer_in_site = customerInSite
+    fraudDetection.device_unique_id = "devicefingerprintid"
     fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
     def payment = new Payment()
@@ -95,7 +98,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 10010
     payment.token = token
-    payment.installments = 1
+    payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "450799"
@@ -106,10 +109,14 @@ class DecidirSpec extends Specification {
     def result = decidir.confirmPayment(payment)
 
     then:
-    result.status == 402
-    result.result.status == REJECTED
+    result.status == 200
+    result.result.status == APPROVED
+    ((Payment)result.result).fraud_detection.status.decision == "green"
+    ((Payment)result.result).fraud_detection.status.reason_code == "100"
+    ((Payment)result.result).fraud_detection.status.description == "Decision Manager processing"
   }
 
+  @Ignore
   def "test list of payments"() {
     when:
       def decidirResponse = decidir.payments()
@@ -135,7 +142,7 @@ class DecidirSpec extends Specification {
       def payments = decidir.payments()
       def payment = decidir.cancelPayment(payments.result.results[0].id)
 
-    println "cambiar cuando este el rest real"
+    //println "cambiar cuando este el rest real"
 
     then:
       payment.result.id == payments.result.results[0].id

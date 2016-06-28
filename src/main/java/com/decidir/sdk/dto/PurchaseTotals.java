@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class PurchaseTotals implements Serializable{
 
-    private String currency;
+    private Currency currency;
     private Double amount;
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

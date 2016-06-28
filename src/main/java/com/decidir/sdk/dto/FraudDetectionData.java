@@ -9,11 +9,11 @@ public class FraudDetectionData implements Serializable {
 
     private BillingData bill_to;
     private PurchaseTotals purchase_totals;
-    private String channel;
+    private Channel channel;
     private CustomerInSite customer_in_site;
     private String device_unique_id;
     private TicketingTransactionData ticketing_transaction_data;
-    private String status;
+    private FDStatus status;
 
     public BillingData getBill_to() {
         return bill_to;
@@ -31,11 +31,11 @@ public class FraudDetectionData implements Serializable {
         this.purchase_totals = purchase_totals;
     }
 
-    public String getChannel() {
+    public Channel getChannel() {
         return channel;
     }
 
-    public void setChannel(String channel) {
+    public void setChannel(Channel channel) {
         this.channel = channel;
     }
 
@@ -63,11 +63,11 @@ public class FraudDetectionData implements Serializable {
         this.ticketing_transaction_data = ticketing_transaction_data;
     }
 
-    public String getStatus() {
+    public FDStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(FDStatus status) {
         this.status = status;
     }
 }

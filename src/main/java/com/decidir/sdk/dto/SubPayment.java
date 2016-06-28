@@ -8,17 +8,29 @@ public class SubPayment implements Serializable {
 
   private int installments;
 
-  private int siteId;
+  private int site_id;
 
   public int getAmount() {
     return amount;
+  }
+
+  public void setAmount(int amount) {
+    this.amount = amount;
   }
 
   public int getInstallments() {
     return installments;
   }
 
-  public int getSiteId() {
-    return siteId;
+  public void setInstallments(int installments) {
+    this.installments = installments;
+  }
+
+  public int getSite_id() {
+    return site_id;
+  }
+
+  public void setSite_id(int site_id) {
+    this.site_id = site_id;
   }
 }

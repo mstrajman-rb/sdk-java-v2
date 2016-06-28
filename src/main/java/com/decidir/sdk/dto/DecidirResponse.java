@@ -1,6 +1,5 @@
 package com.decidir.sdk.dto;
 
-import okhttp3.Response;
 import retrofit2.Call;
 
 import java.io.IOException;
