@@ -27,8 +27,9 @@ public final class Payment implements Serializable {
   private String site_transaction_id;
   private String bin;
   private Card card_brand = Card.VISA;
-  public String payment_type; //single / distributed% / distributed$
-  public List<SubPayment> sub_payments;
+  private String payment_type; //single / distributed% / distributed$
+  private String merchant_id;
+  private List<SubPayment> sub_payments;
   private FraudDetectionData fraud_detection;
 
   public int getId() {
@@ -197,6 +198,14 @@ public final class Payment implements Serializable {
 
   public void setCard_brand(Card card_brand) {
     this.card_brand = card_brand;
+  }
+
+  public String getMerchant_id() {
+    return merchant_id;
+  }
+
+  public void setMerchant_id(String merchant_id) {
+    this.merchant_id = merchant_id;
   }
 
   public FraudDetectionData getFraud_detection() {
