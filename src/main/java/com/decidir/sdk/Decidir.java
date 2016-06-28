@@ -23,7 +23,7 @@ public final class Decidir {
 
   static private String apiUrl = "https://api.decidir.com";
 
-  static private final String version = "0.1.0";
+  static private final String version = "0.1.3";
 
   static private String secretAccessToken;
 
