@@ -9,8 +9,9 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00040407'
-  public static final String token = "819adc8c-6adb-437f-8213-c51eb74bfb12"
-  public static final String apiUrl = "http://localhost:9002"//"http://decidirapi.dev.redbee.io"//'http://172.17.10.59:9002'
+  public static final String token = "de18b169-317c-420a-86ea-32991edfff36"
+  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
+  //"http://localhost:9002"//'http://172.17.10.59:9002'
   def decidir
   def billTo
   def purchaseTotals
@@ -57,7 +58,7 @@ class DecidirSpec extends Specification {
     ticketingTransactionData.items = Arrays.asList(ticketingTItem)
   }
 
-  def "test payment with erro black"() {
+  def "test payment with black error"() {
     setup:
       def payment = new Payment()
       payment.payment_type = "single"
@@ -69,6 +70,7 @@ class DecidirSpec extends Specification {
       payment.sub_payments = []
       payment.site_transaction_id = UUID.randomUUID().toString()
       payment.bin = "450799"
+      payment.merchant_id= secretAccessToken
       payment.card_brand = Card.VISA
 
     when:
@@ -102,6 +104,7 @@ class DecidirSpec extends Specification {
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "450799"
+    payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
