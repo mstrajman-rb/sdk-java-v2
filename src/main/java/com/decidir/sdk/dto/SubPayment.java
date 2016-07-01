@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class SubPayment implements Serializable {
 
-  private int amount;
+  private Long amount;
 
   private int installments;
 
   private int site_id;
 
-  public int getAmount() {
+  public Long getAmount() {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(Long amount) {
     this.amount = amount;
   }
 

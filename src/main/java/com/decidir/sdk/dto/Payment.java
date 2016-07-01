@@ -21,7 +21,7 @@ public final class Payment implements Serializable {
   private Boolean live_mode;
   private String description;
   private Currency currency;
-  private int amount;
+  private Long amount;
   private String status;
   private int installments;
   private String site_transaction_id;
@@ -136,11 +136,11 @@ public final class Payment implements Serializable {
     this.currency = currency;
   }
 
-  public int getAmount() {
+  public Long getAmount() {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(Long amount) {
     this.amount = amount;
   }
 

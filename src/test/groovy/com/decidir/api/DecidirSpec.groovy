@@ -9,8 +9,9 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00040407'
-  public static final String token = "de18b169-317c-420a-86ea-32991edfff36"
-  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
+  public static final String token = "f63ccd3a-84f9-4677-9901-b8333dd78d0a"
+  public static final String apiUrl = "http://127.0.0.1:9002"
+//  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
   def decidir
   def billTo
