@@ -1,7 +1,7 @@
 package com.decidir.sdk;
 
 
-import com.decidir.sdk.configuration.Retrofit;
+import com.decidir.sdk.configuration.RetrofitConfiguration;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
@@ -20,7 +20,8 @@ public final class Decidir {
       Decidir.apiUrl = apiUrl;
     }
 
-    this.paymentsService = new PaymentsService(Retrofit.initRetrofit(secretAccessToken, apiUrl));
+    this.paymentsService = PaymentsService.getInstance(
+            RetrofitConfiguration.getInstance().initRetrofit(secretAccessToken, apiUrl));
   }
 
   public Decidir(final String secretAccessToken) {
@@ -31,16 +32,16 @@ public final class Decidir {
     return paymentsService.confirmPayment(payment);
   }
 
-  public DecidirResponse<Page> payments() {
-    return paymentsService.payments();
+  public DecidirResponse<Page> payments(int offset, int pageSize) {
+    return paymentsService.payments(offset, pageSize);
   }
 
   public DecidirResponse<Payment> getPayment(int paymentId) {
     return paymentsService.getPayment(paymentId);
   }
 
-  public DecidirResponse<Payment> cancelPayment(int paymentId) {
-    return paymentsService.cancelPayment(paymentId);
+  public DecidirResponse<Payment> refundPayment(int paymentId) {
+    return paymentsService.refundPayment(paymentId);
   }
 
  }

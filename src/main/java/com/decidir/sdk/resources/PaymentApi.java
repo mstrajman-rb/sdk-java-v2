@@ -1,11 +1,7 @@
 package com.decidir.sdk.resources;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
@@ -13,13 +9,13 @@ import com.decidir.sdk.dto.Payment;
 public interface PaymentApi {
 
   @GET("payments")
-  Call<Page> payments();
+  Call<Page> payments(@Query("oOffset") int offset, @Query("oPageSize") int pageSize);
 
   @GET("payments/{paymentId}")
   Call<Payment> getPayment(@Path("paymentId") int id);
 
-  @DELETE("payments/{paymentId}")
-  Call<Payment> deletePayment(@Path("paymentId") int id);
+  @POST("payments/{paymentId}/refunds")
+  Call<Payment> refundPayment(@Path("paymentId") int id);
 
   @POST("payments")
   Call<Payment> confirmPayment(@Body Payment payment);

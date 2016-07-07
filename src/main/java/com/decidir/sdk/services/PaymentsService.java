@@ -15,26 +15,34 @@ import java.io.IOException;
  */
 public class PaymentsService {
 
+    private static PaymentsService service = null;
     private PaymentApi paymentApi;
 
-    public PaymentsService(PaymentApi paymentApi){
+    private PaymentsService(PaymentApi paymentApi){
         this.paymentApi = paymentApi;
+    }
+
+    public static PaymentsService getInstance(PaymentApi paymentApi) {
+        if(service == null) {
+            service = new PaymentsService(paymentApi);
+        }
+        return service;
     }
 
     public DecidirResponse<Payment> confirmPayment(Payment payment) {
         return build(this.paymentApi.confirmPayment(payment));
     }
 
-    public DecidirResponse<Page> payments() {
-        return build(this.paymentApi.payments());
+    public DecidirResponse<Page> payments(int offset, int pageSize) {
+        return build(this.paymentApi.payments(offset, pageSize));
     }
 
     public DecidirResponse<Payment> getPayment(int paymentId) {
         return build(this.paymentApi.getPayment(paymentId));
     }
 
-    public DecidirResponse<Payment> cancelPayment(int paymentId) {
-        return build(this.paymentApi.deletePayment(paymentId));
+    public DecidirResponse<Payment> refundPayment(int paymentId) {
+        return build(this.paymentApi.refundPayment(paymentId));
     }
 
     public static DecidirResponse build(Call call) {
@@ -43,7 +51,6 @@ public class PaymentsService {
             ObjectMapper objectMapper = new ObjectMapper();
             if (response.isSuccessful()) {
                 DecidirResponse<Payment> decidirResponse = new DecidirResponse();
-                //TODO: por q no lo toma??
                 //decidirResponse.setResult(objectMapper.readValue(response.body().toString(), Payment.class));
                 decidirResponse.setResult((Payment)response.body());
                 decidirResponse.setStatus(response.code());

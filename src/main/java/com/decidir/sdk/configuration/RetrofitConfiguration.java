@@ -11,8 +11,9 @@ import java.io.IOException;
 /**
  * Created by biandra on 06/07/16.
  */
-public class Retrofit {
+public class RetrofitConfiguration {
 
+    private static RetrofitConfiguration retrofitConf = new RetrofitConfiguration();
     static private final String version = "0.1.3";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
@@ -21,11 +22,13 @@ public class Retrofit {
     public static final String PRIVATE = "_private";
     public static final String DECIDIR_JAVA_SDK_V = "Decidir Java SDK v ";
 
-    //TODO: inject
-    public static PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
-       // GsonBuilder gsonBuilder = new GsonBuilder();
-       // gsonBuilder.registerTypeAdapter(Page.class, new PageDeserializer());
-       // Gson gson = gsonBuilder.create();
+    private RetrofitConfiguration(){}
+
+    public static RetrofitConfiguration getInstance() {
+        return retrofitConf;
+    }
+
+    public PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         httpClient.networkInterceptors().add(new Interceptor() {
@@ -52,27 +55,8 @@ public class Retrofit {
         return retrofit.create(com.decidir.sdk.resources.PaymentApi.class);
     }
 
-
     static private String getUserAgent() {
         return DECIDIR_JAVA_SDK_V + version;
     }
 
-
-//  private class PageDeserializer implements JsonDeserializer<Page<?>> {
-//
-//    //TODO: Hacer esto para que ande generico
-//    public Page<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-//      throws JsonParseException {
-//
-//        Page<Payment> page = new Page<Payment>();
-//
-//        page.total = json.getAsJsonObject().get("total").getAsInt();
-//        page.offset = json.getAsJsonObject().get("offset").getAsInt();
-//        page.limit = json.getAsJsonObject().get("limit").getAsInt();
-//        Type listPaymentType = new TypeToken<List<Payment>>(){}.getType();
-//        page.results = context.deserialize(json.getAsJsonObject().get("results").getAsJsonArray(), listPaymentType);
-//
-//        return page;
-//    }
-//  }
 }
