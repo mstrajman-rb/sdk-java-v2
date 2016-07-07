@@ -1,6 +1,5 @@
 package com.decidir.sdk.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
@@ -39,24 +38,14 @@ public enum Card {
   PAGONIA365(41),
   MUSICRED(42);*/
 
+  private String cardId;
 
-
-  private final String cardId;
-
-  Card(String cardId) {
-
+  private Card(final String cardId) {
     this.cardId = cardId;
   }
 
-  @JsonCreator
-  public static Card forValue(String value) {
-
-    return Card.VISA;
-  }
-
   @JsonValue
-  public String toValue() {
-
-    return Card.VISA.name();
+  public String getCardId() {
+    return cardId;
   }
 }

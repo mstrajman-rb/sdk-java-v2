@@ -8,9 +8,9 @@ class DecidirSpec extends Specification {
 
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
-  public static final String secretAccessToken = '00040407'
-  public static final String token = "f63ccd3a-84f9-4677-9901-b8333dd78d0a"
-  public static final String apiUrl = "http://127.0.0.1:9002"
+  public static final String secretAccessToken = '00020515'
+  public static final String token = "cb032731-a524-495c-88fd-88bbdeac517a"
+  public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
   def decidir
@@ -18,6 +18,7 @@ class DecidirSpec extends Specification {
   def purchaseTotals
   def customerInSite
   def ticketingTransactionData
+  def subPayment
 
   def setup(){
     decidir = new Decidir(secretAccessToken, apiUrl)
@@ -57,6 +58,11 @@ class DecidirSpec extends Specification {
     ticketingTItem.quantity = 2
     ticketingTItem.unit_price = 1212.12
     ticketingTransactionData.items = Arrays.asList(ticketingTItem)
+
+    subPayment = new SubPayment()
+    subPayment.site_id = "1"
+    subPayment.installments = 2
+    subPayment.amount = 3
   }
 
   def "test payment with black error"() {
@@ -64,7 +70,7 @@ class DecidirSpec extends Specification {
       def payment = new Payment()
       payment.payment_type = "single"
       payment.currency = Currency.ARS
-      payment.description = ""
+      payment.description = "description"
       payment.amount = 10010
       payment.token = token
       payment.installments = 7
@@ -80,9 +86,9 @@ class DecidirSpec extends Specification {
     then:
       result.status == 200
       result.result.status == APPROVED
-    ((Payment)result.result).fraud_detection.status.decision == "black"
-    ((Payment)result.result).fraud_detection.status.reason_code == "X"
-    ((Payment)result.result).fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
+      result.result.fraud_detection.status.decision == "black"
+      result.result.fraud_detection.status.reason_code == "X"
+      result.result.fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
   }
 
   def "test valid payment"() {
@@ -102,7 +108,7 @@ class DecidirSpec extends Specification {
     payment.amount = 10010
     payment.token = token
     payment.installments = 7
-    payment.sub_payments = []
+    payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "450799"
     payment.merchant_id= secretAccessToken
@@ -115,9 +121,9 @@ class DecidirSpec extends Specification {
     then:
     result.status == 200
     result.result.status == APPROVED
-    ((Payment)result.result).fraud_detection.status.decision == "green"
-    ((Payment)result.result).fraud_detection.status.reason_code == "100"
-    ((Payment)result.result).fraud_detection.status.description == "Decision Manager processing"
+    result.result.fraud_detection.status.decision == "green"
+    result.result.fraud_detection.status.reason_code == "100"
+    result.result.fraud_detection.status.description == "Decision Manager processing"
   }
 
   @Ignore

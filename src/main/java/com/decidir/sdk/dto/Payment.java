@@ -2,7 +2,6 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -26,7 +25,7 @@ public final class Payment implements Serializable {
   private int installments;
   private String site_transaction_id;
   private String bin;
-  private Card card_brand = Card.VISA;
+  private Card card_brand;
   private String payment_type; //single / distributed% / distributed$
   private String merchant_id;
   private List<SubPayment> sub_payments;

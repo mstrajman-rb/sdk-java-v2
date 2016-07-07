@@ -12,10 +12,9 @@ public enum Currency {
 
     ARS("ars");
 
-    private final String  currencyId;
+    private String  currencyId;
 
-    Currency(String currencyId) {
-
+    private Currency(final String currencyId) {
         this.currencyId = currencyId;
     }
 

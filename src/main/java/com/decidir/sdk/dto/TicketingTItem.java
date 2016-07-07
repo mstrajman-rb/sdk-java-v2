@@ -12,7 +12,7 @@ public class TicketingTItem implements Serializable {
     private String name;
     private String sku;
     private Double total_amount;
-    private Long quantity;
+    private Integer quantity;
     private Double unit_price;
 
     public String getCode() {
@@ -47,11 +47,11 @@ public class TicketingTItem implements Serializable {
         this.sku = sku;
     }
 
-    public Long getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

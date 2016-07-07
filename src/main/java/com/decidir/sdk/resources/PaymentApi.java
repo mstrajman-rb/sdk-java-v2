@@ -1,4 +1,4 @@
-package com.decidir.sdk.api;
+package com.decidir.sdk.resources;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

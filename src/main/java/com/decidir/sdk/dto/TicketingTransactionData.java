@@ -8,15 +8,15 @@ import java.util.List;
  */
 public class TicketingTransactionData implements Serializable{
 
-    private Long days_to_event;
+    private Integer days_to_event;
     private String delivery_type;
     private List<TicketingTItem> items;
 
-    public Long getDays_to_event() {
+    public Integer getDays_to_event() {
         return days_to_event;
     }
 
-    public void setDays_to_event(Long days_to_event) {
+    public void setDays_to_event(Integer days_to_event) {
         this.days_to_event = days_to_event;
     }
 
