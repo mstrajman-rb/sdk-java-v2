@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
+import java.io.Serializable;
+
 /**
  * Created by biandra on 06/07/16.
  */
@@ -22,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
         @Type(value = ApiError.class, name = "rate_limit_error"),
         @Type(value = NotFoundError.class, name = "not_found_error"),
         @Type(value = ValidateError.class, name = "invalid_request_error") })
-public class DecidirError {
+public class DecidirError implements Serializable {
 
     private String error_type;
 
