@@ -1,10 +1,12 @@
 package com.decidir.sdk.dto;
 
 
+import java.io.Serializable;
+
 /**
  * Created by ezequiel on 2/6/16.
  */
-public class DecidirResponse<T> {
+public class DecidirResponse<T> implements Serializable{
 
   private int status;
   private T result;

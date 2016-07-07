@@ -5,6 +5,7 @@ import com.decidir.sdk.configuration.RetrofitConfiguration;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.PaymentResult;
 import com.decidir.sdk.services.PaymentsService;
 
 /**
@@ -28,19 +29,19 @@ public final class Decidir {
     this(secretAccessToken, null);
   }
 
-  public DecidirResponse<Payment> confirmPayment(Payment payment) {
+  public DecidirResponse<PaymentResult> confirmPayment(Payment payment) {
     return paymentsService.confirmPayment(payment);
   }
 
-  public DecidirResponse<Page> payments(int offset, int pageSize) {
-    return paymentsService.payments(offset, pageSize);
+  public DecidirResponse<Page> getPayments(int offset, int pageSize) {
+    return paymentsService.getPayments(offset, pageSize);
   }
 
-  public DecidirResponse<Payment> getPayment(int paymentId) {
+  public DecidirResponse<PaymentResult> getPayment(int paymentId) {
     return paymentsService.getPayment(paymentId);
   }
 
-  public DecidirResponse<Payment> refundPayment(int paymentId) {
+  public DecidirResponse<PaymentResult> refundPayment(int paymentId) {
     return paymentsService.refundPayment(paymentId);
   }
 

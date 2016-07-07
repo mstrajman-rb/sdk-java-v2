@@ -86,9 +86,9 @@ class DecidirSpec extends Specification {
     then:
       result.status == 200
       result.result.status == APPROVED
-      result.result.fraud_detection.status.decision == "black"
-      result.result.fraud_detection.status.reason_code == "X"
-      result.result.fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
+      result.result.payment.fraud_detection.status.decision == "black"
+      result.result.payment.fraud_detection.status.reason_code == "X"
+      result.result.payment.fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
   }
 
   def "test confirmPayment valid"() {
@@ -121,9 +121,9 @@ class DecidirSpec extends Specification {
     then:
     result.status == 200
     result.result.status == APPROVED
-    result.result.fraud_detection.status.decision == "green"
-    result.result.fraud_detection.status.reason_code == "100"
-    result.result.fraud_detection.status.description == "Decision Manager processing"
+    result.result.payment.fraud_detection.status.decision == "green"
+    result.result.payment.fraud_detection.status.reason_code == "100"
+    result.result.payment.fraud_detection.status.description == "Decision Manager processing"
   }
 
   def "test confirmPayment with error"() {
@@ -155,16 +155,15 @@ class DecidirSpec extends Specification {
 
     then:
     result.status == 400
-    result.result.error_type == "invalid_request_error"
-    result.result.validation_errors.get(0).code == "Payment"
-    result.result.validation_errors.get(0).param == "bin"
+    result.result.errorDetail.error_type == "invalid_request_error"
+    result.result.errorDetail.validation_errors.get(0).code == "Payment"
+    result.result.errorDetail.validation_errors.get(0).param == "bin"
     result.message == "Bad Request"
   }
 
-  @Ignore
   def "test list of payments"() {
     when:
-      def decidirResponse = decidir.payments()
+      def decidirResponse = decidir.getPayments(1, 10)
 
     then:
       decidirResponse != null
