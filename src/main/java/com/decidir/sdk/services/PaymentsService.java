@@ -1,9 +1,13 @@
 package com.decidir.sdk.services;
 
+import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
+import com.decidir.sdk.exceptions.DecidirException;
+import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import retrofit2.Call;
+import retrofit2.Response;
+
 import java.io.IOException;
 
 /**
@@ -11,92 +15,82 @@ import java.io.IOException;
  */
 public class PaymentsService {
 
+    public static final int HTTP_500 = 500;
+    public static final int HTTP_402 = 402;
     private static PaymentsService service = null;
     private PaymentApi paymentApi;
+    private PaymentConverter converter;
 
-    private PaymentsService(PaymentApi paymentApi){
+    private PaymentsService(PaymentApi paymentApi, PaymentConverter converter){
         this.paymentApi = paymentApi;
+        this.converter = converter;
     }
 
     public static PaymentsService getInstance(PaymentApi paymentApi) {
         if(service == null) {
-            service = new PaymentsService(paymentApi);
+            service = new PaymentsService(paymentApi, new PaymentConverter());
         }
         return service;
     }
 
-    public DecidirResponse<PaymentResult> confirmPayment(Payment payment) {
-        return buildResponse(this.paymentApi.confirmPayment(payment));
-    }
-
-    public DecidirResponse<Page> getPayments(int offset, int pageSize) {
-        return buildPaymentsResponse(this.paymentApi.getPayments(offset, pageSize));
-    }
-
-    public DecidirResponse<PaymentResult> getPayment(int paymentId) {
-        return buildResponse(this.paymentApi.getPayment(paymentId));
-    }
-
-    public DecidirResponse<PaymentResult> refundPayment(int paymentId) {
-        return buildResponse(this.paymentApi.refundPayment(paymentId));
-    }
-
-    //TODO:converter
-    private DecidirResponse<PaymentResult> buildResponse(Call call) {
+    public DecidirResponse<Payment> confirmPayment(Payment payment) {
         try {
-            retrofit2.Response response = call.execute();
-            ObjectMapper objectMapper = new ObjectMapper();
+            Response<Payment> response = this.paymentApi.confirmPayment(payment).execute();
             if (response.isSuccessful()) {
-                DecidirResponse<PaymentResult> decidirResponse = new DecidirResponse();
-                PaymentResult paymentResult= new PaymentResult();
-                //decidirResponse.setResult(objectMapper.readValue(response.body().toString(), Payment.class));
-                paymentResult.setPayment((Payment) response.body());
-                decidirResponse.setStatus(response.code());
-                decidirResponse.setResult(paymentResult);
-                decidirResponse.setMessage(response.message());
-                return decidirResponse;
+                return converter.convert(response, response.body());
             } else {
-                DecidirResponse<PaymentResult> decidirResponse = new DecidirResponse();
-                PaymentResult paymentResult= new PaymentResult();
-                paymentResult.setErrorDetail(objectMapper.readValue(response.errorBody().string(), DecidirError.class));
-                decidirResponse.setStatus(response.code());
-                decidirResponse.setResult(paymentResult);
-                decidirResponse.setMessage(response.message());
-                return decidirResponse;
+                if (response.code() == HTTP_402){
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), Payment.class));
+                } else {
+                    DecidirResponse<DecidirError> error = converter.convert(response);
+                    throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+                }
             }
-
         } catch(IOException ioe) {
-            DecidirResponse<PaymentResult> decidirResponse = new DecidirResponse();
-            decidirResponse.setStatus(500);
-            decidirResponse.setMessage(ioe.getMessage());
-            return decidirResponse;
+            throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 
-    //TODO:converter
-    private DecidirResponse<Page> buildPaymentsResponse(Call call) {
+    public DecidirResponse<Page> getPayments(int offset, int pageSize) {
         try {
-            retrofit2.Response response = call.execute();
-            ObjectMapper objectMapper = new ObjectMapper();
+            Response<Page> response = this.paymentApi.getPayments(offset, pageSize).execute();
             if (response.isSuccessful()) {
-                DecidirResponse<Page> decidirResponse = new DecidirResponse();
-                //decidirResponse.setResult(objectMapper.readValue(response.body().toString(), Page.class));
-                decidirResponse.setStatus(response.code());
-                decidirResponse.setResult((Page)response.body());
-                decidirResponse.setMessage(response.message());
-                return decidirResponse;
+                return converter.convert(response, response.body());
             } else {
-                DecidirResponse<Page> decidirResponse = new DecidirResponse();
-                decidirResponse.setStatus(response.code());
-                decidirResponse.setMessage(response.message());
-                return decidirResponse;
+                DecidirResponse<DecidirError> error = converter.convert(response);
+                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
-
         } catch(IOException ioe) {
-            DecidirResponse<Page> decidirResponse = new DecidirResponse();
-            decidirResponse.setStatus(500);
-            decidirResponse.setMessage(ioe.getMessage());
-            return decidirResponse;
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<Payment> getPayment(int paymentId) {
+        try {
+            Response<Payment> response = this.paymentApi.getPayment(paymentId).execute();
+            if (response.isSuccessful()) {
+                return converter.convert(response, response.body());
+            } else {
+                DecidirResponse<DecidirError> error = converter.convert(response);
+                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+            }
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<Payment> refundPayment(int paymentId) {
+        try {
+            Response<Payment> response = this.paymentApi.refundPayment(paymentId).execute();
+            if (response.isSuccessful()) {
+                return converter.convert(response, response.body());
+            } else {
+                DecidirResponse<DecidirError> error = converter.convert(response);
+                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+            }
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 

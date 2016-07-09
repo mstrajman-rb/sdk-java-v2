@@ -1,5 +1,6 @@
-package com.decidir.api;
+package com.decidir.api
 
+import com.decidir.sdk.exceptions.ValidateException;
 import spock.lang.*
 import com.decidir.sdk.*
 import com.decidir.sdk.dto.*
@@ -9,7 +10,7 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00020515'
-  public static final String token = "3269618b-9b56-4e27-aa76-03b391785fd9"
+  public static final String token = "c64d1e95-fd9b-4e42-bffb-e335a9107359"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
@@ -21,7 +22,7 @@ class DecidirSpec extends Specification {
   def subPayment
 
   def setup(){
-    decidir = new Decidir(secretAccessToken, apiUrl)
+    decidir = new Application(secretAccessToken, apiUrl)
 
     billTo = new BillingData()
     billTo.city = "Buenos Aires"
@@ -88,7 +89,7 @@ class DecidirSpec extends Specification {
       result.result.status == APPROVED
       result.result.payment.fraud_detection.status.decision == "black"
       result.result.payment.fraud_detection.status.reason_code == "X"
-      result.result.payment.fraud_detection.status.description == "InvalidRequestError(List(ValidationError(missing,bill_to)))"
+      result.result.payment.fraud_detection.status.description == "Decision Manager processing"
   }
 
   def "test confirmPayment valid"() {
@@ -126,7 +127,7 @@ class DecidirSpec extends Specification {
     result.result.payment.fraud_detection.status.description == "Decision Manager processing"
   }
 
-  def "test confirmPayment with error"() {
+  def "test confirmPayment with ValidateException"() {
     setup:
     def fraudDetection = new FraudDetectionData()
     fraudDetection.bill_to = billTo
@@ -151,14 +152,15 @@ class DecidirSpec extends Specification {
     payment.fraud_detection = fraudDetection
 
     when:
-    def result = decidir.confirmPayment(payment)
+    decidir.confirmPayment(payment)
 
     then:
-    result.status == 400
-    result.result.errorDetail.error_type == "invalid_request_error"
-    result.result.errorDetail.validation_errors.get(0).code == "Payment"
-    result.result.errorDetail.validation_errors.get(0).param == "bin"
-    result.message == "Bad Request"
+    def exception = thrown(ValidateException)
+    exception.status == 400
+    exception.errorDetail.error_type == "invalid_request_error"
+    exception.errorDetail.validation_errors.get(0).code == "Payment"
+    exception.errorDetail.validation_errors.get(0).param == "bin"
+    exception.message == "Bad Request"
   }
 
   def "test list of payments"() {
@@ -166,8 +168,9 @@ class DecidirSpec extends Specification {
       def decidirResponse = decidir.getPayments(1, 10)
 
     then:
-      decidirResponse != null
       decidirResponse.status == 200
+      decidirResponse.result != null
+      decidirResponse.message == "OK"
   }
 
   @Ignore

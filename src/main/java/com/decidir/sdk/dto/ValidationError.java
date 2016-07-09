@@ -1,9 +1,11 @@
 package com.decidir.sdk.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by biandra on 06/07/16.
  */
-public class ValidationError {
+public class ValidationError implements Serializable{
 
     private String code;
     private String param;

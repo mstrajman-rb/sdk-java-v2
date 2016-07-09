@@ -11,9 +11,9 @@ import java.io.IOException;
 /**
  * Created by biandra on 06/07/16.
  */
-public class RetrofitConfiguration {
+public class DecidirConfiguration {
 
-    private static RetrofitConfiguration retrofitConf = new RetrofitConfiguration();
+    private static DecidirConfiguration retrofitConf = new DecidirConfiguration();
     static private final String version = "0.1.3";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
@@ -22,9 +22,9 @@ public class RetrofitConfiguration {
     public static final String PRIVATE = "_private";
     public static final String DECIDIR_JAVA_SDK_V = "Decidir Java SDK v ";
 
-    private RetrofitConfiguration(){}
+    private DecidirConfiguration(){}
 
-    public static RetrofitConfiguration getInstance() {
+    public static DecidirConfiguration getInstance() {
         return retrofitConf;
     }
 
