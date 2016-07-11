@@ -18,8 +18,7 @@ public final class Application {
       Application.apiUrl = apiUrl;
     }
 
-    this.paymentsService = PaymentsService.getInstance(
-            DecidirConfiguration.getInstance().initRetrofit(secretAccessToken, apiUrl));
+    this.paymentsService = PaymentsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, apiUrl));
   }
 
   public Application(final String secretAccessToken) {

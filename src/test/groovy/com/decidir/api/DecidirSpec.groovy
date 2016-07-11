@@ -10,7 +10,7 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00020515'
-  public static final String token = "c64d1e95-fd9b-4e42-bffb-e335a9107359"
+  public static final String token = "5cf0a0c2-98fc-4b8e-8066-e7dba122747c"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'

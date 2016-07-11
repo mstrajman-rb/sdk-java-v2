@@ -13,8 +13,7 @@ import java.io.IOException;
  */
 public class DecidirConfiguration {
 
-    private static DecidirConfiguration retrofitConf = new DecidirConfiguration();
-    static private final String version = "0.1.3";
+    static private final String version = "0.1.4";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
     public static final String X_CONSUMER_USERNAME = "X-Consumer-Username";
@@ -22,13 +21,8 @@ public class DecidirConfiguration {
     public static final String PRIVATE = "_private";
     public static final String DECIDIR_JAVA_SDK_V = "Decidir Java SDK v ";
 
-    private DecidirConfiguration(){}
 
-    public static DecidirConfiguration getInstance() {
-        return retrofitConf;
-    }
-
-    public PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
+    public static PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         httpClient.networkInterceptors().add(new Interceptor() {
