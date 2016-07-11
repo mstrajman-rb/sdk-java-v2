@@ -22,7 +22,7 @@ class DecidirSpec extends Specification {
   def subPayment
 
   def setup(){
-    decidir = new Application(secretAccessToken, apiUrl)
+    decidir = new Decidir(secretAccessToken, apiUrl)
 
     billTo = new BillingData()
     billTo.city = "Buenos Aires"

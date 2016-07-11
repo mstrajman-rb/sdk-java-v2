@@ -8,20 +8,20 @@ import com.decidir.sdk.dto.Payment;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.services.PaymentsService;
 
-public final class Application {
+public final class Decidir {
 
   static private String apiUrl = "https://api.decidir.com";
   private PaymentsService paymentsService;
 
-  public Application(final String secretAccessToken, final String apiUrl) {
+  public Decidir(final String secretAccessToken, final String apiUrl) {
     if (apiUrl != null) {
-      Application.apiUrl = apiUrl;
+      Decidir.apiUrl = apiUrl;
     }
 
     this.paymentsService = PaymentsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, apiUrl));
   }
 
-  public Application(final String secretAccessToken) {
+  public Decidir(final String secretAccessToken) {
     this(secretAccessToken, null);
   }
 
