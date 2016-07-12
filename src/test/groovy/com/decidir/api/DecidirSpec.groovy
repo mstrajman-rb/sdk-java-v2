@@ -10,7 +10,7 @@ class DecidirSpec extends Specification {
   public static final String REJECTED = "rejected"
   public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00020515'
-  public static final String token = "5cf0a0c2-98fc-4b8e-8066-e7dba122747c"
+  public static final String token = "fc293d55-a6f4-47e1-84fe-57a875c88f6a"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
@@ -35,6 +35,7 @@ class DecidirSpec extends Specification {
     billTo.postal_code = "1223"
     billTo.state = "Buenos Aires"
     billTo.street1 = "Italia 1234"
+    billTo.ip_address = "127.0.0.1"
 
     purchaseTotals = new PurchaseTotals()
     purchaseTotals.currency = Currency.ARS
@@ -66,32 +67,6 @@ class DecidirSpec extends Specification {
     subPayment.amount = 3
   }
 
-  def "test payment with black error"() {
-    setup:
-      def payment = new Payment()
-      payment.payment_type = "single"
-      payment.currency = Currency.ARS
-      payment.description = "description"
-      payment.amount = 10010
-      payment.token = token
-      payment.installments = 7
-      payment.sub_payments = []
-      payment.site_transaction_id = UUID.randomUUID().toString()
-      payment.bin = "450799"
-      payment.merchant_id= secretAccessToken
-      payment.card_brand = Card.VISA
-
-    when:
-    def result = decidir.confirmPayment(payment)
-
-    then:
-      result.status == 200
-      result.result.status == APPROVED
-      result.result.payment.fraud_detection.status.decision == "black"
-      result.result.payment.fraud_detection.status.reason_code == "X"
-      result.result.payment.fraud_detection.status.description == "Decision Manager processing"
-  }
-
   def "test confirmPayment valid"() {
     setup:
     def fraudDetection = new FraudDetectionData()
@@ -106,7 +81,7 @@ class DecidirSpec extends Specification {
     payment.payment_type = "single"
     payment.currency = Currency.ARS
     payment.description = ""
-    payment.amount = 10010
+    payment.amount = 5
     payment.token = token
     payment.installments = 7
     payment.sub_payments = [subPayment]
@@ -122,9 +97,9 @@ class DecidirSpec extends Specification {
     then:
     result.status == 200
     result.result.status == APPROVED
-    result.result.payment.fraud_detection.status.decision == "green"
-    result.result.payment.fraud_detection.status.reason_code == "100"
-    result.result.payment.fraud_detection.status.description == "Decision Manager processing"
+    result.result.fraud_detection.status.decision == "green"
+    result.result.fraud_detection.status.reason_code == "100"
+    result.result.fraud_detection.status.description == "Decision Manager processing"
   }
 
   def "test confirmPayment with ValidateException"() {

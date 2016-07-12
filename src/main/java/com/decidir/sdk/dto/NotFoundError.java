@@ -1,12 +1,32 @@
 package com.decidir.sdk.dto;
 
+import com.decidir.sdk.exceptions.NotFoundException;
+
 /**
  * Created by biandra on 07/07/16.
  */
-public class NotFoundError extends ApiError {
+public class NotFoundError extends DecidirError {
 
+    private String message;
+    private String code;
     private String entityName;
     private String id;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getEntityName() {
         return entityName;
@@ -22,5 +42,10 @@ public class NotFoundError extends ApiError {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public NotFoundException toException(int status, String message) {
+        return new NotFoundException(status, message, this);
     }
 }

@@ -10,6 +10,7 @@ public class FDStatus implements Serializable {
     private String decision;
     private String reason_code;
     private String description;
+    private ErrorType details;
 
     public String getDecision() {
         return decision;
@@ -33,5 +34,13 @@ public class FDStatus implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ErrorType getDetails() {
+        return details;
+    }
+
+    public void setDetails(ErrorType details) {
+        this.details = details;
     }
 }

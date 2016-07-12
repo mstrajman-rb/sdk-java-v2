@@ -1,5 +1,7 @@
 package com.decidir.sdk.dto;
 
+import com.decidir.sdk.exceptions.ValidateException;
+
 import java.util.List;
 
 /**
@@ -15,5 +17,10 @@ public class ValidateError extends DecidirError {
 
     public void setValidation_errors(List<ValidationError> validation_errors) {
         this.validation_errors = validation_errors;
+    }
+
+    @Override
+    public ValidateException toException(int status, String message) {
+        return new ValidateException(status, message, this);
     }
 }

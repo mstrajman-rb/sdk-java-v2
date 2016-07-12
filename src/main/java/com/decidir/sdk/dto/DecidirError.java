@@ -1,5 +1,6 @@
 package com.decidir.sdk.dto;
 
+import com.decidir.sdk.exceptions.DecidirException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -34,5 +35,9 @@ public class DecidirError implements Serializable {
 
     public void setError_type(String error_type) {
         this.error_type = error_type;
+    }
+
+    public DecidirException toException(int status, String message) {
+        return new DecidirException(status, message);
     }
 }

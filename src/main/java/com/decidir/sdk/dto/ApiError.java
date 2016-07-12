@@ -1,5 +1,8 @@
 package com.decidir.sdk.dto;
 
+
+import com.decidir.sdk.exceptions.ApiException;
+
 /**
  * Created by biandra on 07/07/16.
  */
@@ -24,4 +27,8 @@ public class ApiError extends DecidirError{
         this.code = code;
     }
 
+    @Override
+    public ApiException toException(int status, String message) {
+        return new ApiException(status, message, this);
+    }
 }
