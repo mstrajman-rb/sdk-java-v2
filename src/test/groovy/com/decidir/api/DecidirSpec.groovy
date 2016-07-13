@@ -7,10 +7,8 @@ import com.decidir.sdk.dto.*
 
 class DecidirSpec extends Specification {
 
-  public static final String REJECTED = "rejected"
-  public static final String APPROVED = "approved"
   public static final String secretAccessToken = '00020515'
-  public static final String token = "fc293d55-a6f4-47e1-84fe-57a875c88f6a"
+  public static final String token = "5138720d-7151-45ff-9179-367b99d3b8f1"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
@@ -26,14 +24,14 @@ class DecidirSpec extends Specification {
 
     billTo = new BillingData()
     billTo.city = "Buenos Aires"
-    billTo.country = "Argentina"
+    billTo.country = "AR"
     billTo.customer_id = "martinid"
     billTo.email = "martin@redb.ee"
     billTo.first_name = "Martin"
     billTo.last_name = "PPP"
     billTo.phone_number = "2322323232"
     billTo.postal_code = "1223"
-    billTo.state = "Buenos Aires"
+    billTo.state = "BA"
     billTo.street1 = "Italia 1234"
     billTo.ip_address = "127.0.0.1"
 
@@ -67,6 +65,43 @@ class DecidirSpec extends Specification {
     subPayment.amount = 3
   }
 
+  def "test payment with black error"() {
+    setup:
+    billTo.first_name = ""
+    def fraudDetection = new FraudDetectionData()
+    fraudDetection.bill_to = billTo
+    fraudDetection.purchase_totals = purchaseTotals
+    fraudDetection.channel = Channel.WEB
+    fraudDetection.customer_in_site = customerInSite
+    fraudDetection.device_unique_id = "devicefingerprintid"
+    fraudDetection.ticketing_transaction_data = ticketingTransactionData
+
+    def payment = new Payment()
+    payment.payment_type = "single"
+    payment.currency = Currency.ARS
+    payment.description = ""
+    payment.amount = 5
+    payment.token = token
+    payment.installments = 7
+    payment.sub_payments = [subPayment]
+    payment.site_transaction_id = UUID.randomUUID().toString()
+    payment.bin = "450799"
+    payment.merchant_id= secretAccessToken
+    payment.card_brand = Card.VISA
+    payment.fraud_detection = fraudDetection
+
+    when:
+    def result = decidir.confirmPayment(payment)
+
+    then:
+      result.status == 200
+      result.result.status == Status.REJECTED
+      result.result.fraud_detection.status.decision == "black"
+      result.result.fraud_detection.status.reason_code == "X"
+      result.result.fraud_detection.status.description == "validation"
+      result.result.fraud_detection.status.details != null
+  }
+
   def "test confirmPayment valid"() {
     setup:
     def fraudDetection = new FraudDetectionData()
@@ -96,7 +131,7 @@ class DecidirSpec extends Specification {
 
     then:
     result.status == 200
-    result.result.status == APPROVED
+    result.result.status == Status.APPROVED
     result.result.fraud_detection.status.decision == "green"
     result.result.fraud_detection.status.reason_code == "100"
     result.result.fraud_detection.status.description == "Decision Manager processing"

@@ -21,7 +21,8 @@ public final class Payment implements Serializable {
   private String description;
   private Currency currency;
   private Long amount;
-  private String status;
+  private Status status;
+  private CardError status_details;
   private int installments;
   private String site_transaction_id;
   private String bin;
@@ -143,12 +144,20 @@ public final class Payment implements Serializable {
     this.amount = amount;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public CardError getStatus_details() {
+    return status_details;
+  }
+
+  public void setStatus_details(CardError status_details) {
+    this.status_details = status_details;
   }
 
   public int getInstallments() {

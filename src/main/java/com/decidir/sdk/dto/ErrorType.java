@@ -3,6 +3,7 @@ package com.decidir.sdk.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by biandra on 12/07/16.
@@ -11,9 +12,7 @@ import java.io.Serializable;
 public class ErrorType implements Serializable{
 
     private String error_type;
-    private String message;
-    private String code;
-
+    private List<ValidationError> validation_errors;
 
     public String getError_type() {
         return error_type;
@@ -23,19 +22,11 @@ public class ErrorType implements Serializable{
         this.error_type = error_type;
     }
 
-    public String getMessage() {
-        return message;
+    public List<ValidationError> getValidation_errors() {
+        return validation_errors;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public void setValidation_errors(List<ValidationError> validation_errors) {
+        this.validation_errors = validation_errors;
     }
 }
