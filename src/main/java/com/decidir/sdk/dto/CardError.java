@@ -7,19 +7,18 @@ import java.io.Serializable;
  */
 public class CardError implements Serializable{
 
-    private String error_type;
+    private CardErrorCode error_type;
     private String message;
     private String code;
     private String actual_error;
     private String card_authorization_code;
     private String card_reason;
 
-
-    public String getError_type() {
+    public CardErrorCode getError_type() {
         return error_type;
     }
 
-    public void setError_type(String error_type) {
+    public void setError_type(CardErrorCode error_type) {
         this.error_type = error_type;
     }
 

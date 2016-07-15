@@ -1,5 +1,6 @@
 package com.decidir.api
 
+import com.decidir.sdk.exceptions.PaymentException
 import com.decidir.sdk.exceptions.ValidateException;
 import spock.lang.*
 import com.decidir.sdk.*
@@ -8,7 +9,7 @@ import com.decidir.sdk.dto.*
 class DecidirSpec extends Specification {
 
   public static final String secretAccessToken = '00020515'
-  public static final String token = "5138720d-7151-45ff-9179-367b99d3b8f1"
+  public static final String token = "70787da4-d407-4216-9a00-b5d620d273e5"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
@@ -85,7 +86,7 @@ class DecidirSpec extends Specification {
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "450799"
+    payment.bin = "455617"
     payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
@@ -121,7 +122,7 @@ class DecidirSpec extends Specification {
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "450799"
+    payment.bin = "455617"
     payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
@@ -171,6 +172,40 @@ class DecidirSpec extends Specification {
     exception.errorDetail.validation_errors.get(0).code == "Payment"
     exception.errorDetail.validation_errors.get(0).param == "bin"
     exception.message == "Bad Request"
+  }
+
+  def "test confirmPayment with PaymentException"() {
+    setup:
+    def fraudDetection = new FraudDetectionData()
+    fraudDetection.bill_to = billTo
+    fraudDetection.purchase_totals = purchaseTotals
+    fraudDetection.channel = Channel.WEB
+    fraudDetection.customer_in_site = customerInSite
+    fraudDetection.device_unique_id = "devicefingerprintid"
+    fraudDetection.ticketing_transaction_data = ticketingTransactionData
+
+    def payment = new Payment()
+    payment.payment_type = "single"
+    payment.currency = Currency.ARS
+    payment.description = ""
+    payment.amount = 5
+    payment.token = token
+    payment.installments = 7
+    payment.sub_payments = [subPayment]
+    payment.site_transaction_id = UUID.randomUUID().toString()
+    payment.bin = "455617"
+    payment.merchant_id= secretAccessToken
+    payment.card_brand = Card.VISA
+    payment.fraud_detection = fraudDetection
+
+    when:
+    decidir.confirmPayment(payment)
+
+    then:
+    def exception = thrown(PaymentException)
+    exception.status == 402
+    exception.payment.status_details.error_type.cardErrorCodeId == "invalid_number"
+    exception.message == "Payment Required"
   }
 
   def "test list of payments"() {
