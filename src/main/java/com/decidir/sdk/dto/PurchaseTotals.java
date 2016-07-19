@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class PurchaseTotals implements Serializable{
 
     private Currency currency;
-    private Double amount;
+    private Long amount;
 
     public Currency getCurrency() {
         return currency;
@@ -18,11 +18,11 @@ public class PurchaseTotals implements Serializable{
         this.currency = currency;
     }
 
-    public Double getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 }

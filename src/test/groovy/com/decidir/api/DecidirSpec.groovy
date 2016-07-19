@@ -9,7 +9,7 @@ import com.decidir.sdk.dto.*
 class DecidirSpec extends Specification {
 
   public static final String secretAccessToken = '00020515'
-  public static final String token = "70787da4-d407-4216-9a00-b5d620d273e5"
+  public static final String token = "97efd2ea-d2ab-481d-9f41-651147fe2ae8"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
   //"http://localhost:9002"//'http://172.17.10.59:9002'
@@ -38,7 +38,7 @@ class DecidirSpec extends Specification {
 
     purchaseTotals = new PurchaseTotals()
     purchaseTotals.currency = Currency.ARS
-    purchaseTotals.amount = 124.44
+    purchaseTotals.amount = 12444
 
     customerInSite = new CustomerInSite()
     customerInSite.days_in_site = 243
@@ -55,9 +55,9 @@ class DecidirSpec extends Specification {
     ticketingTItem.description = "Popular Black Sabbath 2016"
     ticketingTItem.name = "popblacksabbat2016ss"
     ticketingTItem.sku = "asas"
-    ticketingTItem.total_amount = 2424.24
+    ticketingTItem.total_amount = 242424
     ticketingTItem.quantity = 2
-    ticketingTItem.unit_price = 1212.12
+    ticketingTItem.unit_price = 121212
     ticketingTransactionData.items = Arrays.asList(ticketingTItem)
 
     subPayment = new SubPayment()
@@ -68,9 +68,7 @@ class DecidirSpec extends Specification {
 
   def "test payment with black error"() {
     setup:
-    billTo.first_name = ""
     def fraudDetection = new FraudDetectionData()
-    fraudDetection.bill_to = billTo
     fraudDetection.purchase_totals = purchaseTotals
     fraudDetection.channel = Channel.WEB
     fraudDetection.customer_in_site = customerInSite
@@ -86,21 +84,22 @@ class DecidirSpec extends Specification {
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "455617"
+    payment.bin = "450799"
     payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
     when:
-    def result = decidir.confirmPayment(payment)
+    decidir.confirmPayment(payment)
 
     then:
-      result.status == 200
-      result.result.status == Status.REJECTED
-      result.result.fraud_detection.status.decision == "black"
-      result.result.fraud_detection.status.reason_code == "X"
-      result.result.fraud_detection.status.description == "validation"
-      result.result.fraud_detection.status.details != null
+    def exception = thrown(PaymentException)
+    exception.status == 402
+    exception.payment.status == Status.REJECTED
+    exception.payment.fraud_detection.status.decision == "black"
+    exception.payment.fraud_detection.status.reason_code == "X"
+    exception.payment.fraud_detection.status.description == "validation"
+    exception.payment.fraud_detection.status.details != null
   }
 
   def "test confirmPayment valid"() {
@@ -122,7 +121,7 @@ class DecidirSpec extends Specification {
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "455617"
+    payment.bin = "450799"
     payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
@@ -152,12 +151,12 @@ class DecidirSpec extends Specification {
     payment.payment_type = "single"
     payment.currency = Currency.ARS
     payment.description = ""
-    payment.amount = 10010
+    payment.amount = 5
     payment.token = token
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "45079"
+    payment.bin = "450793"
     payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection

@@ -1,10 +1,13 @@
 package com.decidir.sdk.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by biandra on 12/07/16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CardError implements Serializable{
 
     private CardErrorCode error_type;

@@ -11,9 +11,9 @@ public class TicketingTItem implements Serializable {
     private String description;
     private String name;
     private String sku;
-    private Double total_amount;
+    private Long total_amount;
     private Integer quantity;
-    private Double unit_price;
+    private Long unit_price;
 
     public String getCode() {
         return code;
@@ -55,19 +55,19 @@ public class TicketingTItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getTotal_amount() {
+    public Long getTotal_amount() {
         return total_amount;
     }
 
-    public void setTotal_amount(Double total_amount) {
+    public void setTotal_amount(Long total_amount) {
         this.total_amount = total_amount;
     }
 
-    public Double getUnit_price() {
+    public Long getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(Double unit_price) {
+    public void setUnit_price(Long unit_price) {
         this.unit_price = unit_price;
     }
 }
