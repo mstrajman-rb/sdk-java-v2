@@ -10,15 +10,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum CardErrorCode {
 
     INVALID_NUMBER("invalid_number"),
-    INVALID_DATE_CARD("invalid_date_card"),
+    SECURITY_CODE_ERROR("security_code_error"),
     EXPIRED_CARD("expired_card"),
-    CARD_DECLINED("card_declined"),//puede q no vaya mas...
-    PROCESSING_ERROR("processing_error"),
-    INVALID_CARD("invalid_card"), //generic error
-    REQUEST_AUTHORIZATION("request_authorization"),
-    FINANCIAL_REASONS("financial_reasons"),
+    INSUFFICIENT_AMOUNT("insufficient_amount"),
+    REQUEST_AUTHORIZATION_CARD("request_authorization_card"),
     CYBERSOURCE_ERROR("cybersource_error"),
-    EMPTY("");//TODO: este no deberia pasar nunca!!
+
+    CARD_DECLINED("card_declined"),//TODO: remove?
+    PROCESSING_ERROR("processing_error"),//Error entre estados
+    INVALID_CARD("invalid_card"); //generic error
 
     private String cardErrorCodeId;
 
