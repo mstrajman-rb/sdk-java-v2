@@ -52,7 +52,7 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Page> getPayments(int offset, int pageSize) {
+    public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize) {
         try {
             Response<Page> response = this.paymentApi.getPayments(offset, pageSize).execute();
             if (response.isSuccessful()) {

@@ -1,13 +1,14 @@
 package com.decidir.sdk.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Page implements Serializable {
 
   private Integer limit;
   private Integer offset;
-  private List<Payment> results;
+  private ArrayList<Payment> results;
   private Boolean hasMore;
 
   public Integer getLimit() {
@@ -26,11 +27,11 @@ public final class Page implements Serializable {
     this.offset = offset;
   }
 
-  public List<Payment> getResults() {
+  public ArrayList<Payment> getResults() {
     return results;
   }
 
-  public void setResults(List<Payment> results) {
+  public void setResults(ArrayList<Payment> results) {
     this.results = results;
   }
 

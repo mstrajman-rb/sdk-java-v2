@@ -29,7 +29,7 @@ public final class Decidir {
     return paymentsService.confirmPayment(payment);
   }
 
-  public DecidirResponse<Page> getPayments(int offset, int pageSize) throws DecidirException {
+  public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize) throws DecidirException {
     return paymentsService.getPayments(offset, pageSize);
   }
 

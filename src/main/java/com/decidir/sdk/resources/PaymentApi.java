@@ -9,7 +9,7 @@ import com.decidir.sdk.dto.Payment;
 public interface PaymentApi {
 
   @GET("payments")
-  Call<Page> getPayments(@Query("oOffset") int offset, @Query("oPageSize") int pageSize);
+  Call<Page> getPayments(@Query("oOffset") Integer offset, @Query("oPageSize") Integer pageSize);
 
   @GET("payments/{paymentId}")
   Call<Payment> getPayment(@Path("paymentId") int id);

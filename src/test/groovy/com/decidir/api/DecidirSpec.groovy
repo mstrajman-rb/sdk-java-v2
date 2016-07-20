@@ -9,10 +9,10 @@ import com.decidir.sdk.dto.*
 class DecidirSpec extends Specification {
 
   public static final String secretAccessToken = '00020515'
-  public static final String token = "97efd2ea-d2ab-481d-9f41-651147fe2ae8"
+  public static final String token = "89a66036-135b-4e55-96a7-b2f7531e31ae"
   public static final String apiUrl = "http://localhost:9002"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
-  //"http://localhost:9002"//'http://172.17.10.59:9002'
+  //"http://localhost:9002"//'https://api.decidir.com'
   def decidir
   def billTo
   def purchaseTotals
@@ -209,7 +209,7 @@ class DecidirSpec extends Specification {
 
   def "test list of payments"() {
     when:
-      def decidirResponse = decidir.getPayments(1, 10)
+      def decidirResponse = decidir.getPayments(null, null)
 
     then:
       decidirResponse.status == 200
