@@ -66,7 +66,7 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Payment> getPayment(int paymentId) {
+    public DecidirResponse<Payment> getPayment(Long paymentId) {
         try {
             Response<Payment> response = this.paymentApi.getPayment(paymentId).execute();
             if (response.isSuccessful()) {
@@ -80,7 +80,7 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Payment> refundPayment(int paymentId) {
+    public DecidirResponse<Payment> refundPayment(Long paymentId) {
         try {
             Response<Payment> response = this.paymentApi.refundPayment(paymentId).execute();
             if (response.isSuccessful()) {

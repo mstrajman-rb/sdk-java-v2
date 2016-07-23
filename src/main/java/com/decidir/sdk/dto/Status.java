@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Status {
 
     APPROVED("approved"),
-    REJECTED("rejected");
+    REJECTED("rejected"),
+    REVIEW("review"),
+    REVERSED("reversed"),
+    CANCELLED("cancelled");
 
     private String statusId;
 

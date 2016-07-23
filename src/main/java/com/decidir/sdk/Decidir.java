@@ -33,11 +33,11 @@ public final class Decidir {
     return paymentsService.getPayments(offset, pageSize);
   }
 
-  public DecidirResponse<Payment> getPayment(int paymentId) throws DecidirException {
+  public DecidirResponse<Payment> getPayment(Long paymentId) throws DecidirException {
     return paymentsService.getPayment(paymentId);
   }
 
-  public DecidirResponse<Payment> refundPayment(int paymentId) throws DecidirException {
+  public DecidirResponse<Payment> refundPayment(Long paymentId) throws DecidirException {
     return paymentsService.refundPayment(paymentId);
   }
 

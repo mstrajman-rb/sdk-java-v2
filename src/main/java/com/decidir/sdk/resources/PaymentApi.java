@@ -12,10 +12,10 @@ public interface PaymentApi {
   Call<Page> getPayments(@Query("oOffset") Integer offset, @Query("oPageSize") Integer pageSize);
 
   @GET("payments/{paymentId}")
-  Call<Payment> getPayment(@Path("paymentId") int id);
+  Call<Payment> getPayment(@Path("paymentId") Long id);
 
   @POST("payments/{paymentId}/refunds")
-  Call<Payment> refundPayment(@Path("paymentId") int id);
+  Call<Payment> refundPayment(@Path("paymentId") Long id);
 
   @POST("payments")
   Call<Payment> confirmPayment(@Body Payment payment);

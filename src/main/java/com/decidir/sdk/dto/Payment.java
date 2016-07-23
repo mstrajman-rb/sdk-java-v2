@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Payment implements Serializable {
 
-  private int id = 0;
+  private Long id = 0L;
   private String token;
   private String date;
   private String date_created;
@@ -32,11 +32,11 @@ public final class Payment implements Serializable {
   private List<SubPayment> sub_payments;
   private FraudDetectionData fraud_detection;
 
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
