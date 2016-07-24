@@ -16,10 +16,9 @@ public class DecidirConfiguration {
     static private final String version = "0.1.4";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
-    public static final String X_CONSUMER_USERNAME = "X-Consumer-Username";
     public static final String USER_AGENT = "User-Agent";
-    public static final String PRIVATE = "_private";
     public static final String DECIDIR_JAVA_SDK_V = "Decidir Java SDK v ";
+    public static final String APIKEY = "apikey";
 
 
     public static PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
@@ -32,7 +31,7 @@ public class DecidirConfiguration {
 
                 Request request = chain.request().newBuilder()
                         .header(CACHE_CONTROL, MAX_AGE_0)
-                        .header(X_CONSUMER_USERNAME, secretAccessToken + PRIVATE)
+                        .header(APIKEY, secretAccessToken)
                         .header(USER_AGENT, getUserAgent())
                         .build();
 

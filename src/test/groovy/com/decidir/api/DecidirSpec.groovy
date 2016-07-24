@@ -8,11 +8,11 @@ import com.decidir.sdk.dto.*
 
 class DecidirSpec extends Specification {
 
-  public static final String secretAccessToken = '00020515'
-  public static final String token = "89a66036-135b-4e55-96a7-b2f7531e31ae"
-  public static final String apiUrl = "http://localhost:9002"
+  public static final String secretAccessToken = '3ffb59bf3c7c4f409c11d2c5aae9a631'
+  public static final String token = "0f3ea4b2-0ab8-440e-98f8-91873fdfc2c5"
+  public static final String apiUrl = "https://api.decidir.com"
 //  public static final String apiUrl = "http://decidirapi.dev.redbee.io"
-  //"http://localhost:9002"//'https://api.decidir.com'
+  //"http://localhost:9002"//'https://api.decidir.com'//"http://decidirapi.dev.redbee.io"
   def decidir
   def billTo
   def purchaseTotals
@@ -27,14 +27,14 @@ class DecidirSpec extends Specification {
     billTo.city = "Buenos Aires"
     billTo.country = "AR"
     billTo.customer_id = "martinid"
-    billTo.email = "martin@redb.ee"
-    billTo.first_name = "Martin"
-    billTo.last_name = "PPP"
-    billTo.phone_number = "2322323232"
-    billTo.postal_code = "1223"
+    billTo.email = "accept@decidir.com.ar"
+    billTo.first_name = "Maxi"
+    billTo.last_name = "Biandratti"
+    billTo.phone_number = "1547766329"
+    billTo.postal_code = "1414"
     billTo.state = "BA"
-    billTo.street1 = "Italia 1234"
-    billTo.ip_address = "127.0.0.1"
+    billTo.street1 = "THAMES 677"
+    billTo.ip_address = "190.210.214.252"
 
     purchaseTotals = new PurchaseTotals()
     purchaseTotals.currency = Currency.ARS
@@ -85,7 +85,6 @@ class DecidirSpec extends Specification {
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "450799"
-    payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
@@ -121,8 +120,8 @@ class DecidirSpec extends Specification {
     payment.installments = 7
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
-    payment.bin = "450799"
-    payment.merchant_id= secretAccessToken
+    payment.bin = "450979"
+    //payment.merchant_id=
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
@@ -157,7 +156,6 @@ class DecidirSpec extends Specification {
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "450793"
-    payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
@@ -193,7 +191,6 @@ class DecidirSpec extends Specification {
     payment.sub_payments = [subPayment]
     payment.site_transaction_id = UUID.randomUUID().toString()
     payment.bin = "455617"
-    payment.merchant_id= secretAccessToken
     payment.card_brand = Card.VISA
     payment.fraud_detection = fraudDetection
 
@@ -227,13 +224,10 @@ class DecidirSpec extends Specification {
       payment.result.amount == payments.result.results[0].amount
   }
 
-  @Ignore
-  def "test delete payment"() {
+  def "test refund payment"() {
     when:
-      def payments = decidir.payments()
-      def payment = decidir.cancelPayment(payments.result.results[0].id)
-
-    //println "cambiar cuando este el rest real"
+      def payments = decidir.getPayments(null, null)
+      def payment = decidir.refundPayment(payments.result.results[0].id)
 
     then:
       payment.result.id == payments.result.results[0].id
