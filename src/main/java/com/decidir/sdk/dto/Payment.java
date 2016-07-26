@@ -2,13 +2,12 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Payment implements Serializable {
 
-  private int id = 0;
+  private Long id = 0L;
   private String token;
   private String date;
   private String date_created;
@@ -20,24 +19,24 @@ public final class Payment implements Serializable {
   private Boolean binary_mode;
   private Boolean live_mode;
   private String description;
-  private String currency;
-  private int amount;
-  private String status;
+  private Currency currency;
+  private Long amount;
+  private Status status;
+  private CardError status_details;
   private int installments;
-
   private String site_transaction_id;
   private String bin;
+  private Card card_brand;
+  private String payment_type; //single / distributed% / distributed$
+  private String merchant_id;
+  private List<SubPayment> sub_payments;
+  private FraudDetectionData fraud_detection;
 
-
-  public String payment_type; //single / distributed% / distributed$
-
-  public List<SubPayment> sub_payments;
-
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -129,28 +128,36 @@ public final class Payment implements Serializable {
     this.description = description;
   }
 
-  public String getCurrency() {
+  public Currency getCurrency() {
     return currency;
   }
 
-  public void setCurrency(String currency) {
+  public void setCurrency(Currency currency) {
     this.currency = currency;
   }
 
-  public int getAmount() {
+  public Long getAmount() {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(Long amount) {
     this.amount = amount;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public CardError getStatus_details() {
+    return status_details;
+  }
+
+  public void setStatus_details(CardError status_details) {
+    this.status_details = status_details;
   }
 
   public int getInstallments() {
@@ -191,5 +198,29 @@ public final class Payment implements Serializable {
 
   public void setBin(String bin) {
     this.bin = bin;
+  }
+
+  public Card getCard_brand() {
+    return card_brand;
+  }
+
+  public void setCard_brand(Card card_brand) {
+    this.card_brand = card_brand;
+  }
+
+  public String getMerchant_id() {
+    return merchant_id;
+  }
+
+  public void setMerchant_id(String merchant_id) {
+    this.merchant_id = merchant_id;
+  }
+
+  public FraudDetectionData getFraud_detection() {
+    return fraud_detection;
+  }
+
+  public void setFraud_detection(FraudDetectionData fraud_detection) {
+    this.fraud_detection = fraud_detection;
   }
 }

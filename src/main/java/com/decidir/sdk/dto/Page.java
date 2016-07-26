@@ -1,25 +1,15 @@
 package com.decidir.sdk.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Page implements Serializable {
 
-  private Integer total;
-
   private Integer limit;
-
   private Integer offset;
-
-  private List<Payment> results;
-
-  public Integer getTotal() {
-    return total;
-  }
-
-  public void setTotal(Integer total) {
-    this.total = total;
-  }
+  private ArrayList<Payment> results;
+  private Boolean hasMore;
 
   public Integer getLimit() {
     return limit;
@@ -37,11 +27,19 @@ public final class Page implements Serializable {
     this.offset = offset;
   }
 
-  public List<Payment> getResults() {
+  public ArrayList<Payment> getResults() {
     return results;
   }
 
-  public void setResults(List<Payment> results) {
+  public void setResults(ArrayList<Payment> results) {
     this.results = results;
+  }
+
+  public Boolean getHasMore() {
+    return hasMore;
+  }
+
+  public void setHasMore(Boolean hasMore) {
+    this.hasMore = hasMore;
   }
 }
