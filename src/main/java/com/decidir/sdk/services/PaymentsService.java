@@ -1,5 +1,6 @@
 package com.decidir.sdk.services;
 
+import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
@@ -19,16 +20,18 @@ public class PaymentsService {
     public static final int HTTP_402 = 402;
     private static PaymentsService service = null;
     private PaymentApi paymentApi;
-    private PaymentConverter converter;
+    private PaymentConverter paymentConverter;
+    private ErrorConverter errorConverter;
 
-    private PaymentsService(PaymentApi paymentApi, PaymentConverter converter){
+    private PaymentsService(PaymentApi paymentApi, PaymentConverter paymentConverter, ErrorConverter errorConverter){
         this.paymentApi = paymentApi;
-        this.converter = converter;
+        this.paymentConverter = paymentConverter;
+        this.errorConverter = errorConverter;
     }
 
     public static PaymentsService getInstance(PaymentApi paymentApi) {
         if(service == null) {
-            service = new PaymentsService(paymentApi, new PaymentConverter());
+            service = new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
         }
         return service;
     }
@@ -37,13 +40,13 @@ public class PaymentsService {
         try {
             Response<Payment> response = this.paymentApi.confirmPayment(payment).execute();
             if (response.isSuccessful()) {
-                return converter.convert(response, response.body());
+                return paymentConverter.convert(response, response.body());
             } else {
                 if (response.code() == HTTP_402){
                     ObjectMapper objectMapper = new ObjectMapper();
                     throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), Payment.class));
                 } else {
-                    DecidirResponse<DecidirError> error = converter.convert(response);
+                    DecidirResponse<DecidirError> error = errorConverter.convert(response);
                     throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
                 }
             }
@@ -56,9 +59,9 @@ public class PaymentsService {
         try {
             Response<Page> response = this.paymentApi.getPayments(offset, pageSize).execute();
             if (response.isSuccessful()) {
-                return converter.convert(response, response.body());
+                return paymentConverter.convert(response, response.body());
             } else {
-                DecidirResponse<DecidirError> error = converter.convert(response);
+                DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
         } catch(IOException ioe) {
@@ -70,9 +73,9 @@ public class PaymentsService {
         try {
             Response<Payment> response = this.paymentApi.getPayment(paymentId).execute();
             if (response.isSuccessful()) {
-                return converter.convert(response, response.body());
+                return paymentConverter.convert(response, response.body());
             } else {
-                DecidirResponse<DecidirError> error = converter.convert(response);
+                DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
         } catch(IOException ioe) {
@@ -84,9 +87,9 @@ public class PaymentsService {
         try {
             Response<Payment> response = this.paymentApi.refundPayment(paymentId).execute();
             if (response.isSuccessful()) {
-                return converter.convert(response, response.body());
+                return paymentConverter.convert(response, response.body());
             } else {
-                DecidirResponse<DecidirError> error = converter.convert(response);
+                DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
         } catch(IOException ioe) {
