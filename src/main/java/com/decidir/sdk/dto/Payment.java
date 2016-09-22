@@ -9,6 +9,7 @@ public final class Payment implements Serializable {
 
   private Long id = 0L;
   private String token;
+  private String user_id;
   private String date;
   private String date_created;
   private String date_approved;
@@ -46,6 +47,14 @@ public final class Payment implements Serializable {
 
   public void setToken(String token) {
     this.token = token;
+  }
+
+  public String getUser_id() {
+    return user_id;
+  }
+
+  public void setUser_id(String user_id) {
+    this.user_id = user_id;
   }
 
   public String getDate() {

@@ -81,6 +81,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 5
     payment.token = token
+    payment.user_id = "biandra"
     payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
@@ -117,6 +118,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 5
     payment.token = token
+    payment.user_id = "biandra"
     payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
@@ -152,6 +154,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 5
     payment.token = token
+    payment.user_id = "biandra"
     payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
@@ -187,6 +190,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 5
     payment.token = token
+    payment.user_id = "biandra"
     payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()
@@ -249,6 +253,7 @@ class DecidirSpec extends Specification {
     payment.description = ""
     payment.amount = 5
     payment.token = token
+    payment.user_id = "biandra"
     payment.installments = 7
     payment.sub_payments = []
     payment.site_transaction_id = UUID.randomUUID().toString()

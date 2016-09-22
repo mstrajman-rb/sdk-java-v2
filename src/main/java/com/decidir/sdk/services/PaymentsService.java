@@ -83,18 +83,4 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Payment> refundPayment(Long paymentId) {
-        try {
-            Response<Payment> response = this.paymentApi.refundPayment(paymentId).execute();
-            if (response.isSuccessful()) {
-                return paymentConverter.convert(response, response.body());
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-
 }
