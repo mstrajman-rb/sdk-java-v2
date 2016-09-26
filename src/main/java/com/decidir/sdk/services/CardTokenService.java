@@ -50,10 +50,12 @@ public class CardTokenService {
         }
     }
 
-    public void deleteCardToken(String token) {
+    public DecidirResponse<Void> deleteCardToken(String token) {
         try {
-            Response response = this.cardTokenApi.deleteCardToken(token).execute();
-            if (!response.isSuccessful()) {
+            Response<Void> response = this.cardTokenApi.deleteCardToken(token).execute();
+            if (response.isSuccessful()) {
+                return cardTokenConverter.convert(response);
+            } else {
                 DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }

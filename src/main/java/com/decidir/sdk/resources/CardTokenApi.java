@@ -20,5 +20,5 @@ public interface CardTokenApi {
                              @Query("expirationYear") String expirationYear);
 
     @DELETE("cardtokens/{cardtokenId}")
-    Call deleteCardToken(@Path("cardtokenId") String token);
+    Call<Void> deleteCardToken(@Path("cardtokenId") String token);
 }

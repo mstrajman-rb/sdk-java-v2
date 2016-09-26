@@ -16,4 +16,11 @@ public class CardTokenConverter {
         dResponse.setMessage(response.message());
         return dResponse;
     }
+
+    public DecidirResponse<Void> convert(Response<Void> response) {
+        DecidirResponse<Void> dResponse = new DecidirResponse();
+        dResponse.setStatus(response.code());
+        dResponse.setMessage(response.message());
+        return dResponse;
+    }
 }

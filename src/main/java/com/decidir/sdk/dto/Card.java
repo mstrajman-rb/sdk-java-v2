@@ -9,11 +9,11 @@ public enum Card {
 
   MASTERCARD("mastercard"),
   AMEX("amex"),
-  //DINERS(3),
+  CABAL("cabal"),
   VISA("visa");
   /*TARSHOP(8),
+  //DINERS(3),
   TARJETANARANJA(9),
-  CABAL(12),
   VISAMOBILE(13),
   ITALCRED(14),
   ARGENCARD(15),

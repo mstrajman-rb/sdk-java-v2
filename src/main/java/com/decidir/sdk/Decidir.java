@@ -63,8 +63,8 @@ public final class Decidir {
     return cardTokenService.getCardTokens(userSiteId, bin, lastFourDigits, expirationMonth, expirationYear);
   }
 
-  public void deleteCardToken(String token) throws DecidirException {
-    cardTokenService.deleteCardToken(token);
+  public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
+    return cardTokenService.deleteCardToken(token);
   }
 
  }
