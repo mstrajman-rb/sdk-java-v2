@@ -43,19 +43,23 @@ public final class Decidir {
     return paymentsService.confirmPayment(payment);
   }
 
-  public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize) throws DecidirException {
-    return paymentsService.getPayments(offset, pageSize);
+  public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String merchantId) throws DecidirException {
+    return paymentsService.getPayments(offset, pageSize, siteOperationId, merchantId);
   }
 
   public DecidirResponse<Payment> getPayment(Long paymentId) throws DecidirException {
     return paymentsService.getPayment(paymentId);
   }
 
-  public DecidirResponse<RefundPayment> refundPayment(Long paymentId) throws DecidirException {
-    return refundsService.refundPayment(paymentId);
+  public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) throws DecidirException {
+    return refundsService.getRefunds(paymentId);
   }
 
-  public DecidirResponse<RefundPayment> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
+  public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment) throws DecidirException {
+    return refundsService.refundPayment(paymentId, refundPayment);
+  }
+
+  public DecidirResponse<RefundPaymentResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
     return refundsService.cancelRefund(paymentId, refundId);
   }
 

@@ -10,10 +10,10 @@ public enum Card {
   MASTERCARD("mastercard"),
   AMEX("amex"),
   CABAL("cabal"),
-  VISA("visa");
+  VISA("visa"),
+  NARANJA("naranja");
   /*TARSHOP(8),
   //DINERS(3),
-  TARJETANARANJA(9),
   VISAMOBILE(13),
   ITALCRED(14),
   ARGENCARD(15),

@@ -1,20 +1,23 @@
 package com.decidir.sdk.resources;
 
 import com.decidir.sdk.dto.RefundPayment;
+import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
+import com.decidir.sdk.dto.RefundPaymentResponse;
 import retrofit2.Call;
-import retrofit2.http.DELETE;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 /**
  * Created by biandra on 22/09/16.
  */
 public interface RefundApi {
 
-    @POST("payments/{paymentId}/refunds")
-    Call<RefundPayment> refundPayment(@Path("paymentId") Long id);
+    @GET("payments/{paymentId}/refunds")
+    Call<RefundPaymentHistoryResponse> getRefunds(@Path("paymentId") Long paymentId);
 
-    @DELETE("payments/{chargeId}/refunds/{refundId}")
-    Call<RefundPayment> cancelRefund(@Path("chargeId") Long paymentId, @Path("paymentId") Long refundId);
+    @POST("payments/{paymentId}/refunds")
+    Call<RefundPaymentResponse> refundPayment(@Path("paymentId") Long paymentId, @Body RefundPayment refundPayment);
+
+    @DELETE("payments/{paymentId}/refunds/{refundId}")
+    Call<RefundPaymentResponse> cancelRefund(@Path("paymentId") Long paymentId, @Path("refundId") Long refundId);
 
 }

@@ -1,7 +1,8 @@
 package com.decidir.sdk.converters;
 
 import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.RefundPayment;
+import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
+import com.decidir.sdk.dto.RefundPaymentResponse;
 import retrofit2.Response;
 
 /**
@@ -9,10 +10,19 @@ import retrofit2.Response;
  */
 public class RefundConverter {
 
-    public DecidirResponse<RefundPayment> convert(Response<RefundPayment> response, RefundPayment refundPayment) {
-        DecidirResponse<RefundPayment> dResponse = new DecidirResponse();
+    public DecidirResponse<RefundPaymentResponse> convert(Response<RefundPaymentResponse> response, RefundPaymentResponse refundPayment) {
+        DecidirResponse<RefundPaymentResponse> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(refundPayment);
+        dResponse.setMessage(response.message());
+        return dResponse;
+    }
+
+    public DecidirResponse<RefundPaymentHistoryResponse> convert(Response<RefundPaymentHistoryResponse> response,
+                                                                 RefundPaymentHistoryResponse refundPaymentHistory) {
+        DecidirResponse<RefundPaymentHistoryResponse> dResponse = new DecidirResponse();
+        dResponse.setStatus(response.code());
+        dResponse.setResult(refundPaymentHistory);
         dResponse.setMessage(response.message());
         return dResponse;
     }

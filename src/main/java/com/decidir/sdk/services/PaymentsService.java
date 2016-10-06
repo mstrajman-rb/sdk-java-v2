@@ -55,9 +55,9 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize) {
+    public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String merchantId) {
         try {
-            Response<Page> response = this.paymentApi.getPayments(offset, pageSize).execute();
+            Response<Page> response = this.paymentApi.getPayments(offset, pageSize, siteOperationId, merchantId).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
             } else {
