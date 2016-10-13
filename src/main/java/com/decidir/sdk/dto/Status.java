@@ -18,6 +18,8 @@ public enum Status {
     REFUNDED,
     ANNULLED,
     ACCREDITED,
+    ANNULMENT_APPROVED,
+    REFUND_APPROVED,
     UNDEFINED;
 
     private static Map<String, Status> statusMap = new HashMap<>(8);
@@ -29,6 +31,8 @@ public enum Status {
         statusMap.put("refunded", REFUNDED);
         statusMap.put("annulled", ANNULLED);
         statusMap.put("accredited", ACCREDITED);
+        statusMap.put("annulment_approved", ANNULMENT_APPROVED);
+        statusMap.put("refund_approved", REFUND_APPROVED);
         statusMap.put("undefined", UNDEFINED);
     }
 

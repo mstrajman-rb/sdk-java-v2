@@ -6,7 +6,7 @@ import com.decidir.sdk.dto.*
 class RefundServiceTests extends Specification {
 
   public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
-  public static final String apiUrl = "http://localhost:9002"
+  public static final String apiUrl = "http://172.16.21.13:9002"
 
   def decidir
 
@@ -16,7 +16,7 @@ class RefundServiceTests extends Specification {
 
   def "test payment annulled"() {
     setup:
-    def paymentId = 1382
+    def paymentId = 2173
     def refundPayment = new RefundPayment()
 
     when:
