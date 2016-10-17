@@ -16,7 +16,6 @@ public class RefundsService {
 
     public static final int HTTP_500 = 500;
     public static final int HTTP_402 = 402;
-    private static RefundsService service = null;
     private RefundApi refundApi;
     private RefundConverter refundConverter;
     private ErrorConverter errorConverter;
@@ -28,10 +27,7 @@ public class RefundsService {
     }
 
     public static RefundsService getInstance(RefundApi refundApi) {
-        if(service == null) {
-            service = new RefundsService(refundApi, new RefundConverter(), new ErrorConverter());
-        }
-        return service;
+        return new RefundsService(refundApi, new RefundConverter(), new ErrorConverter());
     }
 
     public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) {

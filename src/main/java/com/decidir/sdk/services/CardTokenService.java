@@ -18,7 +18,6 @@ public class CardTokenService {
 
     public static final int HTTP_500 = 500;
     public static final int HTTP_402 = 402;
-    private static CardTokenService service = null;
     private CardTokenApi cardTokenApi;
     private CardTokenConverter cardTokenConverter;
     private ErrorConverter errorConverter;
@@ -30,10 +29,7 @@ public class CardTokenService {
     }
 
     public static CardTokenService getInstance(CardTokenApi cardTokenApi) {
-        if(service == null) {
-            service = new CardTokenService(cardTokenApi, new CardTokenConverter(), new ErrorConverter());
-        }
-        return service;
+        return new CardTokenService(cardTokenApi, new CardTokenConverter(), new ErrorConverter());
     }
 
     public DecidirResponse<CardTokens> getCardTokens(String userSiteId, String bin, String lastFourDigits, String expirationMonth, String expirationYear) {

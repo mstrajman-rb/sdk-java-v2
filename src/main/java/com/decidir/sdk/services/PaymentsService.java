@@ -18,7 +18,6 @@ public class PaymentsService {
 
     public static final int HTTP_500 = 500;
     public static final int HTTP_402 = 402;
-    private static PaymentsService service = null;
     private PaymentApi paymentApi;
     private PaymentConverter paymentConverter;
     private ErrorConverter errorConverter;
@@ -30,10 +29,7 @@ public class PaymentsService {
     }
 
     public static PaymentsService getInstance(PaymentApi paymentApi) {
-        if(service == null) {
-            service = new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
-        }
-        return service;
+        return new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
     public DecidirResponse<Payment> confirmPayment(Payment payment) {
