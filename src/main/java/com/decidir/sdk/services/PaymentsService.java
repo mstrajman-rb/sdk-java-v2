@@ -32,9 +32,9 @@ public class PaymentsService {
         return new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<Payment> confirmPayment(Payment payment) {
+    public DecidirResponse<Payment> payment(Payment payment) {
         try {
-            Response<Payment> response = this.paymentApi.confirmPayment(payment).execute();
+            Response<Payment> response = this.paymentApi.pay(payment).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
             } else {

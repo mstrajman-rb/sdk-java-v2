@@ -17,5 +17,5 @@ public interface PaymentApi {
   Call<Payment> getPayment(@Path("paymentId") Long id);
 
   @POST("payments")
-  Call<Payment> confirmPayment(@Body Payment payment);
+  Call<Payment> pay(@Body Payment payment);
 }

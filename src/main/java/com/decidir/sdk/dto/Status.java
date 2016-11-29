@@ -12,6 +12,7 @@ import java.util.Map;
 public enum Status {
 
     APPROVED,
+    PRE_APPROVED,
     APPROVED_WITH_REFUND,
     REJECTED,
     REVIEW,
@@ -25,6 +26,7 @@ public enum Status {
     private static Map<String, Status> statusMap = new HashMap<>(8);
     static {
         statusMap.put("approved", APPROVED);
+        statusMap.put("pre_approved", PRE_APPROVED);
         statusMap.put("approved_with_refund", APPROVED_WITH_REFUND);
         statusMap.put("rejected", REJECTED);
         statusMap.put("review", REVIEW);

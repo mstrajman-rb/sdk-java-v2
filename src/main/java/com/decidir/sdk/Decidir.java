@@ -6,8 +6,10 @@ import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
+import com.decidir.sdk.resources.PaymentConfirmApi;
 import com.decidir.sdk.resources.RefundApi;
 import com.decidir.sdk.services.CardTokenService;
+import com.decidir.sdk.services.PaymentConfirmService;
 import com.decidir.sdk.services.PaymentsService;
 import com.decidir.sdk.services.RefundsService;
 
@@ -18,6 +20,7 @@ public final class Decidir {
   private PaymentsService paymentsService;
   private RefundsService refundsService;
   private CardTokenService cardTokenService;
+  private PaymentConfirmService paymentConfirmService;
 
   public Decidir(final String secretAccessToken, final String apiUrl, final Integer timeOut) {
     if (apiUrl != null) {
@@ -29,6 +32,7 @@ public final class Decidir {
     this.paymentsService = PaymentsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
     this.refundsService = RefundsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, RefundApi.class));
     this.cardTokenService = CardTokenService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
+    this.paymentConfirmService = PaymentConfirmService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentConfirmApi.class));
   }
 
   public Decidir(final String secretAccessToken) {
@@ -39,8 +43,8 @@ public final class Decidir {
     this(secretAccessToken, null, timeOut);
   }
 
-  public DecidirResponse<Payment> confirmPayment(Payment payment) throws DecidirException {
-    return paymentsService.confirmPayment(payment);
+  public DecidirResponse<Payment> payment(Payment payment) throws DecidirException {
+    return paymentsService.payment(payment);
   }
 
   public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String merchantId) throws DecidirException {
@@ -67,8 +71,12 @@ public final class Decidir {
     return cardTokenService.getCardTokens(userSiteId, bin, lastFourDigits, expirationMonth, expirationYear);
   }
 
-  public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
-    return cardTokenService.deleteCardToken(token);
+  public DecidirResponse<ConfirmPaymentResponse> confirmPayment(Long paymentId, ConfirmPayment confirmPayment) throws DecidirException {
+    return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
+  }
+
+  public DecidirResponse<ConfirmPaymentResponse> getConfirm(Long paymentId) throws DecidirException {
+    return paymentConfirmService.getConfirm(paymentId);
   }
 
  }

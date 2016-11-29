@@ -96,7 +96,7 @@ class PaymentServiceTests extends Specification {
         payment.fraud_detection = fraudDetection
 
         when:
-        decidir.confirmPayment(payment)
+        decidir.payment(payment)
 
         then:
         def exception = thrown(PaymentException)
@@ -136,7 +136,7 @@ class PaymentServiceTests extends Specification {
         payment.fraud_detection = fraudDetection
 
         when:
-        def result = decidir.confirmPayment(payment)
+        def result = decidir.payment(payment)
 
         then:
         result.status == 201
@@ -171,7 +171,7 @@ class PaymentServiceTests extends Specification {
         payment.fraud_detection = fraudDetection
 
         when:
-        decidir.confirmPayment(payment)
+        decidir.payment(payment)
 
         then:
         def exception = thrown(ValidateException)
