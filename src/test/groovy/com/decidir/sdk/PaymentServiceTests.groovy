@@ -1,7 +1,6 @@
 package com.decidir.sdk
 
 import com.decidir.sdk.dto.BillingData
-import com.decidir.sdk.dto.Card
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.CustomerInSite
@@ -84,7 +83,6 @@ class PaymentServiceTests extends Specification {
         def payment = new Payment()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
-        payment.description = ""
         payment.amount = 5
         payment.token = token
         payment.user_id = "biandra"
@@ -92,7 +90,7 @@ class PaymentServiceTests extends Specification {
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
         payment.bin = "450799"
-        payment.card_brand = Card.VISA
+        payment.card_brand = 1
         payment.fraud_detection = fraudDetection
 
         when:
@@ -123,7 +121,6 @@ class PaymentServiceTests extends Specification {
         def payment = new Payment()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
-        payment.description = ""
         payment.amount = 5
         payment.token = token
         payment.user_id = "biandra"
@@ -132,7 +129,7 @@ class PaymentServiceTests extends Specification {
         payment.site_transaction_id = UUID.randomUUID().toString()
         payment.bin = "450799"
         //payment.merchant_id=
-        payment.card_brand = Card.VISA
+        payment.card_brand = 1
         payment.fraud_detection = fraudDetection
 
         when:
@@ -159,7 +156,6 @@ class PaymentServiceTests extends Specification {
         def payment = new Payment()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
-        payment.description = ""
         payment.amount = 5
         payment.token = token
         payment.user_id = "biandra"
@@ -167,7 +163,7 @@ class PaymentServiceTests extends Specification {
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
         payment.bin = "450793"
-        payment.card_brand = Card.VISA
+        payment.card_brand = 1
         payment.fraud_detection = fraudDetection
 
         when:

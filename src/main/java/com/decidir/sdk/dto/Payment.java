@@ -19,7 +19,6 @@ public final class Payment implements Serializable {
   private User payer;
   private Boolean binary_mode;
   private Boolean live_mode;
-  private String description;
   private Currency currency;
   private Long amount;
   private Status status;
@@ -27,7 +26,7 @@ public final class Payment implements Serializable {
   private int installments;
   private String site_transaction_id;
   private String bin;
-  private Card card_brand;
+  private Integer card_brand;
   private String payment_type; //single / distributed% / distributed$
   private String merchant_id;
   private List<SubPayment> sub_payments;
@@ -129,14 +128,6 @@ public final class Payment implements Serializable {
     this.live_mode = live_mode;
   }
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public Currency getCurrency() {
     return currency;
   }
@@ -209,11 +200,11 @@ public final class Payment implements Serializable {
     this.bin = bin;
   }
 
-  public Card getCard_brand() {
+  public Integer getCard_brand() {
     return card_brand;
   }
 
-  public void setCard_brand(Card card_brand) {
+  public void setCard_brand(Integer card_brand) {
     this.card_brand = card_brand;
   }
 
