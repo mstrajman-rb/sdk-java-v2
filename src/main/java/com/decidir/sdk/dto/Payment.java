@@ -26,7 +26,7 @@ public final class Payment implements Serializable {
   private int installments;
   private String site_transaction_id;
   private String bin;
-  private Integer card_brand;
+  private Integer payment_method_id;
   private String payment_type; //single / distributed% / distributed$
   private String merchant_id;
   private List<SubPayment> sub_payments;
@@ -200,12 +200,12 @@ public final class Payment implements Serializable {
     this.bin = bin;
   }
 
-  public Integer getCard_brand() {
-    return card_brand;
+  public Integer getPayment_method_id() {
+	return payment_method_id;
   }
 
-  public void setCard_brand(Integer card_brand) {
-    this.card_brand = card_brand;
+  public void setPayment_method_id(Integer payment_method_id) {
+	this.payment_method_id = payment_method_id;
   }
 
   public String getMerchant_id() {

@@ -5,7 +5,7 @@ import com.decidir.sdk.dto.*
 
 class RefundServiceTests extends Specification {
 
-  public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+  public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
   public static final String apiUrl = "http://172.16.21.13:9002"
 
   def decidir

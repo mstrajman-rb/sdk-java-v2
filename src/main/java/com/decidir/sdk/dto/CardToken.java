@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class CardToken implements Serializable {
 
     private String token;
-    private Card card_brand;
+    private Integer payment_method_id;
     private String bin;
     private String last_four_digits;
     private String expiration_month;
@@ -26,15 +26,16 @@ public class CardToken implements Serializable {
         this.token = token;
     }
 
-    public Card getCard_brand() {
-        return card_brand;
-    }
 
-    public void setCard_brand(Card card_brand) {
-        this.card_brand = card_brand;
-    }
+    public Integer getPayment_method_id() {
+		return payment_method_id;
+	}
 
-    public String getBin() {
+	public void setPayment_method_id(Integer payment_method_id) {
+		this.payment_method_id = payment_method_id;
+	}
+
+	public String getBin() {
         return bin;
     }
 

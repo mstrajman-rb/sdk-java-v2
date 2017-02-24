@@ -71,6 +71,10 @@ public final class Decidir {
     return cardTokenService.getCardTokens(userSiteId, bin, lastFourDigits, expirationMonth, expirationYear);
   }
 
+  public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
+    return cardTokenService.deleteCardToken(token);
+  }
+
   public DecidirResponse<ConfirmPaymentResponse> confirmPayment(Long paymentId, ConfirmPayment confirmPayment) throws DecidirException {
     return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
   }

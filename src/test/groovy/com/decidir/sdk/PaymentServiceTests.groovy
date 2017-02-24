@@ -19,9 +19,12 @@ import spock.lang.Specification
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "81492db8-a51e-41c4-98c9-6d4d318206f2"
+    public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
+    public static final String token = "9567c738-bdba-4efd-8891-0be85c591b02"
+    public static final String valid_bin = "450799"
+    public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
+
 
     def decidir
     def billTo
@@ -85,13 +88,14 @@ class PaymentServiceTests extends Specification {
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = "biandra"
+        payment.user_id = user_id
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
-        payment.bin = "450799"
-        payment.card_brand = 1
+        payment.bin = valid_bin
+        payment.payment_method_id = 1
         payment.fraud_detection = fraudDetection
+
 
         when:
         decidir.payment(payment)
@@ -123,13 +127,13 @@ class PaymentServiceTests extends Specification {
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = "biandra"
+        payment.user_id = user_id
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
-        payment.bin = "450799"
+        payment.bin = valid_bin
         //payment.merchant_id=
-        payment.card_brand = 1
+        payment.payment_method_id = 1
         payment.fraud_detection = fraudDetection
 
         when:
@@ -158,12 +162,12 @@ class PaymentServiceTests extends Specification {
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = "biandra"
+        payment.user_id = user_id
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
-        payment.bin = "450793"
-        payment.card_brand = 1
+        payment.bin = "123456"
+        payment.payment_method_id = 1
         payment.fraud_detection = fraudDetection
 
         when:
@@ -187,16 +191,14 @@ class PaymentServiceTests extends Specification {
         decidirResponse.result != null
         decidirResponse.message == "OK"
     }
-
-    //@Ignore
+    
     def "test get payment"() {
         when:
-        //def payments = decidir.payments()
-        //def payment = decidir.getPayment(payments.result.results[0].id)
-        def payment = decidir.getPayment(1374)
+        def payments = decidir.getPayments(null, null, null, null)
+        def payment = decidir.getPayment(payments.result.results[0].id)
 
         then:
         payment != null
-        //payment.result.amount == payments.result.results[0].amount
+        payment.result.amount == payments.result.results[0].amount
     }
 }

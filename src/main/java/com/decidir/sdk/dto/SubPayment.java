@@ -8,6 +8,7 @@ public class SubPayment implements Serializable {
   private Integer installments;
   private Long amount;
   private Long subpayment_id;
+  private Status status;
 
   public String getSite_id() {
     return site_id;
@@ -40,4 +41,10 @@ public class SubPayment implements Serializable {
   public void setSubpayment_id(Long subpayment_id) {
     this.subpayment_id = subpayment_id;
   }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
+
+  public Status getStatus() { return this.status; }
 }
