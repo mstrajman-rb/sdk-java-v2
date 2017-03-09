@@ -1,9 +1,17 @@
 package com.decidir.sdk;
 
-
 import com.decidir.sdk.configuration.DecidirConfiguration;
-import com.decidir.sdk.dto.*;
+import com.decidir.sdk.dto.CardTokens;
+import com.decidir.sdk.dto.ConfirmPayment;
+import com.decidir.sdk.dto.ConfirmPaymentResponse;
+import com.decidir.sdk.dto.DecidirResponse;
+import com.decidir.sdk.dto.Page;
+import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.RefundPayment;
+import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
+import com.decidir.sdk.dto.RefundPaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
+import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
 import com.decidir.sdk.resources.PaymentConfirmApi;
@@ -13,74 +21,135 @@ import com.decidir.sdk.services.PaymentConfirmService;
 import com.decidir.sdk.services.PaymentsService;
 import com.decidir.sdk.services.RefundsService;
 
+
 public final class Decidir {
 
-  private static String apiUrl = "https://api.decidir.com";
-  private static Integer timeOut = 20;
-  private PaymentsService paymentsService;
-  private RefundsService refundsService;
-  private CardTokenService cardTokenService;
-  private PaymentConfirmService paymentConfirmService;
+	private static String apiUrl = "https://api.decidir.com";
+	private static Integer timeOut = 20;
+	private PaymentsService paymentsService;
+	private RefundsService refundsService;
+	private CardTokenService cardTokenService;
+	private PaymentConfirmService paymentConfirmService;
 
-  public Decidir(final String secretAccessToken, final String apiUrl, final Integer timeOut) {
-    if (apiUrl != null) {
-      this.apiUrl = apiUrl;
-    }
-    if (timeOut != null){
-      this.timeOut =timeOut;
-    }
-    this.paymentsService = PaymentsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
-    this.refundsService = RefundsService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, RefundApi.class));
-    this.cardTokenService = CardTokenService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
-    this.paymentConfirmService = PaymentConfirmService.getInstance(DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentConfirmApi.class));
-  }
+	public Decidir(final String secretAccessToken, final String apiUrl, final Integer timeOut) {
+		if (apiUrl != null) {
+			this.apiUrl = apiUrl;
+		}
+		if (timeOut != null) {
+			this.timeOut = timeOut;
+		}
+		this.paymentsService = PaymentsService.getInstance(
+				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
+		this.refundsService = RefundsService.getInstance(
+				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, RefundApi.class));
+		this.cardTokenService = CardTokenService.getInstance(
+				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
+		this.paymentConfirmService = PaymentConfirmService.getInstance(DecidirConfiguration
+				.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentConfirmApi.class));
+	}
 
-  public Decidir(final String secretAccessToken) {
-    this(secretAccessToken, null, null);
-  }
+	public Decidir(final String secretAccessToken) {
+		this(secretAccessToken, null, null);
+	}
 
-  public Decidir(final String secretAccessToken, final Integer timeOut) {
-    this(secretAccessToken, null, timeOut);
-  }
+	public Decidir(final String secretAccessToken, final Integer timeOut) {
+		this(secretAccessToken, null, timeOut);
+	}
 
-  public DecidirResponse<Payment> payment(Payment payment) throws DecidirException {
-    return paymentsService.payment(payment);
-  }
+	/**
+	 * Generates a new payment
+	 * 
+	 * @param payment
+	 *            {@link Payment} request
+	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error ocurrs
+	 */
+	public DecidirResponse<Payment> payment(Payment payment) throws PaymentException, DecidirException {
+		return paymentsService.payment(payment);
+	}
 
-  public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String merchantId) throws DecidirException {
-    return paymentsService.getPayments(offset, pageSize, siteOperationId, merchantId);
-  }
+	/**
+	 * Returns all site paymentes into a paginated list 
+	 * @param offset (optional) index of the first payment to be shown in the list
+	 * @param pageSize	(optional) size of the list to retrieve
+	 * @param siteOperationId (optional) to list only payments with this site transaction id 
+	 * @param merchantId (optional) to list only payments of this merchant
+	 * @return a {@link DecidirResponse} with the {@link Page} of payments
+	 * @throws DecidirException when an error ocurrs
+	 */
+	public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId,
+			String merchantId) throws DecidirException {
+		return paymentsService.getPayments(offset, pageSize, siteOperationId, merchantId);
+	}
 
-  public DecidirResponse<Payment> getPayment(Long paymentId) throws DecidirException {
-    return paymentsService.getPayment(paymentId);
-  }
+	/**
+	 * Retrieve payment by id
+	 * @param paymentId
+	 * @return a {@link DecidirResponse} with the {@link Payment} if exists
+	 * @throws DecidirException if payment does not exist or an error ocurrs
+	 */
+	public DecidirResponse<Payment> getPayment(Long paymentId) throws DecidirException {
+		return paymentsService.getPayment(paymentId);
+	}
 
-  public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) throws DecidirException {
-    return refundsService.getRefunds(paymentId);
-  }
+	public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) throws DecidirException {
+		return refundsService.getRefunds(paymentId);
+	}
 
-  public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment) throws DecidirException {
-    return refundsService.refundPayment(paymentId, refundPayment);
-  }
+	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment)
+			throws DecidirException {
+		return refundsService.refundPayment(paymentId, refundPayment);
+	}
 
-  public DecidirResponse<RefundPaymentResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
-    return refundsService.cancelRefund(paymentId, refundId);
-  }
+	public DecidirResponse<RefundPaymentResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
+		return refundsService.cancelRefund(paymentId, refundId);
+	}
 
-  public DecidirResponse<CardTokens> getCardTokens(String userSiteId, String bin, String lastFourDigits, String expirationMonth, String expirationYear) throws DecidirException {
-    return cardTokenService.getCardTokens(userSiteId, bin, lastFourDigits, expirationMonth, expirationYear);
-  }
+	/**
+	 * Lists user's card tokens
+	 * 
+	 * @param userSiteId
+	 *            the userID
+	 * @param bin
+	 *            (optional) credit card bin
+	 * @param lastFourDigits
+	 *            (optional) last 4 digits of credit card
+	 * @param expirationMonth
+	 *            (optional) credit card's expiration month <code>[01-12]</code>
+	 * @param expirationYear
+	 *            (optional) credit card's expiration year <code>[00-99]</code>
+	 * @return a {@link DecidirResponse} with a List with card tokens
+	 * @throws DecidirException
+	 *             when an error ocurrs
+	 */
+	public DecidirResponse<CardTokens> getCardTokens(String userSiteId, String bin, String lastFourDigits,
+			String expirationMonth, String expirationYear) throws DecidirException {
+		return cardTokenService.getCardTokens(userSiteId, bin, lastFourDigits, expirationMonth, expirationYear);
+	}
 
-  public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
-    return cardTokenService.deleteCardToken(token);
-  }
+	/**
+	 * Deletes a persisted card token
+	 * 
+	 * @param token
+	 *            a valid card Token
+	 * @return a {@link DecidirResponse} when success
+	 * @throws DecidirException
+	 *             when an error ocurrs or token does not exist
+	 */
+	public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
+		return cardTokenService.deleteCardToken(token);
+	}
 
-  public DecidirResponse<ConfirmPaymentResponse> confirmPayment(Long paymentId, ConfirmPayment confirmPayment) throws DecidirException {
-    return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
-  }
+	public DecidirResponse<ConfirmPaymentResponse> confirmPayment(Long paymentId, ConfirmPayment confirmPayment)
+			throws DecidirException {
+		return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
+	}
 
-  public DecidirResponse<ConfirmPaymentResponse> getConfirm(Long paymentId) throws DecidirException {
-    return paymentConfirmService.getConfirm(paymentId);
-  }
+	public DecidirResponse<ConfirmPaymentResponse> getConfirm(Long paymentId) throws DecidirException {
+		return paymentConfirmService.getConfirm(paymentId);
+	}
 
- }
+}
