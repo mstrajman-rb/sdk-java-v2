@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Generic Fraud Detection Data DTO
  * Created by biandra on 21/06/16.
  */
-public class FraudDetectionData implements Serializable {
+public abstract class FraudDetectionData implements Serializable {
 
 	private BillingData bill_to;
-	private ShippingData ship_to;
 	private PurchaseTotals purchase_totals;
 	private Channel channel;
 	private String dispatch_method;
@@ -17,8 +17,6 @@ public class FraudDetectionData implements Serializable {
 	private CopyPasteCardData copy_paste_card_data;
 	private Boolean send_to_cs;
 	private String device_unique_id;
-	private TicketingTransactionData ticketing_transaction_data;
-	private RetailTransactionData retail_transaction_data;
 	private FDStatus status;
 	private List<Csmdd> csmdds;
 
@@ -28,14 +26,6 @@ public class FraudDetectionData implements Serializable {
 
 	public void setBill_to(BillingData bill_to) {
 		this.bill_to = bill_to;
-	}
-
-	public ShippingData getShip_to() {
-		return ship_to;
-	}
-
-	public void setShip_to(ShippingData ship_to) {
-		this.ship_to = ship_to;
 	}
 
 	public PurchaseTotals getPurchase_totals() {
@@ -92,22 +82,6 @@ public class FraudDetectionData implements Serializable {
 
 	public void setDevice_unique_id(String device_unique_id) {
 		this.device_unique_id = device_unique_id;
-	}
-
-	public TicketingTransactionData getTicketing_transaction_data() {
-		return ticketing_transaction_data;
-	}
-
-	public void setTicketing_transaction_data(TicketingTransactionData ticketing_transaction_data) {
-		this.ticketing_transaction_data = ticketing_transaction_data;
-	}
-
-	public RetailTransactionData getRetail_transaction_data() {
-		return retail_transaction_data;
-	}
-
-	public void setRetail_transaction_data(RetailTransactionData retail_transaction_data) {
-		this.retail_transaction_data = retail_transaction_data;
 	}
 
 	public FDStatus getStatus() {
