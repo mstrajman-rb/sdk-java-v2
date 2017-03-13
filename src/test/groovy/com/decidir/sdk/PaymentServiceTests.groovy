@@ -8,6 +8,7 @@ import com.decidir.sdk.dto.FraudDetectionData
 import com.decidir.sdk.dto.Payment
 import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
+import com.decidir.sdk.dto.TicketingFraudDetectionData
 import com.decidir.sdk.dto.TicketingTItem
 import com.decidir.sdk.dto.TicketingTransactionData
 import com.decidir.sdk.exceptions.PaymentException
@@ -20,7 +21,7 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "9567c738-bdba-4efd-8891-0be85c591b02"
+    public static final String token = "4ed92d18-fd58-49ce-a49f-8ecd0b6a3422"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
@@ -76,7 +77,7 @@ class PaymentServiceTests extends Specification {
 
     def "test payment with CS black error"() {
         setup:
-        def fraudDetection = new FraudDetectionData()
+        def fraudDetection = new TicketingFraudDetectionData()
         fraudDetection.purchase_totals = purchaseTotals
         fraudDetection.channel = Channel.WEB
         fraudDetection.customer_in_site = customerInSite
@@ -114,7 +115,7 @@ class PaymentServiceTests extends Specification {
 
     def "test confirmPayment valid"() {
         setup:
-        def fraudDetection = new FraudDetectionData()
+        def fraudDetection = new TicketingFraudDetectionData()
         fraudDetection.bill_to = billTo
         fraudDetection.purchase_totals = purchaseTotals
         fraudDetection.channel = Channel.WEB
@@ -149,7 +150,7 @@ class PaymentServiceTests extends Specification {
 
     def "test confirmPayment with ValidateException"() {
         setup:
-        def fraudDetection = new FraudDetectionData()
+        def fraudDetection = new TicketingFraudDetectionData()
         fraudDetection.bill_to = billTo
         fraudDetection.purchase_totals = purchaseTotals
         fraudDetection.channel = Channel.WEB

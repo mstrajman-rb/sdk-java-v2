@@ -3,7 +3,7 @@ package com.decidir.sdk.dto;
 /**
  * Ticketing specific Fraud Detection Data DTO
  */
-public class TicketingFraudDetectionData extends FraudDetectionData {
+public class TicketingFraudDetectionData extends FraudDetectionDataRequest {
 
 	private TicketingTransactionData ticketing_transaction_data;
 

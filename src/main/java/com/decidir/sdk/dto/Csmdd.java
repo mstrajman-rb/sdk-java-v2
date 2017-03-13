@@ -2,6 +2,10 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 
+/**
+ * Represents a detailed error for Fraud Detection response
+ *
+ */
 public class Csmdd implements Serializable {
 
 	private Integer code;

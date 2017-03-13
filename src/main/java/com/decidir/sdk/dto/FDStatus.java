@@ -3,6 +3,7 @@ package com.decidir.sdk.dto;
 import java.io.Serializable;
 
 /**
+ * Fraud detection result status
  * Created by biandra on 28/06/16.
  */
 public class FDStatus implements Serializable {

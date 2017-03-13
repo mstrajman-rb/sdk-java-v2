@@ -3,7 +3,7 @@ package com.decidir.sdk.dto;
 /**
  * Retail specific Fraud Detection Data DTO
  */
-public class RetailFraudDetectionData extends FraudDetectionData {
+public class RetailFraudDetectionData extends FraudDetectionDataRequest {
 
 	private ShippingData ship_to;
 	private RetailTransactionData retail_transaction_data;
