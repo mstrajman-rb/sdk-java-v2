@@ -1,15 +1,25 @@
 package com.decidir.sdk.services;
 
+import java.io.IOException;
+
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
-import com.decidir.sdk.dto.*;
+import com.decidir.sdk.dto.DecidirError;
+import com.decidir.sdk.dto.DecidirResponse;
+import com.decidir.sdk.dto.Page;
+import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.PaymentNoPciRequest;
+import com.decidir.sdk.dto.PaymentPciCardRequest;
+import com.decidir.sdk.dto.PaymentPciTokenRequest;
+import com.decidir.sdk.dto.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import retrofit2.Response;
 
-import java.io.IOException;
+import retrofit2.Response;
 
 /**
  * Created by biandra on 06/07/16.
@@ -32,24 +42,45 @@ public class PaymentsService {
         return new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<Payment> payment(Payment payment) {
+    public DecidirResponse<PaymentResponse> paymentNoPci(PaymentNoPciRequest payment) {
         try {
-            Response<Payment> response = this.paymentApi.pay(payment).execute();
-            if (response.isSuccessful()) {
-                return paymentConverter.convert(response, response.body());
-            } else {
-                if (response.code() == HTTP_402){
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), Payment.class));
-                } else {
-                    DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                    throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-                }
-            }
+            Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
+            return processPaymentResponse(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
+    public DecidirResponse<PaymentResponse> paymentPciCard(PaymentPciCardRequest payment) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.payPciCard(payment).execute();
+            return processPaymentResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+    public DecidirResponse<PaymentResponse> paymentPciToken(PaymentPciTokenRequest payment) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.payPciToken(payment).execute();
+            return processPaymentResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+	private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
+			throws IOException, JsonParseException, JsonMappingException {
+		if (response.isSuccessful()) {
+		    return paymentConverter.convert(response, response.body());
+		} else {
+		    if (response.code() == HTTP_402){
+		        ObjectMapper objectMapper = new ObjectMapper();
+		        throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), Payment.class));
+		    } else {
+		        DecidirResponse<DecidirError> error = errorConverter.convert(response);
+		        throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+		    }
+		}
+	}
 
     public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String merchantId) {
         try {
@@ -65,9 +96,9 @@ public class PaymentsService {
         }
     }
 
-    public DecidirResponse<Payment> getPayment(Long paymentId) {
+    public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
         try {
-            Response<Payment> response = this.paymentApi.getPayment(paymentId).execute();
+            Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
             } else {

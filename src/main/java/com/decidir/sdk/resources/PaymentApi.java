@@ -1,9 +1,17 @@
 package com.decidir.sdk.resources;
 
-import retrofit2.Call;
-import retrofit2.http.*;
 import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.PaymentNoPciRequest;
+import com.decidir.sdk.dto.PaymentPciCardRequest;
+import com.decidir.sdk.dto.PaymentPciTokenRequest;
+import com.decidir.sdk.dto.PaymentResponse;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface PaymentApi {
 
@@ -14,8 +22,15 @@ public interface PaymentApi {
                          @Query("merchantId") String merchantId);
 
   @GET("payments/{paymentId}")
-  Call<Payment> getPayment(@Path("paymentId") Long id);
+  Call<PaymentResponse> getPayment(@Path("paymentId") Long id);
 
   @POST("payments")
-  Call<Payment> pay(@Body Payment payment);
+  Call<PaymentResponse> payNoPci(@Body PaymentNoPciRequest payment);
+  
+  @POST("payments")
+  Call<PaymentResponse> payPciCard(@Body PaymentPciCardRequest payment);
+  
+  @POST("payments")
+  Call<PaymentResponse> payPciToken(@Body PaymentPciTokenRequest payment);
+  
 }

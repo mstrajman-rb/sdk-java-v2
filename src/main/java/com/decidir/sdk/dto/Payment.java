@@ -3,21 +3,13 @@ package com.decidir.sdk.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
- * Payment DTO used to communicate with Decidir's Payment Service 
+ * Payment DTO used to communicate with Decidir's Payment Service
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public final class Payment implements Serializable {
+public abstract class Payment implements Serializable {
 
 	private Long id = 0L;
-	private String token;
 	private String user_id;
-	private String date;
-	private String date_created;
-	private String date_approved;
-	private String date_last_updated;
 	private User collector;
 	private String operation_type;
 	private User payer;
@@ -25,8 +17,6 @@ public final class Payment implements Serializable {
 	private Boolean live_mode;
 	private Currency currency;
 	private Long amount;
-	private Status status;
-	private CardError status_details;
 	private int installments;
 	private String site_transaction_id;
 	private String bin;
@@ -36,10 +26,6 @@ public final class Payment implements Serializable {
 	private List<SubPayment> sub_payments;
 	private FraudDetectionData fraud_detection;
 
-	private CardData card_data;
-	private CardTokenData card_token_data;
-
-	
 	public Long getId() {
 		return id;
 	}
@@ -48,52 +34,12 @@ public final class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public String getUser_id() {
 		return user_id;
 	}
 
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getDate_created() {
-		return date_created;
-	}
-
-	public void setDate_created(String date_created) {
-		this.date_created = date_created;
-	}
-
-	public String getDate_approved() {
-		return date_approved;
-	}
-
-	public void setDate_approved(String date_approved) {
-		this.date_approved = date_approved;
-	}
-
-	public String getDate_last_updated() {
-		return date_last_updated;
-	}
-
-	public void setDate_last_updated(String date_last_updated) {
-		this.date_last_updated = date_last_updated;
 	}
 
 	public User getCollector() {
@@ -150,22 +96,6 @@ public final class Payment implements Serializable {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public CardError getStatus_details() {
-		return status_details;
-	}
-
-	public void setStatus_details(CardError status_details) {
-		this.status_details = status_details;
 	}
 
 	public int getInstallments() {
@@ -232,20 +162,4 @@ public final class Payment implements Serializable {
 		this.fraud_detection = fraud_detection;
 	}
 
-	public CardData getCard_data() {
-		return card_data;
-	}
-
-	public void setCard_data(CardData cardData) {
-		this.card_data = cardData;
-	}
-
-	public CardTokenData getCard_token_data() {
-		return card_token_data;
-	}
-
-	public void setCard_token_data(CardTokenData card_token_data) {
-		this.card_token_data = card_token_data;
-	}
-	
 }

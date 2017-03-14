@@ -10,7 +10,9 @@ import com.decidir.sdk.dto.CustomerInSite
 import com.decidir.sdk.dto.FraudDetectionData
 import com.decidir.sdk.dto.Identification
 import com.decidir.sdk.dto.IdentificationType
-import com.decidir.sdk.dto.Payment
+import com.decidir.sdk.dto.PaymentNoPciRequest
+import com.decidir.sdk.dto.PaymentPciCardRequest
+import com.decidir.sdk.dto.PaymentPciTokenRequest
 import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
 import com.decidir.sdk.dto.TicketingFraudDetectionData
@@ -26,7 +28,7 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "b2d487ce-d10a-4525-aa17-3a8f28d66ce7"
+    public static final String token = "db2c65e6-4ee3-43cc-ba96-5f06a0b21e70"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
@@ -89,7 +91,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new Payment()
+        def payment = new PaymentNoPciRequest()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -128,7 +130,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new Payment()
+        def payment = new PaymentNoPciRequest()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -164,7 +166,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new Payment()
+        def payment = new PaymentPciCardRequest()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -217,7 +219,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new Payment()
+        def payment = new PaymentPciTokenRequest()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -262,7 +264,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new Payment()
+        def payment = new PaymentNoPciRequest()
         payment.payment_type = "single"
         payment.currency = Currency.ARS
         payment.amount = 5

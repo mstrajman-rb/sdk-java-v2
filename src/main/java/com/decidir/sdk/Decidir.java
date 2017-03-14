@@ -7,6 +7,10 @@ import com.decidir.sdk.dto.ConfirmPaymentResponse;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.PaymentNoPciRequest;
+import com.decidir.sdk.dto.PaymentPciCardRequest;
+import com.decidir.sdk.dto.PaymentPciTokenRequest;
+import com.decidir.sdk.dto.PaymentResponse;
 import com.decidir.sdk.dto.RefundPayment;
 import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.RefundPaymentResponse;
@@ -57,18 +61,46 @@ public final class Decidir {
 	}
 
 	/**
-	 * Generates a new payment
+	 * Generates a new payment with payment token
 	 * 
 	 * @param payment
-	 *            {@link Payment} request
+	 *            {@link PaymentNoPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
 	 *             when an error ocurrs
 	 */
-	public DecidirResponse<Payment> payment(Payment payment) throws PaymentException, DecidirException {
-		return paymentsService.payment(payment);
+	public DecidirResponse<PaymentResponse> payment(PaymentNoPciRequest payment) throws PaymentException, DecidirException {
+		return paymentsService.paymentNoPci(payment);
+	}
+	/**
+	 * Generates a new pci payment with card data
+	 * 
+	 * @param payment
+	 *            {@link PaymentPciCardRequest} request
+	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error ocurrs
+	 */
+	public DecidirResponse<PaymentResponse> payment(PaymentPciCardRequest payment) throws PaymentException, DecidirException {
+		return paymentsService.paymentPciCard(payment);
+	}
+	/**
+	 * Generates a new pci payment with card token
+	 * 
+	 * @param payment
+	 *            {@link PaymentPciTokenRequest} request
+	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error ocurrs
+	 */
+	public DecidirResponse<PaymentResponse> payment(PaymentPciTokenRequest payment) throws PaymentException, DecidirException {
+		return paymentsService.paymentPciToken(payment);
 	}
 
 	/**
@@ -91,7 +123,7 @@ public final class Decidir {
 	 * @return a {@link DecidirResponse} with the {@link Payment} if exists
 	 * @throws DecidirException if payment does not exist or an error ocurrs
 	 */
-	public DecidirResponse<Payment> getPayment(Long paymentId) throws DecidirException {
+	public DecidirResponse<PaymentResponse> getPayment(Long paymentId) throws DecidirException {
 		return paymentsService.getPayment(paymentId);
 	}
 

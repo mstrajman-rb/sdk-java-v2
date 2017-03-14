@@ -2,7 +2,8 @@ package com.decidir.sdk.converters;
 
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.Payment;
+import com.decidir.sdk.dto.PaymentResponse;
+
 import retrofit2.Response;
 
 /**
@@ -10,8 +11,8 @@ import retrofit2.Response;
  */
 public class PaymentConverter {
 
-    public DecidirResponse<Payment> convert(Response<Payment> response, Payment payment){
-        DecidirResponse<Payment> dResponse = new DecidirResponse();
+    public DecidirResponse<PaymentResponse> convert(Response<PaymentResponse> response, PaymentResponse payment){
+        DecidirResponse<PaymentResponse> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(payment);
         dResponse.setMessage(response.message());
