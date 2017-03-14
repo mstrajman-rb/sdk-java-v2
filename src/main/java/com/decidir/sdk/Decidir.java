@@ -2,8 +2,6 @@ package com.decidir.sdk;
 
 import com.decidir.sdk.configuration.DecidirConfiguration;
 import com.decidir.sdk.dto.CardTokens;
-import com.decidir.sdk.dto.ConfirmPayment;
-import com.decidir.sdk.dto.ConfirmPaymentResponse;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
@@ -18,7 +16,6 @@ import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
-import com.decidir.sdk.resources.PaymentConfirmApi;
 import com.decidir.sdk.resources.RefundApi;
 import com.decidir.sdk.services.CardTokenService;
 import com.decidir.sdk.services.PaymentConfirmService;
@@ -49,7 +46,7 @@ public final class Decidir {
 		this.cardTokenService = CardTokenService.getInstance(
 				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
 		this.paymentConfirmService = PaymentConfirmService.getInstance(DecidirConfiguration
-				.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentConfirmApi.class));
+				.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
 	}
 
 	public Decidir(final String secretAccessToken) {
@@ -174,14 +171,17 @@ public final class Decidir {
 	public DecidirResponse<Void> deleteCardToken(String token) throws DecidirException {
 		return cardTokenService.deleteCardToken(token);
 	}
-
-	public DecidirResponse<ConfirmPaymentResponse> confirmPayment(Long paymentId, ConfirmPayment confirmPayment)
+	
+	/**
+	 * 
+	 * @param paymentId
+	 * @param confirmPayment
+	 * @return
+	 * @throws DecidirException
+	 */
+	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, PaymentNoPciRequest confirmPayment)
 			throws DecidirException {
 		return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
-	}
-
-	public DecidirResponse<ConfirmPaymentResponse> getConfirm(Long paymentId) throws DecidirException {
-		return paymentConfirmService.getConfirm(paymentId);
 	}
 
 }

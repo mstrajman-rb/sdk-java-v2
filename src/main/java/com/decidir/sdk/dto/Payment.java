@@ -25,6 +25,9 @@ public abstract class Payment implements Serializable {
 	private String merchant_id;
 	private List<SubPayment> sub_payments;
 	private FraudDetectionData fraud_detection;
+	private String plan_id;
+	private Aggregator aggregate_data;
+	private String establishment_name;
 
 	public Long getId() {
 		return id;
@@ -160,6 +163,30 @@ public abstract class Payment implements Serializable {
 
 	public void setFraud_detection(FraudDetectionData fraud_detection) {
 		this.fraud_detection = fraud_detection;
+	}
+
+	public String getPlan_id() {
+		return plan_id;
+	}
+
+	public void setPlan_id(String plan_id) {
+		this.plan_id = plan_id;
+	}
+
+	public Aggregator getAggregate_data() {
+		return aggregate_data;
+	}
+
+	public void setAggregate_data(Aggregator aggregate_data) {
+		this.aggregate_data = aggregate_data;
+	}
+
+	public String getEstablishment_name() {
+		return establishment_name;
+	}
+
+	public void setEstablishment_name(String establishment_name) {
+		this.establishment_name = establishment_name;
 	}
 
 }
