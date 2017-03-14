@@ -35,6 +35,7 @@ public class DecidirConfiguration {
                         .header(CACHE_CONTROL, MAX_AGE_0)
                         .header(APIKEY, secretAccessToken)
                         .header("X-Consumer-Username", secretAccessToken+"_private")
+                        .header("X-Consumer-Username", secretAccessToken+"_pci")
                         .header(USER_AGENT, getUserAgent())
                         .build();
 

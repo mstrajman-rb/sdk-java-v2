@@ -36,6 +36,10 @@ public final class Payment implements Serializable {
 	private List<SubPayment> sub_payments;
 	private FraudDetectionData fraud_detection;
 
+	private CardData card_data;
+	private CardTokenData card_token_data;
+
+	
 	public Long getId() {
 		return id;
 	}
@@ -226,6 +230,22 @@ public final class Payment implements Serializable {
 
 	public void setFraud_detection(FraudDetectionData fraud_detection) {
 		this.fraud_detection = fraud_detection;
+	}
+
+	public CardData getCard_data() {
+		return card_data;
+	}
+
+	public void setCard_data(CardData cardData) {
+		this.card_data = cardData;
+	}
+
+	public CardTokenData getCard_token_data() {
+		return card_token_data;
+	}
+
+	public void setCard_token_data(CardTokenData card_token_data) {
+		this.card_token_data = card_token_data;
 	}
 	
 }

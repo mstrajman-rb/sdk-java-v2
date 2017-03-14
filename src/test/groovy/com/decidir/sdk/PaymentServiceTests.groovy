@@ -1,10 +1,15 @@
 package com.decidir.sdk
 
 import com.decidir.sdk.dto.BillingData
+import com.decidir.sdk.dto.CardData
+import com.decidir.sdk.dto.CardFraudDetectionData
+import com.decidir.sdk.dto.CardTokenData
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.CustomerInSite
 import com.decidir.sdk.dto.FraudDetectionData
+import com.decidir.sdk.dto.Identification
+import com.decidir.sdk.dto.IdentificationType
 import com.decidir.sdk.dto.Payment
 import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
@@ -21,7 +26,7 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "4ed92d18-fd58-49ce-a49f-8ecd0b6a3422"
+    public static final String token = "b2d487ce-d10a-4525-aa17-3a8f28d66ce7"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
@@ -137,6 +142,7 @@ class PaymentServiceTests extends Specification {
         payment.payment_method_id = 1
         payment.fraud_detection = fraudDetection
 
+
         when:
         def result = decidir.payment(payment)
 
@@ -147,6 +153,104 @@ class PaymentServiceTests extends Specification {
         result.result.fraud_detection.status.reason_code == "100"
         result.result.fraud_detection.status.description == "Decision Manager processing"
     }
+
+    def "test confirmPayment PCI with CardData valid"() {
+        setup:
+        def fraudDetection = new TicketingFraudDetectionData()
+        fraudDetection.bill_to = billTo
+        fraudDetection.purchase_totals = purchaseTotals
+        fraudDetection.channel = Channel.WEB
+        fraudDetection.customer_in_site = customerInSite
+        fraudDetection.device_unique_id = "devicefingerprintid"
+        fraudDetection.ticketing_transaction_data = ticketingTransactionData
+
+        def payment = new Payment()
+        payment.payment_type = "single"
+        payment.currency = Currency.ARS
+        payment.amount = 5
+
+        payment.user_id = user_id
+        payment.installments = 7
+        payment.sub_payments = []
+        payment.site_transaction_id = UUID.randomUUID().toString()
+        payment.bin = valid_bin
+
+        payment.payment_method_id = 1
+        payment.fraud_detection = fraudDetection
+
+        def cardData = new CardData()
+        cardData.card_number= "4507990000004905"
+        cardData.card_expiration_month = "04"
+        cardData.card_expiration_year = "20"
+        cardData.security_code = "123"
+        cardData.card_holder_name ="Juan"
+
+        def cardFraudDetectionData = new CardFraudDetectionData()
+        cardFraudDetectionData.device_unique_identifier ="12345"
+        cardData.fraud_detection = cardFraudDetectionData
+
+        def cardHolderIdentification = new Identification()
+        cardHolderIdentification.number =  "23968498"
+        cardHolderIdentification.type = IdentificationType.DNI
+        cardData.card_holder_identification = cardHolderIdentification
+
+        payment.card_data = cardData
+
+        when:
+        def result = decidir.payment(payment)
+
+        then:
+        result.status == 201
+        result.result.status == Status.APPROVED
+        result.result.fraud_detection.status.decision == "green"
+        result.result.fraud_detection.status.reason_code == "100"
+        result.result.fraud_detection.status.description == "Decision Manager processing"
+    }
+
+    def "test confirmPayment PCI with CardTokenData valid"() {
+        setup:
+        def fraudDetection = new TicketingFraudDetectionData()
+        fraudDetection.bill_to = billTo
+        fraudDetection.purchase_totals = purchaseTotals
+        fraudDetection.channel = Channel.WEB
+        fraudDetection.customer_in_site = customerInSite
+        fraudDetection.device_unique_id = "devicefingerprintid"
+        fraudDetection.ticketing_transaction_data = ticketingTransactionData
+
+        def payment = new Payment()
+        payment.payment_type = "single"
+        payment.currency = Currency.ARS
+        payment.amount = 5
+
+        payment.user_id = user_id
+        payment.installments = 7
+        payment.sub_payments = []
+        payment.site_transaction_id = UUID.randomUUID().toString()
+        payment.bin = valid_bin
+        payment.payment_method_id = 1
+        payment.fraud_detection = fraudDetection
+
+        def cardTokenData = new CardTokenData()
+        cardTokenData.token= "c1c7470d-4c22-4656-940a-d159075f52b3"
+        cardTokenData.security_code = "123"
+
+        def cardFraudDetectionData = new CardFraudDetectionData()
+        cardFraudDetectionData.device_unique_identifier ="12345"
+        cardTokenData.fraud_detection = cardFraudDetectionData
+
+
+        payment.card_token_data = cardTokenData
+        when:
+        def result = decidir.payment(payment)
+
+        then:
+        result.status == 201
+        result.result.status == Status.APPROVED
+        result.result.fraud_detection.status.decision == "green"
+        result.result.fraud_detection.status.reason_code == "100"
+        result.result.fraud_detection.status.description == "Decision Manager processing"
+    }
+
 
     def "test confirmPayment with ValidateException"() {
         setup:
