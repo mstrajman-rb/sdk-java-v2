@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
+import com.decidir.sdk.dto.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.PaymentNoPciRequest;
 import com.decidir.sdk.dto.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.PaymentApi;
@@ -26,6 +26,7 @@ public class PaymentConfirmService {
 
     private PaymentConfirmService(PaymentApi paymentApi, PaymentConverter paymentConverter, ErrorConverter errorConverter){
         this.paymentApi = paymentApi;
+        this.paymentConverter = paymentConverter;
         this.errorConverter = errorConverter;
     }
 
@@ -33,9 +34,9 @@ public class PaymentConfirmService {
         return new PaymentConfirmService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, PaymentNoPciRequest confirmPayment) {
+    public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount) {
         try {
-            Response<PaymentResponse> response = this.paymentApi.paymentConfirm(paymentId, confirmPayment).execute();
+            Response<PaymentResponse> response = this.paymentApi.paymentConfirm(paymentId, new ConfirmPaymentAmount(amount)).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
             } else {

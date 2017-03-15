@@ -20,7 +20,7 @@ public class PaymentResponse extends Payment implements Serializable {
 	
 	private Status status;
 	private CardError status_details;
-
+	private ConfirmedPaymentData confirmed;
 
 	public String getToken() {
 		return token;
@@ -77,5 +77,14 @@ public class PaymentResponse extends Payment implements Serializable {
 	public void setStatus_details(CardError status_details) {
 		this.status_details = status_details;
 	}
+
+	public ConfirmedPaymentData getConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(ConfirmedPaymentData confirmed) {
+		this.confirmed = confirmed;
+	}
+
 
 }

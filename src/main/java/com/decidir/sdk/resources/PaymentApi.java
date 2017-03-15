@@ -1,5 +1,6 @@
 package com.decidir.sdk.resources;
 
+import com.decidir.sdk.dto.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.PaymentNoPciRequest;
 import com.decidir.sdk.dto.PaymentPciCardRequest;
@@ -35,5 +36,5 @@ public interface PaymentApi {
   Call<PaymentResponse> payPciToken(@Body PaymentPciTokenRequest payment);
   
   @PUT("payments/{paymentId}")
-  Call<PaymentResponse> paymentConfirm(@Path("paymentId") Long id, @Body PaymentNoPciRequest payment);
+  Call<PaymentResponse> paymentConfirm(@Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);
 }

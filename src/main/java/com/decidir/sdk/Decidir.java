@@ -173,15 +173,15 @@ public final class Decidir {
 	}
 	
 	/**
-	 * 
+	 * Confirm a pre approved payment
 	 * @param paymentId
-	 * @param confirmPayment
-	 * @return
-	 * @throws DecidirException
+	 * @param amount (nullable) new payment amount
+	 * @return @return a {@link DecidirResponse} when success
+	 * @throws DecidirException when an error ocurrs 
 	 */
-	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, PaymentNoPciRequest confirmPayment)
+	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, Long amount)
 			throws DecidirException {
-		return paymentConfirmService.paymentConfirm(paymentId, confirmPayment);
+		return paymentConfirmService.paymentConfirm(paymentId, amount);
 	}
 
 }

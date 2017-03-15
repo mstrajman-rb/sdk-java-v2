@@ -1,6 +1,6 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.ConfirmPayment
+import com.decidir.sdk.dto.PaymentNoPciRequest
 import com.decidir.sdk.dto.Status
 import spock.lang.Specification
 
@@ -20,26 +20,11 @@ class PaymentConfirmServiceTests extends Specification {
 
     def "test confirm payment"() {
         setup:
-        def paymentId = 3370
-        def confirmPayment = new ConfirmPayment()
-        confirmPayment.amount = 20L
+        def paymentId = 657
+        def paymentNewAmount = 200L
 
         when:
-        def result = decidir.confirmPayment(paymentId, confirmPayment)
-
-        then:
-        result.status == 201
-        result.result.id != null
-        result.result.amount != null
-        result.result.status == Status.APPROVED
-    }
-
-    def "test get confirm"() {
-        setup:
-        def paymentId = 3369
-
-        when:
-        def result = decidir.getConfirm(paymentId)
+        def result = decidir.confirmPayment(paymentId, paymentNewAmount)
 
         then:
         result.status == 200
@@ -47,4 +32,6 @@ class PaymentConfirmServiceTests extends Specification {
         result.result.amount != null
         result.result.status == Status.APPROVED
     }
+
+
 }
