@@ -74,7 +74,7 @@ public class PaymentsService {
 		} else {
 		    if (response.code() == HTTP_402){
 		        ObjectMapper objectMapper = new ObjectMapper();
-		        throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), Payment.class));
+		        throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
 		    } else {
 		        DecidirResponse<DecidirError> error = errorConverter.convert(response);
 		        throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
