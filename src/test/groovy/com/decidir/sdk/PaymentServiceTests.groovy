@@ -28,22 +28,20 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "85a468a3-1350-476d-b051-985066adca60"
+    public static final String token = "ee7565a6-391e-419c-aa75-a289db8df5aa"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
 
 
-    def decidirPrivate
-    def decidirPCI
+    def decidir
     def billTo
     def purchaseTotals
     def customerInSite
     def ticketingTransactionData
 
     def setup(){
-        decidirPrivate = new Decidir(secretAccessToken.concat("_private"), apiUrl, 15)
-        decidirPCI = new Decidir(secretAccessToken.concat("_pci"), apiUrl, 15)
+        decidir = new Decidir(secretAccessToken, apiUrl, 15)
         billTo = new BillingData()
         billTo.city = "Buenos Aires"
         billTo.country = "AR"
@@ -107,7 +105,7 @@ class PaymentServiceTests extends Specification {
 
 
         when:
-        decidirPrivate.payment(payment)
+        decidir.payment(payment)
 
         then:
         def exception = thrown(PaymentException)
@@ -147,7 +145,7 @@ class PaymentServiceTests extends Specification {
 
 
         when:
-        def result = decidirPrivate.payment(payment)
+        def result = decidir.payment(payment)
 
         then:
         result.status == 201
@@ -200,7 +198,7 @@ class PaymentServiceTests extends Specification {
         payment.card_data = cardData
 
         when:
-        def result = decidirPCI.payment(payment)
+        def result = decidir.payment(payment)
 
         then:
         result.status == 201
@@ -244,7 +242,7 @@ class PaymentServiceTests extends Specification {
 
         payment.card_token_data = cardTokenData
         when:
-        def result = decidirPCI.payment(payment)
+        def result = decidir.payment(payment)
 
         then:
         result.status == 201
@@ -279,7 +277,7 @@ class PaymentServiceTests extends Specification {
         payment.fraud_detection = fraudDetection
 
         when:
-        decidirPrivate.payment(payment)
+        decidir.payment(payment)
 
         then:
         def exception = thrown(ValidateException)
@@ -292,7 +290,7 @@ class PaymentServiceTests extends Specification {
 
     def "test list of payments"() {
         when:
-        def decidirResponse = decidirPrivate.getPayments(null, null, null, null)
+        def decidirResponse = decidir.getPayments(null, null, null, null)
 
         then:
         decidirResponse.status == 200
@@ -302,8 +300,8 @@ class PaymentServiceTests extends Specification {
     
     def "test get payment"() {
         when:
-        def payments = decidirPrivate.getPayments(null, null, null, null)
-        def payment = decidirPrivate.getPayment(payments.result.results[0].id)
+        def payments = decidir.getPayments(null, null, null, null)
+        def payment = decidir.getPayment(payments.result.results[0].id)
 
         then:
         payment != null

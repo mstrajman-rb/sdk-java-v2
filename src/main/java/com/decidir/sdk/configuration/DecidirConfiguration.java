@@ -34,8 +34,8 @@ public class DecidirConfiguration {
                 Request request = chain.request().newBuilder()
                         .header(CACHE_CONTROL, MAX_AGE_0)
                         .header(APIKEY, secretAccessToken)
-                        //TODO remove the line below, only for testing purpose
-                        .header("X-Consumer-Username", secretAccessToken)
+                        .header("X-Consumer-Username", secretAccessToken+"_private")
+                        //.header("X-Consumer-Username", secretAccessToken+"_pci")
                         .header(USER_AGENT, getUserAgent())
                         .build();
 

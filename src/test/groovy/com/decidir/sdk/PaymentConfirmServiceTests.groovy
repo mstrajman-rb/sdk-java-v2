@@ -1,6 +1,5 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.PaymentNoPciRequest
 import com.decidir.sdk.dto.Status
 import spock.lang.Specification
 
