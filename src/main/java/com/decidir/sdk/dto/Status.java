@@ -22,6 +22,7 @@ public enum Status {
     ANNULMENT_APPROVED,
     REFUND_APPROVED,
     GROUP_REJECTED,
+    GROUP_ANNULLED,
     UNDEFINED;
 
     private static Map<String, Status> statusMap = new HashMap<>(8);
@@ -37,6 +38,7 @@ public enum Status {
         statusMap.put("annulment_approved", ANNULMENT_APPROVED);
         statusMap.put("refund_approved", REFUND_APPROVED);
         statusMap.put("group_rejected", GROUP_REJECTED);
+        statusMap.put("group_annulled", GROUP_ANNULLED);
         statusMap.put("undefined", UNDEFINED);
     }
 
