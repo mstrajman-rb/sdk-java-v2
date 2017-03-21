@@ -7,16 +7,16 @@ import com.decidir.sdk.dto.CardTokenData
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.CustomerInSite
-import com.decidir.sdk.dto.FraudDetectionData
+import com.decidir.sdk.dto.FraudDetectionDataResponse
 import com.decidir.sdk.dto.Identification
 import com.decidir.sdk.dto.IdentificationType
+import com.decidir.sdk.dto.Item
 import com.decidir.sdk.dto.PaymentNoPciRequest
 import com.decidir.sdk.dto.PaymentPciCardRequest
 import com.decidir.sdk.dto.PaymentPciTokenRequest
 import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
 import com.decidir.sdk.dto.TicketingFraudDetectionData
-import com.decidir.sdk.dto.TicketingTItem
 import com.decidir.sdk.dto.TicketingTransactionData
 import com.decidir.sdk.exceptions.PaymentException
 import com.decidir.sdk.exceptions.ValidateException
@@ -27,8 +27,8 @@ import spock.lang.Specification
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "ee7565a6-391e-419c-aa75-a289db8df5aa"
+    public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+    public static final String token = "547e6895-f473-4f3f-a7e5-db2bf63d53ec"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
@@ -69,15 +69,15 @@ class PaymentServiceTests extends Specification {
         ticketingTransactionData = new TicketingTransactionData()
         ticketingTransactionData.days_to_event = 55
         ticketingTransactionData.delivery_type = "Pick up"
-        def ticketingTItem = new TicketingTItem()
-        ticketingTItem.code = "popblacksabbat2016"
-        ticketingTItem.description = "Popular Black Sabbath 2016"
-        ticketingTItem.name = "popblacksabbat2016ss"
-        ticketingTItem.sku = "asas"
-        ticketingTItem.total_amount = 242424
-        ticketingTItem.quantity = 2
-        ticketingTItem.unit_price = 121212
-        ticketingTransactionData.items = Arrays.asList(ticketingTItem)
+        def item = new Item()
+        item.code = "popblacksabbat2016"
+        item.description = "Popular Black Sabbath 2016"
+        item.name = "popblacksabbat2016ss"
+        item.sku = "asas"
+        item.total_amount = 242424
+        item.quantity = 2
+        item.unit_price = 121212
+        ticketingTransactionData.items = Arrays.asList(item)
 
     }
 
@@ -111,7 +111,7 @@ class PaymentServiceTests extends Specification {
         def exception = thrown(PaymentException)
         exception.status == 402
         exception.payment.status == Status.REJECTED
-        exception.payment.fraud_detection.status.decision == "black"
+        ((FraudDetectionDataResponse)exception.payment.fraud_detection).status.decision == "black"
         exception.payment.fraud_detection.status.reason_code == "-1"
         exception.payment.fraud_detection.status.description == "validation"
         exception.payment.fraud_detection.status.details.error_type == "invalid_request_error"

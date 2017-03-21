@@ -5,16 +5,8 @@ package com.decidir.sdk.dto;
  */
 public class RetailFraudDetectionData extends FraudDetectionDataRequest {
 
-	private ShippingData ship_to;
+
 	private RetailTransactionData retail_transaction_data;
-
-	public ShippingData getShip_to() {
-		return ship_to;
-	}
-
-	public void setShip_to(ShippingData ship_to) {
-		this.ship_to = ship_to;
-	}
 
 	public RetailTransactionData getRetail_transaction_data() {
 		return retail_transaction_data;

@@ -5,11 +5,20 @@ import java.util.List;
 
 public class RetailTransactionData implements Serializable {
 
+	private ShippingData ship_to;
 	private String days_to_delivery;
 	private Boolean tax_voucher_required;
 	private String customer_loyality_number;
 	private String coupon_code;
 	private List<Item> items;
+
+	public ShippingData getShip_to() {
+		return ship_to;
+	}
+
+	public void setShip_to(ShippingData ship_to) {
+		this.ship_to = ship_to;
+	}
 
 	public String getDays_to_delivery() {
 		return days_to_delivery;
