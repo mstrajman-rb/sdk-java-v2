@@ -14,6 +14,7 @@ import com.decidir.sdk.dto.Item
 import com.decidir.sdk.dto.PaymentNoPciRequest
 import com.decidir.sdk.dto.PaymentPciCardRequest
 import com.decidir.sdk.dto.PaymentPciTokenRequest
+import com.decidir.sdk.dto.PaymentType
 import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
 import com.decidir.sdk.dto.TicketingFraudDetectionData
@@ -28,7 +29,7 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "547e6895-f473-4f3f-a7e5-db2bf63d53ec"
+    public static final String token = "5cebb741-955b-4b82-a7b8-304f94b63594"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
@@ -91,7 +92,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
         def payment = new PaymentNoPciRequest()
-        payment.payment_type = "single"
+        payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
@@ -130,7 +131,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
         def payment = new PaymentNoPciRequest()
-        payment.payment_type = "single"
+        payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
@@ -139,7 +140,7 @@ class PaymentServiceTests extends Specification {
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
         payment.bin = valid_bin
-        //payment.merchant_id=
+        //payment.site_id=
         payment.payment_method_id = 1
         payment.fraud_detection = fraudDetection
 
@@ -166,7 +167,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
         def payment = new PaymentPciCardRequest()
-        payment.payment_type = "single"
+        payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
 
@@ -219,7 +220,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
         def payment = new PaymentPciTokenRequest()
-        payment.payment_type = "single"
+        payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
 
@@ -264,7 +265,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
         def payment = new PaymentNoPciRequest()
-        payment.payment_type = "single"
+        payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token

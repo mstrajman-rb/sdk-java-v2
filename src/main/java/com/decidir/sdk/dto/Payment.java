@@ -21,7 +21,7 @@ public abstract class Payment implements Serializable {
 	private String site_transaction_id;
 	private String bin;
 	private Integer payment_method_id;
-	private String payment_type; // single / distributed% / distributed$
+	private PaymentType payment_type; // single / distributed% / distributed$
 	private String site_id;
 	private List<SubPayment> sub_payments;
 	private FraudDetectionData fraud_detection;
@@ -109,11 +109,11 @@ public abstract class Payment implements Serializable {
 		this.installments = installments;
 	}
 
-	public String getPayment_type() {
+	public PaymentType getPayment_type() {
 		return payment_type;
 	}
 
-	public void setPayment_type(String payment_type) {
+	public void setPayment_type(PaymentType payment_type) {
 		this.payment_type = payment_type;
 	}
 

@@ -52,7 +52,7 @@ public final class Decidir {
 	 * 
 	 * @param payment
 	 *            {@link PaymentNoPciRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
@@ -66,7 +66,7 @@ public final class Decidir {
 	 * 
 	 * @param payment
 	 *            {@link PaymentPciCardRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
