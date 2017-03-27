@@ -58,9 +58,9 @@ public class RefundsService {
         }
     }
 
-    public DecidirResponse<RefundPaymentResponse> cancelRefund(Long paymentId, Long refundId) {
+    public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId) {
         try {
-            Response<RefundPaymentResponse> response = this.refundApi.cancelRefund(paymentId, refundId).execute();
+            Response<AnnulRefundResponse> response = this.refundApi.cancelRefund(paymentId, refundId).execute();
             if (response.isSuccessful()) {
                 return refundConverter.convert(response, response.body());
             } else {

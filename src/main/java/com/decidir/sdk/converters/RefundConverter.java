@@ -1,5 +1,6 @@
 package com.decidir.sdk.converters;
 
+import com.decidir.sdk.dto.AnnulRefundResponse;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.RefundPaymentResponse;
@@ -14,6 +15,14 @@ public class RefundConverter {
         DecidirResponse<RefundPaymentResponse> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(refundPayment);
+        dResponse.setMessage(response.message());
+        return dResponse;
+    }
+
+    public DecidirResponse<AnnulRefundResponse> convert(Response<AnnulRefundResponse> response, AnnulRefundResponse annulRefund) {
+        DecidirResponse<AnnulRefundResponse> dResponse = new DecidirResponse();
+        dResponse.setStatus(response.code());
+        dResponse.setResult(annulRefund);
         dResponse.setMessage(response.message());
         return dResponse;
     }
