@@ -1,17 +1,7 @@
 package com.decidir.sdk;
 
 import com.decidir.sdk.configuration.DecidirConfiguration;
-import com.decidir.sdk.dto.CardTokens;
-import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.Payment;
-import com.decidir.sdk.dto.PaymentNoPciRequest;
-import com.decidir.sdk.dto.PaymentPciCardRequest;
-import com.decidir.sdk.dto.PaymentPciTokenRequest;
-import com.decidir.sdk.dto.PaymentResponse;
-import com.decidir.sdk.dto.RefundPayment;
-import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
-import com.decidir.sdk.dto.RefundPaymentResponse;
+import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.CardTokenApi;
@@ -62,7 +52,7 @@ public final class Decidir {
 	 * 
 	 * @param payment
 	 *            {@link PaymentNoPciRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
@@ -76,7 +66,7 @@ public final class Decidir {
 	 * 
 	 * @param payment
 	 *            {@link PaymentPciCardRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
@@ -90,7 +80,7 @@ public final class Decidir {
 	 * 
 	 * @param payment
 	 *            {@link PaymentPciTokenRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link payment}
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
 	 * @throws DecidirException
@@ -105,13 +95,13 @@ public final class Decidir {
 	 * @param offset (optional) index of the first payment to be shown in the list
 	 * @param pageSize	(optional) size of the list to retrieve
 	 * @param siteOperationId (optional) to list only payments with this site transaction id 
-	 * @param merchantId (optional) to list only payments of this merchant
+	 * @param siteId (optional) to list only payments of this siteId
 	 * @return a {@link DecidirResponse} with the {@link Page} of payments
 	 * @throws DecidirException when an error ocurrs
 	 */
 	public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId,
-			String merchantId) throws DecidirException {
-		return paymentsService.getPayments(offset, pageSize, siteOperationId, merchantId);
+			String siteId) throws DecidirException {
+		return paymentsService.getPayments(offset, pageSize, siteOperationId, siteId);
 	}
 
 	/**
@@ -124,16 +114,36 @@ public final class Decidir {
 		return paymentsService.getPayment(paymentId);
 	}
 
+	/**
+	 *
+	 * @param paymentId
+	 * @return
+	 * @throws DecidirException when an error ocurrs
+	 */
 	public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) throws DecidirException {
 		return refundsService.getRefunds(paymentId);
 	}
 
+	/**
+	 *
+	 * @param paymentId
+	 * @param refundPayment
+	 * @return
+	 * @throws DecidirException when an error ocurrs
+	 */
 	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment)
 			throws DecidirException {
 		return refundsService.refundPayment(paymentId, refundPayment);
 	}
 
-	public DecidirResponse<RefundPaymentResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
+	/**
+	 *
+	 * @param paymentId
+	 * @param refundId
+	 * @return
+	 * @throws DecidirException when an error ocurrs
+	 */
+	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
 		return refundsService.cancelRefund(paymentId, refundId);
 	}
 

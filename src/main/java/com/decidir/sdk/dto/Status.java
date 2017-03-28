@@ -25,7 +25,7 @@ public enum Status {
     GROUP_ANNULLED,
     UNDEFINED;
 
-    private static Map<String, Status> statusMap = new HashMap<>(8);
+    private static Map<String, Status> statusMap = new HashMap<>(13);
     static {
         statusMap.put("approved", APPROVED);
         statusMap.put("pre_approved", PRE_APPROVED);

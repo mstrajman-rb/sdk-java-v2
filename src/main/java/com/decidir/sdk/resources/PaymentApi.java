@@ -21,7 +21,7 @@ public interface PaymentApi {
   Call<Page> getPayments(@Query("offset") Integer offset,
                          @Query("pageSize") Integer pageSize,
                          @Query("siteOperationId") String siteOperationId,
-                         @Query("merchantId") String merchantId);
+                         @Query("siteId") String merchantId);
 
   @GET("payments/{paymentId}")
   Call<PaymentResponse> getPayment(@Path("paymentId") Long id);

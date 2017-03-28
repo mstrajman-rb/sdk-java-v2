@@ -1,5 +1,6 @@
 package com.decidir.sdk.resources;
 
+import com.decidir.sdk.dto.AnnulRefundResponse;
 import com.decidir.sdk.dto.RefundPayment;
 import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.RefundPaymentResponse;
@@ -18,6 +19,6 @@ public interface RefundApi {
     Call<RefundPaymentResponse> refundPayment(@Path("paymentId") Long paymentId, @Body RefundPayment refundPayment);
 
     @DELETE("payments/{paymentId}/refunds/{refundId}")
-    Call<RefundPaymentResponse> cancelRefund(@Path("paymentId") Long paymentId, @Path("refundId") Long refundId);
+    Call<AnnulRefundResponse> cancelRefund(@Path("paymentId") Long paymentId, @Path("refundId") Long refundId);
 
 }
