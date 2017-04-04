@@ -5,8 +5,8 @@ import com.decidir.sdk.dto.*
 
 class RefundServiceTests extends Specification {
 
-  public static final String secretAccessToken = '00111115'//'4cf891e492384cdeadf211564aa87007'
-  public static final String apiUrl = "http://172.16.21.13:9002"
+  public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+  public static final String apiUrl = "http://localhost:9002"
 
   def decidir
 
@@ -18,9 +18,10 @@ class RefundServiceTests extends Specification {
     setup:
     def paymentId = 2173
     def refundPayment = new RefundPayment()
+    def user = "ccopello"
 
     when:
-    def result = decidir.refundPayment(paymentId, refundPayment)
+    def result = decidir.refundPayment(paymentId, refundPayment, user)
 
     then:
     result.status == 200
@@ -31,12 +32,13 @@ class RefundServiceTests extends Specification {
 
   def "test payment refunded"() {
     setup:
-    def paymentId = 1383
+    def paymentId = 3247
     def refundPayment = new RefundPayment()
+    def user = "ccopello"
     refundPayment.amount = 3
 
     when:
-    def result = decidir.refundPayment(paymentId, refundPayment)
+    def result = decidir.refundPayment(paymentId, refundPayment, user)
 
     then:
     result.status == 200
@@ -49,9 +51,10 @@ class RefundServiceTests extends Specification {
     setup:
     def paymentId = 1383
     def refundId = 201
+    def user = "ccopello"
 
     when:
-    def result = decidir.cancelRefund(paymentId, refundId)
+    def result = decidir.cancelRefund(paymentId, refundId, user)
 
     then:
     result.status == 200

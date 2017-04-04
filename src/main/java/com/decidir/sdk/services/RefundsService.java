@@ -44,9 +44,9 @@ public class RefundsService {
         }
     }
 
-    public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment) {
+    public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment, String user) {
         try {
-            Response<RefundPaymentResponse> response = this.refundApi.refundPayment(paymentId, refundPayment).execute();
+            Response<RefundPaymentResponse> response = this.refundApi.refundPayment(user, paymentId, refundPayment).execute();
             if (response.isSuccessful()) {
                 return refundConverter.convert(response, response.body());
             } else {
@@ -58,9 +58,9 @@ public class RefundsService {
         }
     }
 
-    public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId) {
+    public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) {
         try {
-            Response<AnnulRefundResponse> response = this.refundApi.cancelRefund(paymentId, refundId).execute();
+            Response<AnnulRefundResponse> response = this.refundApi.cancelRefund(user, paymentId, refundId).execute();
             if (response.isSuccessful()) {
                 return refundConverter.convert(response, response.body());
             } else {

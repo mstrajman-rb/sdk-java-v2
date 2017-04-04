@@ -34,9 +34,9 @@ public class PaymentConfirmService {
         return new PaymentConfirmService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount) {
+    public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount, String user) {
         try {
-            Response<PaymentResponse> response = this.paymentApi.paymentConfirm(paymentId, new ConfirmPaymentAmount(amount)).execute();
+            Response<PaymentResponse> response = this.paymentApi.paymentConfirm(user, paymentId, new ConfirmPaymentAmount(amount)).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
             } else {

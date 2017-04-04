@@ -131,9 +131,9 @@ public final class Decidir {
 	 * @return
 	 * @throws DecidirException when an error ocurrs
 	 */
-	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment)
+	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment, String user)
 			throws DecidirException {
-		return refundsService.refundPayment(paymentId, refundPayment);
+		return refundsService.refundPayment(paymentId, refundPayment, user);
 	}
 
 	/**
@@ -143,8 +143,8 @@ public final class Decidir {
 	 * @return
 	 * @throws DecidirException when an error ocurrs
 	 */
-	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId) throws DecidirException {
-		return refundsService.cancelRefund(paymentId, refundId);
+	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) throws DecidirException {
+		return refundsService.cancelRefund(paymentId, refundId, user);
 	}
 
 	/**
@@ -189,9 +189,9 @@ public final class Decidir {
 	 * @return @return a {@link DecidirResponse} when success
 	 * @throws DecidirException when an error ocurrs 
 	 */
-	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, Long amount)
+	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, Long amount, String user)
 			throws DecidirException {
-		return paymentConfirmService.paymentConfirm(paymentId, amount);
+		return paymentConfirmService.paymentConfirm(paymentId, amount, user);
 	}
 
 }

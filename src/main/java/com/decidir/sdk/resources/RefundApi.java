@@ -16,9 +16,9 @@ public interface RefundApi {
     Call<RefundPaymentHistoryResponse> getRefunds(@Path("paymentId") Long paymentId);
 
     @POST("payments/{paymentId}/refunds")
-    Call<RefundPaymentResponse> refundPayment(@Path("paymentId") Long paymentId, @Body RefundPayment refundPayment);
+    Call<RefundPaymentResponse> refundPayment(@Header("User") String user,@Path("paymentId") Long paymentId, @Body RefundPayment refundPayment);
 
     @DELETE("payments/{paymentId}/refunds/{refundId}")
-    Call<AnnulRefundResponse> cancelRefund(@Path("paymentId") Long paymentId, @Path("refundId") Long refundId);
+    Call<AnnulRefundResponse> cancelRefund(@Header("User") String user, @Path("paymentId") Long paymentId, @Path("refundId") Long refundId);
 
 }
