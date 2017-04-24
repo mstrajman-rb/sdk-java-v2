@@ -1,0 +1,7 @@
+com.decidir.sdk
+com.decidir.sdk.configuration
+com.decidir.sdk.converters
+com.decidir.sdk.dto
+com.decidir.sdk.exceptions
+com.decidir.sdk.resources
+com.decidir.sdk.services
