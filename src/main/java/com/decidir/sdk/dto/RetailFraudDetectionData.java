@@ -5,7 +5,6 @@ package com.decidir.sdk.dto;
  */
 public class RetailFraudDetectionData extends FraudDetectionDataRequest {
 
-
 	private RetailTransactionData retail_transaction_data;
 
 	public RetailTransactionData getRetail_transaction_data() {

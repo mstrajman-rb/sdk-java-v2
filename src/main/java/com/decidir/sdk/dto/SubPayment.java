@@ -2,6 +2,21 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 
+/**
+ * Represents a subpayment.
+ * <br>
+ * <br>
+ * <strong>Usage example</strong>
+ * <pre>
+ * {@code ...
+ * SubPayment subPayment = new SubPayment();
+ * subPayment.setSite_id("0000001");
+ * subPayment.setInstallments(1);
+ * subPayment.setAmount(23250L);//Amount in cents: $232.50 
+ * ...
+ * }
+ * </pre>
+ */
 public class SubPayment implements Serializable {
 
   private String site_id;
