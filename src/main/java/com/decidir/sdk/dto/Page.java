@@ -8,7 +8,7 @@ public final class Page implements Serializable {
 
   private Integer limit;
   private Integer offset;
-  private ArrayList<Payment> results;
+  private ArrayList<PaymentResponse> results;
   private Boolean hasMore;
 
   public Integer getLimit() {
@@ -27,11 +27,11 @@ public final class Page implements Serializable {
     this.offset = offset;
   }
 
-  public ArrayList<Payment> getResults() {
+  public ArrayList<PaymentResponse> getResults() {
     return results;
   }
 
-  public void setResults(ArrayList<Payment> results) {
+  public void setResults(ArrayList<PaymentResponse> results) {
     this.results = results;
   }
 

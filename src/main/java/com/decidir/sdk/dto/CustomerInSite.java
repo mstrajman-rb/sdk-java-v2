@@ -12,6 +12,8 @@ public class CustomerInSite implements Serializable{
     private String password;
     private Integer num_of_transactions;
     private String cellphone_number;
+    private String date_of_birth;
+    private String street;
 
     public Integer getDays_in_site() {
         return days_in_site;
@@ -52,4 +54,20 @@ public class CustomerInSite implements Serializable{
     public void setCellphone_number(String cellphone_number) {
         this.cellphone_number = cellphone_number;
     }
+
+	public String getDate_of_birth() {
+		return date_of_birth;
+	}
+
+	public void setDate_of_birth(String date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
 }

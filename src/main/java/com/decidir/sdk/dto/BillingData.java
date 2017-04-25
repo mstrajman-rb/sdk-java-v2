@@ -18,7 +18,6 @@ public class BillingData implements Serializable{
     private String state;
     private String street1;
     private String street2;
-    private String ip_address;
 
     public String getCity() {
         return city;
@@ -108,11 +107,4 @@ public class BillingData implements Serializable{
         this.street2 = street2;
     }
 
-    public String getIp_address() {
-        return ip_address;
-    }
-
-    public void setIp_address(String ip_address) {
-        this.ip_address = ip_address;
-    }
 }

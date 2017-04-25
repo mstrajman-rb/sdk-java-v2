@@ -2,225 +2,191 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public final class Payment implements Serializable {
+/**
+ * Payment DTO used to communicate with Decidir's Payment Service
+ */
+public abstract class Payment implements Serializable {
 
-  private Long id = 0L;
-  private String token;
-  private String date;
-  private String date_created;
-  private String date_approved;
-  private String date_last_updated;
-  private User collector;
-  private String operation_type;
-  private User payer;
-  private Boolean binary_mode;
-  private Boolean live_mode;
-  private String description;
-  private Currency currency;
-  private Long amount;
-  private Status status;
-  private CardError status_details;
-  private int installments;
-  private String site_transaction_id;
-  private String bin;
-  private Card card_brand;
-  private String payment_type; //single / distributed% / distributed$
-  private String merchant_id;
-  private List<SubPayment> sub_payments;
-  private FraudDetectionData fraud_detection;
+	private Long id = 0L;
+	private String user_id;
+	private User collector;
+	private String operation_type;
+	private User payer;
+	private Boolean binary_mode;
+	private Boolean live_mode;
+	private Currency currency;
+	private Long amount;
+	private int installments;
+	private String site_transaction_id;
+	private String bin;
+	private Integer payment_method_id;
+	private PaymentType payment_type; // single / distributed% / distributed$
+	private String site_id;
+	private List<SubPayment> sub_payments;
+	private FraudDetectionData fraud_detection;
+	private String plan_id;
+	private Aggregator aggregate_data;
+	private String establishment_name;
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public String getToken() {
-    return token;
-  }
+	public String getUser_id() {
+		return user_id;
+	}
 
-  public void setToken(String token) {
-    this.token = token;
-  }
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
-  public String getDate() {
-    return date;
-  }
+	public User getCollector() {
+		return collector;
+	}
 
-  public void setDate(String date) {
-    this.date = date;
-  }
+	public void setCollector(User collector) {
+		this.collector = collector;
+	}
 
-  public String getDate_created() {
-    return date_created;
-  }
+	public String getOperation_type() {
+		return operation_type;
+	}
 
-  public void setDate_created(String date_created) {
-    this.date_created = date_created;
-  }
+	public void setOperation_type(String operation_type) {
+		this.operation_type = operation_type;
+	}
 
-  public String getDate_approved() {
-    return date_approved;
-  }
+	public User getPayer() {
+		return payer;
+	}
 
-  public void setDate_approved(String date_approved) {
-    this.date_approved = date_approved;
-  }
+	public void setPayer(User payer) {
+		this.payer = payer;
+	}
 
-  public String getDate_last_updated() {
-    return date_last_updated;
-  }
+	public Boolean getBinary_mode() {
+		return binary_mode;
+	}
 
-  public void setDate_last_updated(String date_last_updated) {
-    this.date_last_updated = date_last_updated;
-  }
+	public void setBinary_mode(Boolean binary_mode) {
+		this.binary_mode = binary_mode;
+	}
 
-  public User getCollector() {
-    return collector;
-  }
+	public Boolean getLive_mode() {
+		return live_mode;
+	}
 
-  public void setCollector(User collector) {
-    this.collector = collector;
-  }
+	public void setLive_mode(Boolean live_mode) {
+		this.live_mode = live_mode;
+	}
 
-  public String getOperation_type() {
-    return operation_type;
-  }
+	public Currency getCurrency() {
+		return currency;
+	}
 
-  public void setOperation_type(String operation_type) {
-    this.operation_type = operation_type;
-  }
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
 
-  public User getPayer() {
-    return payer;
-  }
+	public Long getAmount() {
+		return amount;
+	}
 
-  public void setPayer(User payer) {
-    this.payer = payer;
-  }
+	public void setAmount(Long amount) {
+		this.amount = amount;
+	}
 
-  public Boolean getBinary_mode() {
-    return binary_mode;
-  }
+	public int getInstallments() {
+		return installments;
+	}
 
-  public void setBinary_mode(Boolean binary_mode) {
-    this.binary_mode = binary_mode;
-  }
+	public void setInstallments(int installments) {
+		this.installments = installments;
+	}
 
-  public Boolean getLive_mode() {
-    return live_mode;
-  }
+	public PaymentType getPayment_type() {
+		return payment_type;
+	}
 
-  public void setLive_mode(Boolean live_mode) {
-    this.live_mode = live_mode;
-  }
+	public void setPayment_type(PaymentType payment_type) {
+		this.payment_type = payment_type;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public List<SubPayment> getSub_payments() {
+		return sub_payments;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public void setSub_payments(List<SubPayment> sub_payments) {
+		this.sub_payments = sub_payments;
+	}
 
-  public Currency getCurrency() {
-    return currency;
-  }
+	public String getSite_transaction_id() {
+		return site_transaction_id;
+	}
 
-  public void setCurrency(Currency currency) {
-    this.currency = currency;
-  }
+	public void setSite_transaction_id(String site_transaction_id) {
+		this.site_transaction_id = site_transaction_id;
+	}
 
-  public Long getAmount() {
-    return amount;
-  }
+	public String getBin() {
+		return bin;
+	}
 
-  public void setAmount(Long amount) {
-    this.amount = amount;
-  }
+	public void setBin(String bin) {
+		this.bin = bin;
+	}
 
-  public Status getStatus() {
-    return status;
-  }
+	public Integer getPayment_method_id() {
+		return payment_method_id;
+	}
 
-  public void setStatus(Status status) {
-    this.status = status;
-  }
+	public void setPayment_method_id(Integer payment_method_id) {
+		this.payment_method_id = payment_method_id;
+	}
 
-  public CardError getStatus_details() {
-    return status_details;
-  }
+	public String getSite_id() {
+		return site_id;
+	}
 
-  public void setStatus_details(CardError status_details) {
-    this.status_details = status_details;
-  }
+	public void setSite_id(String site_id) {
+		this.site_id = site_id;
+	}
 
-  public int getInstallments() {
-    return installments;
-  }
+	public FraudDetectionData getFraud_detection() {
+		return fraud_detection;
+	}
 
-  public void setInstallments(int installments) {
-    this.installments = installments;
-  }
+	public void setFraud_detection(FraudDetectionData fraud_detection) {
+		this.fraud_detection = fraud_detection;
+	}
 
-  public String getPayment_type() {
-    return payment_type;
-  }
+	public String getPlan_id() {
+		return plan_id;
+	}
 
-  public void setPayment_type(String payment_type) {
-    this.payment_type = payment_type;
-  }
+	public void setPlan_id(String plan_id) {
+		this.plan_id = plan_id;
+	}
 
-  public List<SubPayment> getSub_payments() {
-    return sub_payments;
-  }
+	public Aggregator getAggregate_data() {
+		return aggregate_data;
+	}
 
-  public void setSub_payments(List<SubPayment> sub_payments) {
-    this.sub_payments = sub_payments;
-  }
+	public void setAggregate_data(Aggregator aggregate_data) {
+		this.aggregate_data = aggregate_data;
+	}
 
-  public String getSite_transaction_id() {
-    return site_transaction_id;
-  }
+	public String getEstablishment_name() {
+		return establishment_name;
+	}
 
-  public void setSite_transaction_id(String site_transaction_id) {
-    this.site_transaction_id = site_transaction_id;
-  }
+	public void setEstablishment_name(String establishment_name) {
+		this.establishment_name = establishment_name;
+	}
 
-  public String getBin() {
-    return bin;
-  }
-
-  public void setBin(String bin) {
-    this.bin = bin;
-  }
-
-  public Card getCard_brand() {
-    return card_brand;
-  }
-
-  public void setCard_brand(Card card_brand) {
-    this.card_brand = card_brand;
-  }
-
-  public String getMerchant_id() {
-    return merchant_id;
-  }
-
-  public void setMerchant_id(String merchant_id) {
-    this.merchant_id = merchant_id;
-  }
-
-  public FraudDetectionData getFraud_detection() {
-    return fraud_detection;
-  }
-
-  public void setFraud_detection(FraudDetectionData fraud_detection) {
-    this.fraud_detection = fraud_detection;
-  }
 }

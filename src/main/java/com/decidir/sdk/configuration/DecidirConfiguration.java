@@ -1,19 +1,19 @@
 package com.decidir.sdk.configuration;
 
-import com.decidir.sdk.resources.PaymentApi;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by biandra on 06/07/16.
  */
 public class DecidirConfiguration {
 
-    static private final String version = "0.1.4";
+    static private final String version = "0.1.6";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
     public static final String USER_AGENT = "User-Agent";
@@ -21,8 +21,10 @@ public class DecidirConfiguration {
     public static final String APIKEY = "apikey";
 
 
-    public static PaymentApi initRetrofit(final String secretAccessToken, final String apiUrl) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    public static <T> T initRetrofit(final String secretAccessToken, final String apiUrl, final Integer timeOut, final Class<T> serviceClass) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .readTimeout(timeOut, TimeUnit.SECONDS)
+                .connectTimeout(timeOut, TimeUnit.SECONDS);
 
         httpClient.networkInterceptors().add(new Interceptor() {
 
@@ -32,6 +34,8 @@ public class DecidirConfiguration {
                 Request request = chain.request().newBuilder()
                         .header(CACHE_CONTROL, MAX_AGE_0)
                         .header(APIKEY, secretAccessToken)
+                        .header("X-Consumer-Username", secretAccessToken+"_private")
+                        //.header("X-Consumer-Username", secretAccessToken+"_pci")
                         .header(USER_AGENT, getUserAgent())
                         .build();
 
@@ -45,7 +49,7 @@ public class DecidirConfiguration {
                 .client(httpClient.build())
                 .build();
 
-        return retrofit.create(com.decidir.sdk.resources.PaymentApi.class);
+        return retrofit.create(serviceClass);
     }
 
     static private String getUserAgent() {
