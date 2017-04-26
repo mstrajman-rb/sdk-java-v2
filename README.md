@@ -468,7 +468,7 @@ try {
 
 ## Integración con Cybersource
 
-Para utilizar el Servicio de Control de Fraude Cybersource, deben enviarse datos adicionales sobre la operación de compra que se quiere realizar.
+Para utilizar el Servicio de Control de Fraude Cybersource, en la operación SendAuthorizeRequest, deben enviarse datos adicionales sobre la operación de compra que se quiere realizar.
 Se han definido cinco verticales de negocio que requieren parámetros específicos, así como también parámetros comunes a todas las verticales.
 
 [<sub>Volver a inicio</sub>](#inicio)
@@ -479,24 +479,201 @@ Se han definido cinco verticales de negocio que requieren parámetros específic
 
 Los parámetros comunes a todas las verticales deben enviarse junto con los datos específicos de cada uno. A continuación, describiremos los párametros comúnes que se deberan agregar a los datos de cada vertical al momento de instanciar la clase correspondiente.
 
+1.  **bill_to**
+```java
+// ...codigo...
+BillingData billTo = new BillingData();
+billTo.setCity("Buenos Aires"); //Ciudad de facturación, MANDATORIO.
+billTo.setCountry("AR"); //País de facturación. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)
+billTo.setCustomer_id("usuario_cliente");//Identificador del usuario al que se le emite la factura. MANDATORIO. No puede contener un correo electrónico.
+billTo.setEmail("usuario@email.com.ar");//Mail del usuario al que se le emite la factura. MANDATORIO.
+billTo.setFirst_name("Usuario"); //Nombre del usuario al que se le emite la factura. MANDATORIO.
+billTo.setLast_name("Prueba");//Apellido del usuario al que se le emite la factura. MANDATORIO.
+billTo.setPhone_number("54116763329");//Teléfono del usuario al que se le emite la factura. No utilizar guiones, puntos o espacios. Incluir código de país. MANDATORIO.
+billTo.setPostal_code("1414");//Código Postal de la dirección de facturación. MANDATORIO.
+billTo.setState("C");//Provincia de la dirección de facturación. MANDATORIO. Ver tabla anexa de provincias.
+billTo.setStreet1("THAMES 677");//Domicilio de facturación (calle y nro). MANDATORIO.
+billTo.setStreet2("4to F");//Complemento del domicilio. (piso, departamento). OPCIONAL.
+fraudDetectionData.setBill_to(billTo); //Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
+// ...codigo...
+```
+2.  **purchase_totals**
+```java
+// ...codigo...
+PurchaseTotals purchaseTotals = new PurchaseTotals();
+purchaseTotals.setCurrency(Currency.ARS); //com.decidir.sdk.dto.Currency. MANDATORIO.
+purchaseTotals.setAmount(34900);//Monto en centavos. MANDATORIO.
+fraudDetectionData.setPurchase_totals(purchaseTotals); //Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
+// ...codigo...
+```
+
+3. **customer_in_site**
+```java
+// ...codigo...
+CustomerInSite customerInSite = new CustomerInSite();
+customerInSite.setDays_in_site(243);
+customerInSite.setIs_guest(Boolean.FALSE);
+customerInSite.setPassword("abracadabra");
+customerInSite.setNum_of_transactions(1);
+customerInSite.setCellphone_number("1546763329");
+fraudDetectionData.setCustomer_in_site(customerInSite); //Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
+// ...codigo...
+```
+4.  **copy_paste_card_data**
+```java
+// ...codigo...
+CopyPasteCardData copyPasteCardData = new CopyPasteCardData();
+copyPasteCardData.setCard_number("4485357336447131");
+copyPasteCardData.setSecurity_code("123");
+fraudDetectionData.setCopy_paste_card_data(copyPasteCardData);//Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
+// ...codigo...
+```
+5.  _**Otros campos**_
+```java
+// ...codigo...
+fraudDetectionData.setChannel(Channel.WEB);
+fraudDetectionData.setDispatch_method(''domicilio'');//{domicilio, click and collect, courrier}
+fraudDetectionData.setSend_to_cs(Boolean.true);// true o false
+fraudDetectionData.setDevice_unique_id("fingerprint-del-cliente");//Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
+// ...codigo...
+```
+
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="retail"></a>
 
 ### Retail
+Se enviá un `RetailFraudDetectionData` con los [parámetros comunes](#parametros-comunes) y con los siguientes parámetros que se deben enviar específicamente para la vertical Retail. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
 
-Los siguientes parámetros se deben enviar específicamente para la vertical Retail. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
+```java
+// ...codigo...
+RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//seteo de parámetros comunes
+// ...codigo...
+RetailTransactionData retailTransactionData = new RetailTransactionData();//Datos para la vertical Retail
+//Datos de envio
+ShippingData shipTo = new ShippingData(); 
+shipTo.setCity("Buenos Aires"); //Ciudad de envío, MANDATORIO.
+shipTo.setCountry("AR"); //País de envío. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)
+shipTo.setEmail("usuario@email.com.ar");//Mail del destinatario. MANDATORIO.
+shipTo.setFirst_name("Usuario"); //Nombre del destinatario. MANDATORIO.
+shipTo.setLast_name("Prueba");//Apellido del destinatario. MANDATORIO.
+shipTo.setPhone_number("54116763329");//Teléfono del destinatario. No utilizar guiones, puntos o espacios. Incluir código de país. MANDATORIO.
+shipTo.setPostal_code("1414");//Código Postal de la dirección de envío. MANDATORIO.
+shipTo.setState("C");//Provincia de la dirección de envío. MANDATORIO. Ver tabla anexa de provincias.
+shipTo.setStreet1("THAMES 677");//Domicilio de envío (calle y nro). MANDATORIO.
+shipTo.setStreet2("4to F");//Complemento del domicilio. (piso, departamento). OPCIONAL.
+retailTransactionData.setShip_to(shipTo);//Datos de envio. MANDATORIO
+retailTransactionData.setDays_to_delivery("2");
+retailTransactionData.setTax_voucher_required(Boolean.TRUE);
+retailTransactionData.setCustomer_loyality_number("123232");
+setCoupon_code("cupon22");
+//Items de compra (Al menos un item)
+Item item = new Item();
+item.setCode("popblacksabbat2016");  //MANDATORIO
+item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
+item.setName("popblacksabbat2016ss");//MANDATORIO
+item.setSku("sku");//MANDATORIO
+item.setTotal_amount(34900);//MANDATORIO
+item.setQuantity(1);//MANDATORIO
+item.setUnit_price(34900);//MANDATORIO
+ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
+retail.setRetail_transaction_data(retailTransactionData);//Datos de vertical Retail. MANDATORIO
+// ...codigo...
+```
 
-:warning: **EN CONSTRUCCION** :warning:
+Para incorporar estos datos en el requerimiento inicial, se debe instanciar un objeto de la clase `RetailFraudDetectionData` de la siguiente manera.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";
+//Para el ambiente de produccion(default) usando api key privada
+Decidir decidir= new Decidir(privateApiKey);
+PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+// Datos del pago
+ // ...codigo...
+ RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//Datos de vertical Retail
+// ...codigo...
+paymentRequest.setFraud_detection(retail);
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="ticketing"></a>
 
 ### Ticketing
 
-Los siguientes parámetros se deben enviar específicamente para la vertical Ticketing. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
+Se enviá un `TicketingTransactionData` con los [parámetros comunes](#parametros-comunes) y con los siguientes parámetros que se deben enviar específicamente para la vertical Ticketing. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
 
-:warning: **EN CONSTRUCCION** :warning:
+```java
+// ...codigo...
+TicketingTransactionData ticketing =  new TicketingTransactionData();
+//seteo de parámetros comunes
+// ...codigo...
+TicketingTransactionData ticketingTransactionData = new TicketingTransactionData();//Datos para la vertical Ticketing
+
+ticketingTransactionData.setDays_to_event(10);   //MANDATORIO
+ticketingTransactionData.setDelivery_type("Pick up");  //MANDATORIO
+//Items de compra (Al menos un item)
+Item item = new Item();
+item.setCode("popblacksabbat2016");  //MANDATORIO
+item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
+item.setName("popblacksabbat2016ss");//MANDATORIO
+item.setSku("sku");//MANDATORIO
+item.setTotal_amount(34900);//MANDATORIO
+item.setQuantity(1);//MANDATORIO
+item.setUnit_price(34900);//MANDATORIO
+ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
+ticketing.setTicketing_transaction_data(ticketingTransactionData);//Datos de vertical Ticketing. MANDATORIO
+// ...codigo...
+```
+
+Para incorporar estos datos en el requerimiento inicial, se debe instanciar un objeto de la clase`TicketingTransactionData`  de la siguiente manera.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";
+//Para el ambiente de produccion(default) usando api key privada
+Decidir decidir= new Decidir(privateApiKey);
+PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+// Datos del pago
+ // ...codigo...
+TicketingTransactionData ticketing =  new TicketingTransactionData();
+//Datos de vertical Ticketing
+// ...codigo...
+paymentRequest.setFraud_detection(ticketing);
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -504,9 +681,60 @@ Los siguientes parámetros se deben enviar específicamente para la vertical Tic
 
 ### Digital Goods
 
-Los siguientes parámetros se deben enviar específicamente para la vertical Digital Goods. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
+Se enviá un `DigitalGoodsFraudDetectionData` con los [parámetros comunes](#parametros-comunes) y con los siguientes parámetros que se deben enviar específicamente para la vertical Digital Goods. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
 
-:warning: **EN CONSTRUCCION** :warning:
+```java
+// ...codigo...
+DigitalGoodsFraudDetectionData digitalGoods =  new DigitalGoodsFraudDetectionData();
+//seteo de parámetros comunes
+// ...codigo...
+DigitalGoodsTransactionData digitalGoodsTransactionData = new DigitalGoodsTransactionData();//Datos para la vertical Digital Goods
+
+digitalGoodsTransactionData.setDelivery_type("Pick up");  //MANDATORIO
+//Items de compra (Al menos un item)
+Item item = new Item();
+item.setCode("popblacksabbat2016");  //MANDATORIO
+item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
+item.setName("popblacksabbat2016ss");//MANDATORIO
+item.setSku("sku");//MANDATORIO
+item.setTotal_amount(34900);//MANDATORIO
+item.setQuantity(1);//MANDATORIO
+item.setUnit_price(34900);//MANDATORIO
+digitalGoodsTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
+digitalGoods.setDigital_goods_transaction_data(digitalGoodsTransactionData);//Datos de vertical Digital Goods. MANDATORIO
+// ...codigo...
+```
+
+Para incorporar estos datos en el requerimiento inicial, se debe instanciar un objeto de la clase`DigitalGoodsFraudDetectionData`  de la siguiente manera.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";
+//Para el ambiente de produccion(default) usando api key privada
+Decidir decidir= new Decidir(privateApiKey);
+PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+// Datos del pago
+ // ...codigo...
+DigitalGoodsFraudDetectionData digitalGoods=  new DigitalGoodsFraudDetectionData();
+//Datos de vertical Digital Goods
+// ...codigo...
+paymentRequest.setFraud_detection(digitalGoods);
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -558,16 +786,12 @@ Los siguientes parámetros se deben enviar específicamente para la vertical Dig
 | 62 | CREDIGUIA |
 | 63 | CABAL PRISMA |
 | 64 | TARJETA SOL |
-| 65 | AMEX MT<sup>2</sup> |
+| 65 | AMEX |
 | 66 | MC DEBIT |
 | 67 | CABAL DEBITO (Cabal24) |
 | 99 | MAESTRO |
 
 1. Visa Debito no acepta devoluciones parciales en ecommerce.
-2. En el caso de AMEX se debe seleccionar solo una de las dos opciones. El uso del IdMediodePago = 65, en lugar del IdMediodePago=6, le permite al comercio operar en su Idsite con Multiples terminales provistas por  American Express, favoreciendo la alta disponibilidad de terminales cuando el volumen de transacciones del medio de pago es importante.ndo el volumen de transacciones del medio de pago es importante.
-
-
-*Para la marca American Express, se deberá optar únicamente por uno de los dos IDs. El uso del ID = 65 le permite al comercio operar con múltiples terminales, favoreciendo la alta disponibilidad cuando el volumen de transacciones del medio de pago es importante. DECIDIR recomienda la utilización del ID = 65.
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -577,8 +801,8 @@ Los siguientes parámetros se deben enviar específicamente para la vertical Dig
 
 | Divisa | Descripción | Código API
 ---------|-------------|--------
-| AR$ | Pesos Argentinos | ARS |
-| U$S | Dólares Americanos | USD | 
+| AR$ | Pesos Argentinos | ARS 
+| U$S | Dólares Americanos | USD 
 
 **NOTA** Si bien la API RESTful de DECIDIR admite compras en Dólares Americanos, la legislación argentina sólo permite transacciones en Pesos Argentinos. Es por esto que DECIDIR recomienda que todas las transacciones se cursen en dicha moneda.
 
