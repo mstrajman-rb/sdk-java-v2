@@ -15,7 +15,7 @@ import com.decidir.sdk.services.RefundsService;
 
 public final class Decidir {
 
-	private static String apiUrl = "https://live.decidir.com/api";
+	private static String apiUrl = "https://live.decidir.com/api/v1";
 	private static Integer timeOut = 20;
 	private PaymentsService paymentsService;
 	private RefundsService refundsService;
@@ -25,7 +25,7 @@ public final class Decidir {
 	/**
 	 * Creates a new instance to communicate with Decidir Api.  
 	 * @param secretAccessToken the provided apikey
-	 * @param apiUrl Decidir Api URL. If URL is not provided, <em><strong>https://api.decidir.com</strong></em> will be used
+	 * @param apiUrl Decidir Api URL. If URL is not provided, <em><strong>https://live.decidir.com/api/v1</strong></em> will be used
 	 * @param timeOut sets the request timeout expressed in seconds, by default sets <strong>20 seconds</strong> if no value is provided. <strong>Must</strong> be greater than 0 (zero)
 	 * @throws IllegalArgumentException if an invalid timeout value is used
 	 * <br>
@@ -36,7 +36,7 @@ public final class Decidir {
 	 * <pre>{@code import com.decidir.sdk.Decidir;
 	 * 
 	 * public class MyClass {
-	 *	Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0", "https://developers.decidir.com/api", 5);
+	 *	Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0", "https://developers.decidir.com/api/v1", 5);
 	 *	...
 	 * }
 	 * </pre>
@@ -47,7 +47,7 @@ public final class Decidir {
 	 * <pre>{@code import com.decidir.sdk.Decidir;
 	 * 
 	 * public class MyClass {
-	 *	Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0", "https://developers.decidir.com/api", null);
+	 *	Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0", "https://developers.decidir.com/api/v1", null);
 	 *	...
 	 * }
 	 * </pre>
@@ -94,7 +94,7 @@ public final class Decidir {
 	}
 	
 	/**
-	 * Creates a new instance to communicate with Decidir Api. Sends requests to <em><strong>production(https://live.decidir.com/api)</strong></em> with 20 seconds timeout   
+	 * Creates a new instance to communicate with Decidir Api. Sends requests to <em><strong>production(https://live.decidir.com/api/v1)</strong></em> with 20 seconds timeout   
 	 * @param secretAccessToken the provided apikey
 	 * <br>
 	 * <br>
@@ -116,7 +116,7 @@ public final class Decidir {
 	}
 
 	/**
-	 * Creates a new instance to communicate with Decidir Api. Sends requests to <em><strong>production(https://api.decidir.com)</strong></em>  
+	 * Creates a new instance to communicate with Decidir Api. Sends requests to <em><strong>production(https://live.decidir.com/api/v1)</strong></em>  
 	 * @param secretAccessToken the provided apikey
 	 * @param timeOut sets the request timeout expressed in seconds, by default sets <strong>20 seconds</strong> if no value is provided. <strong>Must</strong> be greater than 0 (zero)
 	 * @throws IllegalArgumentException if an invalid timeout value is used
