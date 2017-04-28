@@ -7,8 +7,9 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Instalación](#instalacion)
     + [Versiones de Java soportadas](#versionesdejavasoportadas)
   + [Manual de Integración](#manualintegracion)
+  + [Alcance](#scope)
   + [Diagrama de secuencia](#secuencia)
-  + [Ambientes](#test)
+  + [Ambientes](#environments)
   + [Uso](#uso)
     + [Inicializar la clase correspondiente al conector](#initconector)
     + [Operatoria del Gateway](#operatoria)
@@ -47,7 +48,7 @@ import com.decidir.sdk.exceptions.*;
 
 <a name="versionesdejavasoportadas"></a>
 ### Versiones de Java soportadas
-La versi&oacute;n implementada de la SDK, esta testeada para versiones desde Java 1.7
+La versi&oacute;n implementada de la SDK, est&aacute; testeada para versiones desde Java 1.7
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -59,7 +60,7 @@ Se encuentra disponible en Gitbook el **[Manual de Integración Decidir2] (https
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-<a name="secuencia"></a>
+<a name="scope"></a>
 
 ## Alcance
 **SDK-JAVA** provee soporte para su **aplicaci&oacute;n backend**, encargandose de la comunicaci&oacute;n del comercio con la **API Decidir** utilizando su **API Key privada**<sup>1</sup> y el **token de pago** generado por el cliente.
@@ -70,21 +71,28 @@ Para generar el token de pago, la aplicaci&oacute;n cliente realizar&aacute; con
 + [SDK-JavaScript](https://github.com/decidir/SDK-JavaScript.v2)
 
 
-![imagen de configuracion](./docs/img/DiagramaSDKs.png)</br>
+![imagen de sdks](./docs/img/DiagramaSDKs.png)</br>
 
 ---
 <sup>_1 - Las API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar). _</sup>
+
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="secuencia"></a>
 
 ## Diagrama de secuencia
+El flujo de una transacción a través de las SDKs consta de dos pasos, a saber:
 
+1. Se realiza una solicitud de token de pago con la Llave de Acceso pública (public API Key), enviando los datos sensibles de la tarjeta (PAN, mes y año de expiración, código de seguridad, titular, y tipo y número de documento) y obteniéndose como resultado un token que permitirá realizar la transacción posterior.
+
+1. Se ejecuta el pago con la Llave de Acceso privada (private API Key), enviando el token generado en el Paso 1 más el identificador de la transacción a nivel comercio, el monto total, la moneda y la cantidad de cuotas.
+
+A continuación, se presenta un diagrama con el Flujo de un Pago.
 ![imagen de configuracion](./docs/img/FlujoPago.png)</br>
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-<a name="test"></a>
+<a name="environments"></a>
 
 ## Ambientes
 
