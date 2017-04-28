@@ -41,7 +41,7 @@ El flujo de una transacción a través de las **sdks** consta de dos pasos, la *
 + **Generaci&oacute;n de un token de pago.**  Se utiliza alguna de las siguentes **sdks front-end** :
   + [sdk IOS](https://github.com/decidir/SDK-IOS.v2)
   + [sdk Android](https://github.com/decidir/SDK-Android.v2)
-  + [sdk Javascript](https://github.com/decidir/SDK-JavaScript.v2)
+  + [sdk Javascript](https://github.com/decidir/sdk-javascript-v2)
 + **Procesamiento de pago.**  Se utiliza alguna de las siguentes **sdks back-end** :
   + [sdk Java](https://github.com/decidir/SDK-JAVA.v2)
   + [sdk PHP](https://github.com/decidir/SDK-PHP.v2)
@@ -57,7 +57,7 @@ La **sdk Java** provee soporte para su **aplicaci&oacute;n back-end**, encargand
 Para generar el token de pago, la aplicaci&oacute;n cliente realizar&aacute; con **Decidir** a trav&eacute;s de alguna de las siguentes **sdks front-end**:
 + [sdk IOS](https://github.com/decidir/SDK-IOS.v2)
 + [sdk Android](https://github.com/decidir/SDK-Android.v2)
-+ [sdk Javascript](https://github.com/decidir/SDK-JavaScript.v2)
++ [sdk Javascript](https://github.com/decidir/sdk-javascript-v2)
 
 ![imagen de sdks](./docs/img/DiagramaSDKs.png)</br>
 
@@ -84,7 +84,7 @@ A continuación, se presenta un diagrama con el Flujo de un Pago.
 <a name="instalacion"></a>
 ## Instalación
 Se debe descargar la última versión del SDK desde el botón Download ZIP del branch master.
-Una vez descargado y descomprimido, se debe agregar la librería decidir.jar que se encuentra dentro de la carpeta dist, a las librerías del proyecto y en el codigo se debe agregar siguiente using.
+Una vez descargado y descomprimido, se debe agregar la librería `decidir.jar` que se encuentra dentro de la carpeta `./dist/`, a las librerías del proyecto y en el codigo se debe agregar siguiente import.
 
 ```java
 import com.decidir.sdk.Decidir;
@@ -111,7 +111,7 @@ Se encuentra disponible en Gitbook el **[Manual de Integración Decidir2] (https
 
 ## Ambientes
 
-El **sdk Java** permite trabajar con los ambientes de Sandbox y Producc&oacute;n de Decidir.
+La **sdk Java** permite trabajar con los ambientes de Sandbox y Producc&oacute;n de Decidir.
 El ambiente se debe instanciar indicando su URL.
 
 ```java
