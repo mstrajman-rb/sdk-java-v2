@@ -27,13 +27,13 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Parámetros Comunes](#parametros-comunes)
       + [Retail](#retail)
       + [Ticketing](#ticketing)
-      + [Digital Goods](#digital-goods)  
+      + [Digital Goods](#digital-goods)
   + [Tablas de referencia](#tablasreferencia)
     + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
       + [Divisas Aceptadas](#divisasa)
     + [Provincias](#provincias)
-  
-  
+
+
 <a name="instalacion"></a>
 ## Instalación
 Se debe descargar la última versión del SDK desde el botón Download ZIP del branch master.
@@ -61,9 +61,26 @@ Se encuentra disponible en Gitbook el **[Manual de Integración Decidir2] (https
 
 <a name="secuencia"></a>
 
+## Alcance
+**SDK-JAVA** provee soporte para su **aplicaci&oacute;n backend**, encargandose de la comunicaci&oacute;n del comercio con la **API Decidir** utilizando su **API Key privada**<sup>1</sup> y el **token de pago** generado por el cliente.
+
+Para generar el token de pago, la aplicaci&oacute;n cliente realizar&aacute; con **Decidir** a trav&eacute;s de alguna de las siguentes **SDKs FrontEnd**:
++ [SDK-IOS](https://github.com/decidir/SDK-IOS.v2)
++ [SDK-Android](https://github.com/decidir/SDK-Android.v2)
++ [SDK-JavaScript](https://github.com/decidir/SDK-JavaScript.v2)
+
+
+![imagen de configuracion](./docs/img/DiagramaSDKs.png)</br>
+
+---
+<sup>_1 - Las API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar). _</sup>
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="secuencia"></a>
+
 ## Diagrama de secuencia
 
-![imagen de configuracion](https://www.planttext.com/plantuml/img/NP7DJiCm48JlUOfLkAI7149HIN90gaWE4H9K_5shnTuWqyIkrWvIUNhiYhQX5zixdfM_MQDmXk7D4iC5aupsf_GEX1c8XJ8LC66lVX16ZK7TCaQ7os3i30zZZnoimqZMCKuqa0HR_3JHHF9DDGab5LTWJQ-4SgCCHcSsf26Hw8pTryXVv70M_TdFdrEoYhjEYB8iYhJiFcxJ6vddQIclV5ai5cKf5uMydiUGl3uzD8-pCufJniFzDDYHyNABku6qix1YzOsEOBbgOKCxiChHsWVM5eLJHgy3qNlxieIwyKkMGNmEcMNnDCu9mVlo-JnfwyF8mbutzstTFly72rzK-KxTAHxGY_euvIZw1G00)</br>
+![imagen de configuracion](./docs/img/FlujoPago.png)</br>
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -71,7 +88,7 @@ Se encuentra disponible en Gitbook el **[Manual de Integración Decidir2] (https
 
 ## Ambientes
 
-El SDK-Java permite trabajar con todos los ambientes de Decidir.
+El SDK-Java permite trabajar con los ambientes de Sandbox y Producc&oacute;n de Decidir.
 El ambiente se debe instanciar indicando su URL.
 
 ```java
@@ -79,8 +96,8 @@ import com.decidir.sdk.Decidir;
 
 public class MiClase {
 	String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";
-	String urlDesarrollo = "https://developers.decidir.com/api";
-	String urlProduccion = "https://live.decidir.com/api";
+	String urlDesarrollo = "https://developers.decidir.com/api/v1";
+	String urlProduccion = "https://live.decidir.com/api/v1";
 	int timeout = 5;
 	//Para el ambiente de desarrollo
 	Decidir decidirDesa = new Decidir(privateApiKey, urlDesarrollo, timeout);
@@ -99,9 +116,9 @@ public class MiClase {
 
 Instanciación de la clase `Decidir`
 
-La misma recibe como parámetros la pci key o private key provisto por Decidir para el comercio y el ambiente en que se trabajara.
+La misma recibe como parámetros la API Key privada provista por Decidir para el comercio y el ambiente en que se trabajara.
 
-Ambas API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar).
+Las API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar).
 
 ```java
 // ...codigo...
@@ -140,7 +157,7 @@ paymentRequest.setSite_transaction_id("0001234");
 paymentRequest.setUser_id("usuario_cliente");
 paymentRequest.setPayment_method_id(15); //MASTERCARD
 paymentRequest.setBin("53236");
-paymentRequest.setAmount(23250L);//Valor en centavos: $232.50 
+paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
 paymentRequest.setCurrency(Currency.ARS);
 paymentRequest.setInstallments(1);
 paymentRequest.setPayment_type(PaymentType.SINGLE);
@@ -411,7 +428,7 @@ paymentRequest.setSite_transaction_id("0001234");
 paymentRequest.setUser_id("usuario_cliente");
 paymentRequest.setPayment_method_id(15); //MASTERCARD
 paymentRequest.setBin("53236");
-paymentRequest.setAmount(23250L);//Valor en centavos: $232.50 
+paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
 paymentRequest.setCurrency(Currency.ARS);
 paymentRequest.setInstallments(1);
 paymentRequest.setPayment_type(PaymentType.SINGLE);
@@ -552,7 +569,7 @@ RetailFraudDetectionData retail =  new RetailFraudDetectionData();
 // ...codigo...
 RetailTransactionData retailTransactionData = new RetailTransactionData();//Datos para la vertical Retail
 //Datos de envio
-ShippingData shipTo = new ShippingData(); 
+ShippingData shipTo = new ShippingData();
 shipTo.setCity("Buenos Aires"); //Ciudad de envío, MANDATORIO.
 shipTo.setCountry("AR"); //País de envío. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)
 shipTo.setEmail("usuario@email.com.ar");//Mail del destinatario. MANDATORIO.
@@ -801,8 +818,8 @@ try {
 
 | Divisa | Descripción | Código API
 ---------|-------------|--------
-| AR$ | Pesos Argentinos | ARS 
-| U$S | Dólares Americanos | USD 
+| AR$ | Pesos Argentinos | ARS
+| U$S | Dólares Americanos | USD
 
 **NOTA** Si bien la API RESTful de DECIDIR admite compras en Dólares Americanos, la legislación argentina sólo permite transacciones en Pesos Argentinos. Es por esto que DECIDIR recomienda que todas las transacciones se cursen en dicha moneda.
 
@@ -837,7 +854,6 @@ try {
 | Santa Fe | S |
 | Santiago del Estero | G |
 | Tierra del Fuego | V |
-| Tucumán | T | 	
+| Tucumán | T |
 
 [<sub>Volver a inicio</sub>](#inicio)
-
