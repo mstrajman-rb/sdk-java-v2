@@ -4,13 +4,24 @@ apply plugin: 'groovy'
 apply plugin: "maven-publish"
 
 sourceCompatibility = 1.7
-version = '0.1.9-SNAPSHOT'
+version = '1.0.0'
 group = 'com.decidir.api'
 
 jar {
     manifest {
         attributes 'Implementation-Title': 'Java SDK for Decidir', 'Implementation-Version': version
     }
+}
+
+//create a single Jar with all dependencies
+task releaseJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Java SDK for Decidir', 'Implementation-Version': version
+    }
+    archiveName 'decidir.jar'
+    destinationDir project.file('dist')		
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 repositories {
