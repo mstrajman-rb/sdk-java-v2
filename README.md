@@ -38,14 +38,15 @@ Modulo para conexión con gateway de pago DECIDIR2
 El flujo de una transacción a través de las **sdks** consta de dos pasos, la **generaci&oacute;n de un token de pago** por parte del cliente y el **procesamiento de pago** por parte del comercio. Existen sdks espec&iacute;ficas para realizar estas funciones en distintos lenguajes que se detallan a continuaci&oacute;n:
 
 + **Generaci&oacute;n de un token de pago.**  Se utiliza alguna de las siguentes **sdks front-end** :
-  + [sdk IOS](https://github.com/decidir/SDK-IOS.v2)
-  + [sdk Android](https://github.com/decidir/SDK-Android.v2)
+  + [sdk IOS](https://github.com/decidir/sdk-ios-v2)
+  + [sdk Android](https://github.com/decidir/sdk-android-v2)
   + [sdk Javascript](https://github.com/decidir/sdk-javascript-v2)
 + **Procesamiento de pago.**  Se utiliza alguna de las siguentes **sdks back-end** :
-  + [sdk Java](https://github.com/decidir/SDK-JAVA.v2)
-  + [sdk PHP](https://github.com/decidir/SDK-PHP.v2)
-  + [sdk .Net](https://github.com/decidir/SDK-.NET.v2)
-  + [sdk Node](https://github.com/decidir/SDK-.NODE.v2)
+  + [sdk Java](https://github.com/decidir/sdk-java-v2)
+  + [sdk PHP](https://github.com/decidir/sdk-php-v2)
+  + [sdk .Net](https://github.com/decidir/sdk-.net-v2)
+  + [sdk Node](https://github.com/decidir/sdk-node-v2)
+
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -54,8 +55,8 @@ El flujo de una transacción a través de las **sdks** consta de dos pasos, la *
 La **sdk Java** provee soporte para su **aplicaci&oacute;n back-end**, encargandose de la comunicaci&oacute;n del comercio con la **API Decidir** utilizando su **API Key privada**<sup>1</sup> y el **token de pago** generado por el cliente.
 
 Para generar el token de pago, la aplicaci&oacute;n cliente realizar&aacute; con **Decidir** a trav&eacute;s de alguna de las siguentes **sdks front-end**:
-+ [sdk IOS](https://github.com/decidir/SDK-IOS.v2)
-+ [sdk Android](https://github.com/decidir/SDK-Android.v2)
++ [sdk IOS](https://github.com/decidir/sdk-ios-v2)
++ [sdk Android](https://github.com/decidir/sdk-android-v2)
 + [sdk Javascript](https://github.com/decidir/sdk-javascript-v2)
 
 ![imagen de sdks](./docs/img/DiagramaSDKs.png)</br>
@@ -112,7 +113,7 @@ public class MiClase {
 	String urlSandbox = "https://developers.decidir.com/api/v1";
 	String urlProduccion = "https://live.decidir.com/api/v1";
 	int timeout = 10; // 10 segundos de timeout
-	//Para el ambiente de desarrollo
+	//Para el ambiente Sandbox
 	Decidir decidirSandbox = new Decidir(privateApiKey, urlSandbox, timeout);
 	//Para el ambiente de produccion
 	Decidir decidirProd = new Decidir(privateApiKey, urlProduccion, timeout);
@@ -131,7 +132,7 @@ Instanciación de la clase `Decidir`
 
 La misma recibe como parámetros la API Key privada provista por Decidir para el comercio y el ambiente en que se trabajara.
 
-Las API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar).
+La API Key será provista por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar).
 
 A partir de ahora y por el resto de la documentaci&oacute;n, se ejemplificar&aacute; utilizando una APIKey habilitada para operar en el ambiente Sandbox.
 
