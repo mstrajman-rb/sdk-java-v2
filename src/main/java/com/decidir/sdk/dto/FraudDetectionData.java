@@ -1,73 +1,128 @@
 package com.decidir.sdk.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by biandra on 21/06/16.
  */
 public class FraudDetectionData implements Serializable {
 
-    private BillingData bill_to;
-    private PurchaseTotals purchase_totals;
-    private Channel channel;
-    private CustomerInSite customer_in_site;
-    private String device_unique_id;
-    private TicketingTransactionData ticketing_transaction_data;
-    private FDStatus status;
+	private BillingData bill_to;
+	private ShippingData ship_to;
+	private PurchaseTotals purchase_totals;
+	private Channel channel;
+	private String dispatch_method;
+	private CustomerInSite customer_in_site;
+	private CopyPasteCardData copy_paste_card_data;
+	private Boolean send_to_cs;
+	private String device_unique_id;
+	private TicketingTransactionData ticketing_transaction_data;
+	private RetailTransactionData retail_transaction_data;
+	private FDStatus status;
+	private List<Csmdd> csmdds;
 
-    public BillingData getBill_to() {
-        return bill_to;
-    }
+	public BillingData getBill_to() {
+		return bill_to;
+	}
 
-    public void setBill_to(BillingData bill_to) {
-        this.bill_to = bill_to;
-    }
+	public void setBill_to(BillingData bill_to) {
+		this.bill_to = bill_to;
+	}
 
-    public PurchaseTotals getPurchase_totals() {
-        return purchase_totals;
-    }
+	public ShippingData getShip_to() {
+		return ship_to;
+	}
 
-    public void setPurchase_totals(PurchaseTotals purchase_totals) {
-        this.purchase_totals = purchase_totals;
-    }
+	public void setShip_to(ShippingData ship_to) {
+		this.ship_to = ship_to;
+	}
 
-    public Channel getChannel() {
-        return channel;
-    }
+	public PurchaseTotals getPurchase_totals() {
+		return purchase_totals;
+	}
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
+	public void setPurchase_totals(PurchaseTotals purchase_totals) {
+		this.purchase_totals = purchase_totals;
+	}
 
-    public CustomerInSite getCustomer_in_site() {
-        return customer_in_site;
-    }
+	public Channel getChannel() {
+		return channel;
+	}
 
-    public void setCustomer_in_site(CustomerInSite customer_in_site) {
-        this.customer_in_site = customer_in_site;
-    }
+	public void setChannel(Channel channel) {
+		this.channel = channel;
+	}
 
-    public String getDevice_unique_id() {
-        return device_unique_id;
-    }
+	public String getDispatch_method() {
+		return dispatch_method;
+	}
 
-    public void setDevice_unique_id(String device_unique_id) {
-        this.device_unique_id = device_unique_id;
-    }
+	public void setDispatch_method(String dispatch_method) {
+		this.dispatch_method = dispatch_method;
+	}
 
-    public TicketingTransactionData getTicketing_transaction_data() {
-        return ticketing_transaction_data;
-    }
+	public CustomerInSite getCustomer_in_site() {
+		return customer_in_site;
+	}
 
-    public void setTicketing_transaction_data(TicketingTransactionData ticketing_transaction_data) {
-        this.ticketing_transaction_data = ticketing_transaction_data;
-    }
+	public void setCustomer_in_site(CustomerInSite customer_in_site) {
+		this.customer_in_site = customer_in_site;
+	}
 
-    public FDStatus getStatus() {
-        return status;
-    }
+	public CopyPasteCardData getCopy_paste_card_data() {
+		return copy_paste_card_data;
+	}
 
-    public void setStatus(FDStatus status) {
-        this.status = status;
-    }
+	public void setCopy_paste_card_data(CopyPasteCardData copy_paste_card_data) {
+		this.copy_paste_card_data = copy_paste_card_data;
+	}
+
+	public Boolean getSend_to_cs() {
+		return send_to_cs;
+	}
+
+	public void setSend_to_cs(Boolean send_to_cs) {
+		this.send_to_cs = send_to_cs;
+	}
+
+	public String getDevice_unique_id() {
+		return device_unique_id;
+	}
+
+	public void setDevice_unique_id(String device_unique_id) {
+		this.device_unique_id = device_unique_id;
+	}
+
+	public TicketingTransactionData getTicketing_transaction_data() {
+		return ticketing_transaction_data;
+	}
+
+	public void setTicketing_transaction_data(TicketingTransactionData ticketing_transaction_data) {
+		this.ticketing_transaction_data = ticketing_transaction_data;
+	}
+
+	public RetailTransactionData getRetail_transaction_data() {
+		return retail_transaction_data;
+	}
+
+	public void setRetail_transaction_data(RetailTransactionData retail_transaction_data) {
+		this.retail_transaction_data = retail_transaction_data;
+	}
+
+	public FDStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(FDStatus status) {
+		this.status = status;
+	}
+
+	public List<Csmdd> getCsmdds() {
+		return csmdds;
+	}
+
+	public void setCsmdds(List<Csmdd> csmdds) {
+		this.csmdds = csmdds;
+	}
 }
