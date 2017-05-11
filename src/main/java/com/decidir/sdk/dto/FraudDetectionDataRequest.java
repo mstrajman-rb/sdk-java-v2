@@ -7,54 +7,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
  * Generic Fraud Detection Data DTO
  * Created by biandra on 21/06/16.
  */
-//"fraud_detection": {
-//	 "send_to_cs": false,
-// "bill_to": {
-//    "city": "Buenos Aires",
-//    "country": "AR",
-//    "customer_id": "martinid",
-//    "email": "accept@decidir.com.ar",
-//    "first_name": "martin",
-//    "last_name": "paoletta",
-//    "phone_number": "1547766329",
-//    "postal_code": "1427",
-//    "state": "BA",
-//    "street1": "GARCIA DEL RIO 4041",
-//    "ip_address": "190.210.214.252"
-// },
-// "purchase_totals": {
-//    "currency": "ARS",
-//    "amount": 2
-// },
-// "channel": "Web",
-// "customer_in_site": {
-//    "days_in_site": 243,
-//    "is_guest": false,
-//    "password": "abracadabra",
-//    "num_of_transactions": 1,
-//    "cellphone_number": "12121"
-// },
-// "device_unique_id": "devicefingerprintid",
-// "ticketing_transaction_data": {
-//    "days_to_event": 55,
-//    "delivery_type": "Pick up",
-//    "items": [
-//       {
-//          "code": "popblacksabbat2016",
-//          "description": "Popular Black Sabbath 2016",
-//          "name": "popblacksabbat2016ss",
-//          "sku": "asas",
-//          "total_amount": 20,
-//          "quantity": 1,
-//          "unit_price": 20
-//       }
-//    ]
-// }
-//}
 @JsonSubTypes({
     @Type(value = RetailFraudDetectionData.class),
     @Type(value = TicketingFraudDetectionData.class),
-    @Type(value = DigitalGoodsFraudDetectionData.class)})
+    @Type(value = DigitalGoodsFraudDetectionData.class),
+    @Type(value = TravelFraudDetectionData.class)})
 public abstract class FraudDetectionDataRequest implements FraudDetectionData {
 
 	private BillingData bill_to;

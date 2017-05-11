@@ -7,10 +7,16 @@ import com.decidir.sdk.dto.CardTokenData
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.CustomerInSite
+import com.decidir.sdk.dto.DayOfWeekOfFlight
+import com.decidir.sdk.dto.DecisionManagerTravel
 import com.decidir.sdk.dto.FraudDetectionDataResponse
 import com.decidir.sdk.dto.Identification
 import com.decidir.sdk.dto.IdentificationType
 import com.decidir.sdk.dto.Item
+import com.decidir.sdk.dto.JourneyType
+import com.decidir.sdk.dto.Passenger
+import com.decidir.sdk.dto.PassengerStatus
+import com.decidir.sdk.dto.PassengerType
 import com.decidir.sdk.dto.PaymentNoPciRequest
 import com.decidir.sdk.dto.PaymentPciCardRequest
 import com.decidir.sdk.dto.PaymentPciTokenRequest
@@ -19,6 +25,8 @@ import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
 import com.decidir.sdk.dto.TicketingFraudDetectionData
 import com.decidir.sdk.dto.TicketingTransactionData
+import com.decidir.sdk.dto.TravelFraudDetectionData
+import com.decidir.sdk.dto.TravelTransactionData
 import com.decidir.sdk.exceptions.PaymentException
 import com.decidir.sdk.exceptions.ValidateException
 import spock.lang.Specification
@@ -28,7 +36,7 @@ import spock.lang.Specification
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+    public static final String secretAccessToken = '00111117'//'4cf891e492384cdeadf211564aa87007'
     public static final String token = "5cebb741-955b-4b82-a7b8-304f94b63594"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
@@ -42,7 +50,7 @@ class PaymentServiceTests extends Specification {
     def ticketingTransactionData
 
     def setup(){
-        decidir = new Decidir(secretAccessToken, apiUrl, 15)
+        decidir = new Decidir(secretAccessToken, apiUrl, 30)
         billTo = new BillingData()
         billTo.city = "Buenos Aires"
         billTo.country = "AR"
@@ -54,7 +62,6 @@ class PaymentServiceTests extends Specification {
         billTo.postal_code = "1414"
         billTo.state = "BA"
         billTo.street1 = "THAMES 677"
-        billTo.ip_address = "190.210.214.252"
 
         purchaseTotals = new PurchaseTotals()
         purchaseTotals.currency = Currency.ARS
@@ -307,5 +314,77 @@ class PaymentServiceTests extends Specification {
         then:
         payment != null
         payment.result.amount == payments.result.results[0].amount
+    }
+    
+    
+    def "test confirmPayment valid  with vertical Travel"() {
+        setup:
+       
+        def travelTransactionData = new TravelTransactionData()
+		travelTransactionData.reservation_code = "GJH784"
+		travelTransactionData.third_party_booking = false
+		travelTransactionData.departure_city = "EZE"
+		travelTransactionData.final_destination_city = "HND"
+		travelTransactionData.international_flight = true
+		travelTransactionData.frequent_flier_number = "00000123"
+		travelTransactionData.class_of_service = "class" 
+		travelTransactionData.day_of_week_of_flight = DayOfWeekOfFlight.TUESDAY
+		travelTransactionData.week_of_year_of_flight = 5
+		travelTransactionData.airline_code = "AA"
+		travelTransactionData.code_share = "SKYTEAM"
+		
+		def decisionManagerTravel = new DecisionManagerTravel()
+		decisionManagerTravel.complete_route = "EZE-LAX:LAX-HND"
+		decisionManagerTravel.journey_type = JourneyType.ONE_WAY
+		decisionManagerTravel.departure_date_time = new Date()
+		travelTransactionData.decision_manager_travel = decisionManagerTravel
+		
+		
+		def passenger = new Passenger()
+		passenger.email = "juan@mail.com"
+		passenger.first_name = "Juan"
+		passenger.last_name = "Perez"
+		passenger.passport_id = "412314851231"
+		passenger.phone = "541134356768"
+		passenger.passenger_status = PassengerStatus.GOLD
+		passenger.passenger_type = PassengerType.SENIOR_CITIZEN
+		
+		
+        travelTransactionData.passengers = Arrays.asList(passenger)
+        travelTransactionData.airline_number_of_passengers = 5
+        
+        
+        def fraudDetection = new TravelFraudDetectionData()
+        fraudDetection.bill_to = billTo
+        fraudDetection.purchase_totals = purchaseTotals
+        fraudDetection.channel = Channel.WEB
+        fraudDetection.customer_in_site = customerInSite
+        fraudDetection.device_unique_id = "devicefingerprintid"
+        fraudDetection.travel_transaction_data = travelTransactionData
+
+        def payment = new PaymentNoPciRequest()
+        payment.payment_type = PaymentType.SINGLE
+        payment.currency = Currency.ARS
+        payment.amount = 5
+        payment.token = "ac53c3c4-606e-4a0e-a0b4-a72c797c60f0"
+        payment.user_id = user_id
+        payment.installments = 7
+        payment.sub_payments = []
+        payment.site_transaction_id = UUID.randomUUID().toString()
+        payment.bin = "450979"
+        //payment.site_id=
+        payment.payment_method_id = 1
+        payment.fraud_detection = fraudDetection
+
+
+        when:
+        def result = decidir.payment(payment)
+
+        then:
+        result.status == 201
+        result.result.status == Status.APPROVED
+        result.result.fraud_detection.status.decision == "green"
+        result.result.fraud_detection.status.reason_code == "100"
+        result.result.fraud_detection.status.description == "Decision Manager processing"
     }
 }
