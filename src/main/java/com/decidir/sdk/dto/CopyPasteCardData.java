@@ -4,22 +4,22 @@ import java.io.Serializable;
 
 public class CopyPasteCardData implements Serializable {
 
-	private String card_number;
-	private String security_code;
+	private Boolean card_number;
+	private Boolean security_code;
 
-	public String getCard_number() {
+	public Boolean getCard_number() {
 		return card_number;
 	}
 
-	public void setCard_number(String card_number) {
+	public void setCard_number(Boolean card_number) {
 		this.card_number = card_number;
 	}
 
-	public String getSecurity_code() {
+	public Boolean getSecurity_code() {
 		return security_code;
 	}
 
-	public void setSecurity_code(String security_code) {
+	public void setSecurity_code(Boolean security_code) {
 		this.security_code = security_code;
 	}
 }

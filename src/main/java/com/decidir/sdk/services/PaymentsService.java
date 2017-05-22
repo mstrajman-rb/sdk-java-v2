@@ -8,7 +8,7 @@ import com.decidir.sdk.dto.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.Payment;
-import com.decidir.sdk.dto.PaymentNoPciRequest;
+import com.decidir.sdk.dto.PaymentRequest;
 import com.decidir.sdk.dto.PaymentPciCardRequest;
 import com.decidir.sdk.dto.PaymentPciTokenRequest;
 import com.decidir.sdk.dto.PaymentResponse;
@@ -42,7 +42,7 @@ public class PaymentsService {
         return new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<PaymentResponse> paymentNoPci(PaymentNoPciRequest payment) {
+    public DecidirResponse<PaymentResponse> paymentNoPci(PaymentRequest payment) {
         try {
             Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
             return processPaymentResponse(response);

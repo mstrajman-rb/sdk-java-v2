@@ -7,7 +7,7 @@ package com.decidir.sdk.dto;
  * <strong>Usage example</strong>
  * <pre>
  * {@code ...
- * PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+ * PaymentRequest paymentRequest = new PaymentRequest();
  * paymentRequest.setToken("f522e031-90cb-41ed-ba1f-46e813e8e789"); //payment token
  * //common payment data - i.e. see {@link Payment}
  * paymentRequest.setSite_transaction_id("0001234");
@@ -26,7 +26,7 @@ package com.decidir.sdk.dto;
  * }
  * </pre>
  */
-public class PaymentNoPciRequest extends Payment {
+public class PaymentRequest extends Payment {
 
 	private String token;
 

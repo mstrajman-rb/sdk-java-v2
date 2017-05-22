@@ -9,9 +9,12 @@ import java.io.Serializable;
 public class FDStatus implements Serializable {
 
     private String decision;
+    private String request_id;
     private String reason_code;
     private String description;
     private ErrorType details;
+    
+    private Review review;
 
     public String getDecision() {
         return decision;
@@ -21,7 +24,15 @@ public class FDStatus implements Serializable {
         this.decision = decision;
     }
 
-    public String getReason_code() {
+    public String getRequest_id() {
+		return request_id;
+	}
+
+	public void setRequest_id(String request_id) {
+		this.request_id = request_id;
+	}
+
+	public String getReason_code() {
         return reason_code;
     }
 
@@ -44,4 +55,12 @@ public class FDStatus implements Serializable {
     public void setDetails(ErrorType details) {
         this.details = details;
     }
+
+	public Review getReview() {
+		return review;
+	}
+
+	public void setReview(Review review) {
+		this.review = review;
+	}
 }

@@ -1,9 +1,6 @@
 package com.decidir.sdk.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Created by ivalek on 11/06/17.
@@ -12,7 +9,7 @@ public class DecisionManagerTravel implements Serializable {
 
 	private String complete_route;
 	private JourneyType journey_type;
-	private Date departure_date_time;
+	private DepartureDate departure_date;
 	
 	public String getComplete_route() {
 		return complete_route;
@@ -26,11 +23,11 @@ public class DecisionManagerTravel implements Serializable {
 	public void setJourney_type(JourneyType journey_type) {
 		this.journey_type = journey_type;
 	}
-	public Date getDeparture_date_time() {
-		return departure_date_time;
+	public DepartureDate getDeparture_date() {
+		return departure_date;
 	}
-	public void setDeparture_date_time(Date departure_date_time) {
-		this.departure_date_time = departure_date_time;
+	public void setDeparture_date(DepartureDate departure_date) {
+		this.departure_date = departure_date;
 	}
 	
 }

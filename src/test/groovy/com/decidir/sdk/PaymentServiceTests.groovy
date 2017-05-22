@@ -9,6 +9,7 @@ import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.CustomerInSite
 import com.decidir.sdk.dto.DayOfWeekOfFlight
 import com.decidir.sdk.dto.DecisionManagerTravel
+import com.decidir.sdk.dto.DepartureDate
 import com.decidir.sdk.dto.FraudDetectionDataResponse
 import com.decidir.sdk.dto.Identification
 import com.decidir.sdk.dto.IdentificationType
@@ -17,7 +18,7 @@ import com.decidir.sdk.dto.JourneyType
 import com.decidir.sdk.dto.Passenger
 import com.decidir.sdk.dto.PassengerStatus
 import com.decidir.sdk.dto.PassengerType
-import com.decidir.sdk.dto.PaymentNoPciRequest
+import com.decidir.sdk.dto.PaymentRequest
 import com.decidir.sdk.dto.PaymentPciCardRequest
 import com.decidir.sdk.dto.PaymentPciTokenRequest
 import com.decidir.sdk.dto.PaymentType
@@ -30,6 +31,8 @@ import com.decidir.sdk.dto.TravelTransactionData
 import com.decidir.sdk.exceptions.PaymentException
 import com.decidir.sdk.exceptions.ValidateException
 import spock.lang.Specification
+
+import java.time.ZoneOffset
 
 /**
  * Created by biandra on 05/10/16.
@@ -98,7 +101,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new PaymentNoPciRequest()
+        def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -137,7 +140,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new PaymentNoPciRequest()
+        def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -271,7 +274,7 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
-        def payment = new PaymentNoPciRequest()
+        def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -336,8 +339,11 @@ class PaymentServiceTests extends Specification {
 		def decisionManagerTravel = new DecisionManagerTravel()
 		decisionManagerTravel.complete_route = "EZE-LAX:LAX-HND"
 		decisionManagerTravel.journey_type = JourneyType.ONE_WAY
-		decisionManagerTravel.departure_date_time = new Date()
-		travelTransactionData.decision_manager_travel = decisionManagerTravel
+        def departureDate = new DepartureDate()
+		departureDate.departure_time = new Date()
+        departureDate.departure_zone= "GMT-0300"
+        decisionManagerTravel.departure_date = departureDate
+        travelTransactionData.decision_manager_travel = decisionManagerTravel
 		
 		
 		def passenger = new Passenger()
@@ -362,11 +368,11 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.travel_transaction_data = travelTransactionData
 
-        def payment = new PaymentNoPciRequest()
+        def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
-        payment.token = "ac53c3c4-606e-4a0e-a0b4-a72c797c60f0"
+        payment.token = "44b3915c-6135-4da2-9665-a25f0823bb57"
         payment.user_id = user_id
         payment.installments = 7
         payment.sub_payments = []

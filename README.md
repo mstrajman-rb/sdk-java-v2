@@ -13,12 +13,16 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Inicializar la clase correspondiente al conector](#initconector)
   + [Operatoria del Gateway](#operatoria)
     + [Ejecución del Pago](#payment)
+      + [Transacción simple](#single)
+      + [Transacción distribuida](#distributed)
+      + [Operación en dos pasos](#twosteps)
     + [Listado de Pagos](#getallpayments)
     + [Información de un Pago](#getpaymentinfo)
-    + [Anulación / Devolución Total de Pago](#refund)
-    + [Anulación de Devolución Total](#deleterefund)
-    + [Devolución Parcial de un Pago](#partialrefund)
-    + [Anulación de Devolución Parcial](#deletepartialrefund)
+    + [Devoluciones de pagos](#refunds)
+      + [Anulación / Devolución Total de Pago](#totalrefund)
+      + [Anulación de Devolución Total](#deleterefund)
+      + [Devolución Parcial de un Pago](#partialrefund)
+      + [Anulación de Devolución Parcial](#deletepartialrefund)
   + [Tokenización de tarjetas de crédito](#tokenizaciontarjeta)
     + [Listado de tarjetas tokenizadas](#listadotarjetastokenizadas)
     + [Ejecución de pago tokenizado](#pagotokenizado)
@@ -110,8 +114,8 @@ import com.decidir.sdk.Decidir;
 
 public class MiClase {
 	String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-	String urlSandbox = "https://developers.decidir.com/api/v1";
-	String urlProduccion = "https://live.decidir.com/api/v1";
+	String urlSandbox = "https://developers.decidir.com/api/v1/";
+	String urlProduccion = "https://live.decidir.com/api/v1/";
 	int timeout = 10; // 10 segundos de timeout
 	//Para el ambiente Sandbox
 	Decidir decidirSandbox = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -139,7 +143,7 @@ A partir de ahora y por el resto de la documentaci&oacute;n, se ejemplificar&aac
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -158,17 +162,25 @@ Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 Una vez generado y almacenado el token de pago, se deberá ejecutar la solicitud de pago más el token previamente generado.
 Además del token de pago y los parámetros propios de la transacción, el comercio deberá identificar la compra con el site_transaction_id y el user_id.
 
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="single"></a>
+
+#### Transacción simple
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
-PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("ae9fc3e5-ff41-4de2-9c91-81030be1c4a6"); // token de pago
 paymentRequest.setSite_transaction_id("TX00001234"); //ID de transaccion asignada por el comercio, no puede repetirse
 paymentRequest.setUser_id("test");
@@ -177,9 +189,9 @@ paymentRequest.setBin("450799");
 paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
 paymentRequest.setCurrency(Currency.ARS);
 paymentRequest.setInstallments(1);
-paymentRequest.setPayment_type(PaymentType.SINGLE);
-List<SubPayment> sub_payments = new ArrayList<SubPayment>() // Llenar en caso de transaccion distribuida
-paymentRequest.setSub_payments(sub_payments);
+paymentRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+paymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
 
 try {
 	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -200,6 +212,130 @@ try {
 
 [<sub>Volver a inicio</sub>](#inicio)
 
+<a name="distributed"></a>
+
+#### Transacción distribuida
+Existen transacciones distribuidas definidas por monto o por porcentaje. Para indicar los sitios a distribuir, se debe enviar en el campo `sub_payments` cada uno de ellos. En el caso de transacci&oacute;n por monto se indicar&acute;: **Id del sitio receptor, monto a distribuir y la cantidad de cuotas**. Si se distribuye por porcentaje no se debe enviar informacion en `sub_payments` .
+
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n distribuida por monto sin [Cybersource](#cybersource).
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Integer installments = 2;
+Long amount1 = 10000L;
+Long amount2 = 25990L;
+PaymentRequest paymentRequest = new PaymentRequest();
+paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
+paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
+paymentRequest.setUser_id("test");
+paymentRequest.setPayment_method_id(1); //VISA
+paymentRequest.setBin("450979");
+paymentRequest.setAmount(amount1 + amount2);//Suma de los pagos distribuidos
+paymentRequest.setCurrency(Currency.ARS);
+paymentRequest.setInstallments(installments); //Cantidad de cuotas
+
+paymentRequest.setPayment_type(PaymentType.DISTRIBUTED); //Indica transaccion distribuida
+List<SubPayment> subPayments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+SubPayment subPayment1 = new SubPayment(); //Sitio receptor 1 (solo en caso de distribuida por monto)
+subPayment1.setSite_id("00111115"); //Sitio receptor 1 (solo en caso de distribuida por monto)
+subPayment1.setAmount(amount1); //Monto a recibir (solo en caso de distribuida por monto)
+subPayment1.setInstallments(installments); //Cantidad de cuotas (solo en caso de distribuida por monto)
+SubPayment subPayment2 = new SubPayment(); //Sitio receptor 2 (solo en caso de distribuida por monto)
+subPayment2.setSite_id("00111116"); //Sitio receptor 2 (solo en caso de distribuida por monto)
+subPayment2.setAmount(amount2); //Monto a recibir (solo en caso de distribuida por monto)
+subPayment2.setInstallments(installments); //Cantidad de cuotas (solo en caso de distribuida por monto)
+
+subPayments.add(subPayment1);
+subPayments.add(subPayment2);
+paymentRequest.setSub_payments(subPayments); //Se agregan los datos de distribuida
+
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="twosteps"></a>
+
+### Operación en dos pasos
+Una vez generado y almacenado el token de pago, se deberá ejecutar la solicitud de pago más el token previamente generado.
+Si el pago es preaprobado `Status.PRE_APPROVED`, se procederá a realizar la confirmaci&oacute;n del pago enviando **ID de pago, monto y usario aprobador**.
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin Cybersource.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+String privateApiKey = "00111115";//Private API Key habilitada para operar en ambiente Sandbox
+     String urlSandbox = "http://localhost:9002/";
+     int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+     Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+     PaymentRequest paymentRequest = new PaymentRequest();
+     paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
+     paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
+     paymentRequest.setUser_id("test");
+     paymentRequest.setPayment_method_id(1); //VISA
+     paymentRequest.setBin("450979");
+     paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
+     paymentRequest.setCurrency(Currency.ARS);
+     paymentRequest.setInstallments(1);
+     paymentRequest.setPayment_type(PaymentType.SINGLE);
+     List<SubPayment> sub_payments = new ArrayList<SubPayment>(); //Nunca se utiliza en 2 pasos (se envia vacio)
+     paymentRequest.setSub_payments(sub_payments);
+
+     try {
+         DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+
+         PaymentResponse paymentResult = paymentResponse.getResult();
+         // Confirmar pago preaprobado
+         if (Status.PRE_APPROVED.equals(paymentResult.getStatus())) {
+             Long paymentId = paymentResult.getId(); //Obtener id de pago
+             DecidirResponse<PaymentResponse> confirmPayment = decidir.confirmPayment(paymentId, paymentRequest.getAmount(), "usuario_aprobador");
+             paymentResult = confirmPayment.getResult();
+         }
+         // Procesamiento de respuesta de ejecucion de pago
+         // ...codigo...
+     } catch (PaymentException pe) {
+         // Manejo de pago rechazado
+         // ...codigo...
+     } catch (DecidirException de) {
+         // Manejo de excepcion  de Decidir
+         // ...codigo...
+     } catch (Exception e) {
+         //Manejo de excepcion general
+         // ...codigo...
+     }
+ // ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
 <a name="getallpayments"></a>
 
 ### Listado de Pagos
@@ -210,7 +346,7 @@ Este recurso admite la posibilidad de agregar filtros adicionales
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -245,7 +381,7 @@ Mediante este recurso, se genera una solicitud de información de un pago previa
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -267,16 +403,24 @@ try {
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-<a name="refund"></a>
+<a name="refunds"></a>
+### Devoluciones de pagos
 
-### Anulación / Devolución Total de Pago
+A continuaci&oacute;n se describen las diferentes operatorias para realizar anulaciones y devoluciones de pagos
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="totalrefund"></a>
+
+#### Anulación / Devolución Total de Pago
 
 Mediante este recurso, se genera una solicitud de anulación / devolución total de un pago puntual, pasando como parámetro el id del pago y el usuario del cliente.
 
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -300,13 +444,13 @@ try {
 
 <a name="deleterefund"></a>
 
-### Anulación de Devolución Total
+#### Anulación de Devolución Total
 
 Mediante este recurso, se genera una solicitud de anulación de devolución total de un pago puntual, pasando como parámetro el id del pago, el id de la devolución y el usuario del cliente.
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -331,14 +475,14 @@ try {
 
 <a name="partialrefund"></a>
 
-### Devolución Parcial de un Pago
+#### Devolución Parcial de un Pago
 
 Mediante este recurso, se genera una solicitud de devolución parcial de un pago puntual, pasando como parámetro el id del pago, el monto de la devolución y el usuario del cliente.
 
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -367,13 +511,13 @@ try {
 
 <a name="deletepartialrefund"></a>
 
-### Anulación de Devolución Parcial
+#### Anulación de Devolución Parcial
 
 Mediante este recurso, se genera una solicitud de anulación de devolución parcial de un pago puntual, pasando como parámetro el id del pago, el id de la devolución  el usuario del cliente.
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -415,7 +559,7 @@ Este recurso admite la posibilidad de agregar filtros adicionales.
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -453,12 +597,12 @@ Una vez que se obtiene el token a partir de la tarjeta tokenizada, se deberá ej
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
-PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("ae9fc3e5-ff41-4de2-9c91-81030be1c4a6"); // token de pago
 paymentRequest.setSite_transaction_id("0001234");
 paymentRequest.setUser_id("test");
@@ -499,7 +643,7 @@ El servicio da la posibilidad de eliminar un token de tarjeta generadas, esto se
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -556,7 +700,7 @@ fraudDetectionData.setBill_to(billTo); //Subclase de com.decidir.sdk.dto.FraudDe
 // ...codigo...
 PurchaseTotals purchaseTotals = new PurchaseTotals();
 purchaseTotals.setCurrency(Currency.ARS); //com.decidir.sdk.dto.Currency. MANDATORIO.
-purchaseTotals.setAmount(34900);//Monto en centavos. MANDATORIO.
+purchaseTotals.setAmount(34900L);//Monto en centavos. MANDATORIO.
 fraudDetectionData.setPurchase_totals(purchaseTotals); //Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
 // ...codigo...
 ```
@@ -577,8 +721,8 @@ fraudDetectionData.setCustomer_in_site(customerInSite); //Subclase de com.decidi
 ```java
 // ...codigo...
 CopyPasteCardData copyPasteCardData = new CopyPasteCardData();
-copyPasteCardData.setCard_number("4507990000004905");
-copyPasteCardData.setSecurity_code("123");
+copyPasteCardData.setCard_number(Boolean.TRUE);//valor booleano
+copyPasteCardData.setSecurity_code(Boolean.TRUE);//valor booleano
 fraudDetectionData.setCopy_paste_card_data(copyPasteCardData);//Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
 // ...codigo...
 ```
@@ -628,9 +772,9 @@ item.setCode("popblacksabbat2016");  //MANDATORIO
 item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
 item.setName("popblacksabbat2016ss");//MANDATORIO
 item.setSku("sku");//MANDATORIO
-item.setTotal_amount(34900);//MANDATORIO
+item.setTotal_amount(34900L);//MANDATORIO
 item.setQuantity(1);//MANDATORIO
-item.setUnit_price(34900);//MANDATORIO
+item.setUnit_price(34900L);//MANDATORIO
 ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
 retail.setRetail_transaction_data(retailTransactionData);//Datos de vertical Retail. MANDATORIO
 // ...codigo...
@@ -641,11 +785,11 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
-PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+PaymentRequest paymentRequest = new PaymentRequest();
 // Datos del pago
  // ...codigo...
  RetailFraudDetectionData retail =  new RetailFraudDetectionData();
@@ -692,9 +836,9 @@ item.setCode("popblacksabbat2016");  //MANDATORIO
 item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
 item.setName("popblacksabbat2016ss");//MANDATORIO
 item.setSku("sku");//MANDATORIO
-item.setTotal_amount(34900);//MANDATORIO
+item.setTotal_amount(34900L);//MANDATORIO
 item.setQuantity(1);//MANDATORIO
-item.setUnit_price(34900);//MANDATORIO
+item.setUnit_price(34900L);//MANDATORIO
 ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
 ticketing.setTicketing_transaction_data(ticketingTransactionData);//Datos de vertical Ticketing. MANDATORIO
 // ...codigo...
@@ -705,12 +849,12 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
-PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+PaymentRequest paymentRequest = new PaymentRequest();
 // Datos del pago
  // ...codigo...
 TicketingTransactionData ticketing =  new TicketingTransactionData();
@@ -756,9 +900,9 @@ item.setCode("popblacksabbat2016");  //MANDATORIO
 item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
 item.setName("popblacksabbat2016ss");//MANDATORIO
 item.setSku("sku");//MANDATORIO
-item.setTotal_amount(34900);//MANDATORIO
+item.setTotal_amount(34900L);//MANDATORIO
 item.setQuantity(1);//MANDATORIO
-item.setUnit_price(34900);//MANDATORIO
+item.setUnit_price(34900L);//MANDATORIO
 digitalGoodsTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
 digitalGoods.setDigital_goods_transaction_data(digitalGoodsTransactionData);//Datos de vertical Digital Goods. MANDATORIO
 // ...codigo...
@@ -769,12 +913,12 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1";
+String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
-PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
+PaymentRequest paymentRequest = new PaymentRequest();
 // Datos del pago
  // ...codigo...
 DigitalGoodsFraudDetectionData digitalGoods=  new DigitalGoodsFraudDetectionData();

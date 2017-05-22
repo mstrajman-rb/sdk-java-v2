@@ -2,7 +2,7 @@ package com.decidir.sdk.resources;
 
 import com.decidir.sdk.dto.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.PaymentNoPciRequest;
+import com.decidir.sdk.dto.PaymentRequest;
 import com.decidir.sdk.dto.PaymentPciCardRequest;
 import com.decidir.sdk.dto.PaymentPciTokenRequest;
 import com.decidir.sdk.dto.PaymentResponse;
@@ -22,7 +22,7 @@ public interface PaymentApi {
   Call<PaymentResponse> getPayment(@Path("paymentId") Long id);
 
   @POST("payments")
-  Call<PaymentResponse> payNoPci(@Body PaymentNoPciRequest payment);
+  Call<PaymentResponse> payNoPci(@Body PaymentRequest payment);
   
   @POST("payments")
   Call<PaymentResponse> payPciCard(@Body PaymentPciCardRequest payment);

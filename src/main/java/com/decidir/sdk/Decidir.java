@@ -154,7 +154,7 @@ public final class Decidir {
 	 * Executes a new payment using a generated payment token
 	 * 
 	 * @param payment
-	 *            {@link PaymentNoPciRequest} request
+	 *            {@link PaymentRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -166,8 +166,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentNoPciRequest paymentRequest = new PaymentNoPciRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentNoPciRequest}
+	 * PaymentRequest paymentRequest = new PaymentRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentRequest}
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -193,7 +193,7 @@ public final class Decidir {
 	 * @see #getPayments(Integer, Integer, String, String)
 	 * @see #refundPayment(Long, RefundPayment, String)
 	 */
-	public DecidirResponse<PaymentResponse> payment(PaymentNoPciRequest payment) throws PaymentException, DecidirException {
+	public DecidirResponse<PaymentResponse> payment(PaymentRequest payment) throws PaymentException, DecidirException {
 		return paymentsService.paymentNoPci(payment);
 	}
 	/**
@@ -232,7 +232,7 @@ public final class Decidir {
 	 *	...
 	 * }
 	 * </pre>            
-	 * @see #payment(PaymentNoPciRequest)
+	 * @see #payment(PaymentRequest)
 	 * @see #payment(PaymentPciTokenRequest)
 	 * @see #confirmPayment(Long, Long, String)
 	 * @see #getPayment(Long)
@@ -278,7 +278,7 @@ public final class Decidir {
 	 *	...
 	 * }
 	 * </pre>    
-	 * @see #payment(PaymentNoPciRequest)
+	 * @see #payment(PaymentRequest)
 	 * @see #payment(PaymentPciCardRequest)
 	 * @see #confirmPayment(Long, Long, String)
 	 * @see #getPayments(Integer, Integer, String, String)
@@ -420,7 +420,7 @@ public final class Decidir {
 	 * @return @return a {@link DecidirResponse} when success
 	 * @throws DecidirException when an error occurs 
 	 *
-	 * @see #payment(PaymentNoPciRequest)
+	 * @see #payment(PaymentRequest)
 	 * @see #payment(PaymentPciCardRequest)
 	 * @see #payment(PaymentPciTokenRequest)
 	 * @see #getPayment(Long) 
