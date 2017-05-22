@@ -32,6 +32,7 @@ Modulo para conexión con gateway de pago DECIDIR2
     + [Retail](#retail)
     + [Ticketing](#ticketing)
     + [Digital Goods](#digital-goods)
+    + [Travel](#travel)
 + [Tablas de referencia](#tablasreferencia)
   + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
   + [Divisas Aceptadas](#divisasa)
@@ -277,7 +278,7 @@ try {
 
 <a name="twosteps"></a>
 
-### Operación en dos pasos
+#### Operación en dos pasos
 Una vez generado y almacenado el token de pago, se deberá ejecutar la solicitud de pago más el token previamente generado.
 Si el pago es preaprobado `Status.PRE_APPROVED`, se procederá a realizar la confirmaci&oacute;n del pago enviando **ID de pago, monto y usario aprobador**.
 A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin Cybersource.
@@ -291,46 +292,46 @@ int timeout = 10; // 10 segundos de timeout
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
 String privateApiKey = "00111115";//Private API Key habilitada para operar en ambiente Sandbox
-     String urlSandbox = "http://localhost:9002/";
-     int timeout = 10; // 10 segundos de timeout
+String urlSandbox = "http://localhost:9002/";
+int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
-     Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
-     PaymentRequest paymentRequest = new PaymentRequest();
-     paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
-     paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
-     paymentRequest.setUser_id("test");
-     paymentRequest.setPayment_method_id(1); //VISA
-     paymentRequest.setBin("450979");
-     paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
-     paymentRequest.setCurrency(Currency.ARS);
-     paymentRequest.setInstallments(1);
-     paymentRequest.setPayment_type(PaymentType.SINGLE);
-     List<SubPayment> sub_payments = new ArrayList<SubPayment>(); //Nunca se utiliza en 2 pasos (se envia vacio)
-     paymentRequest.setSub_payments(sub_payments);
+PaymentRequest paymentRequest = new PaymentRequest();
+paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
+paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
+paymentRequest.setUser_id("test");
+paymentRequest.setPayment_method_id(1); //VISA
+paymentRequest.setBin("450979");
+paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
+paymentRequest.setCurrency(Currency.ARS);
+paymentRequest.setInstallments(1);
+paymentRequest.setPayment_type(PaymentType.SINGLE);
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); //Nunca se utiliza en 2 pasos (se envia vacio)
+paymentRequest.setSub_payments(sub_payments);
 
-     try {
-         DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+try {
+   DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
 
-         PaymentResponse paymentResult = paymentResponse.getResult();
-         // Confirmar pago preaprobado
-         if (Status.PRE_APPROVED.equals(paymentResult.getStatus())) {
-             Long paymentId = paymentResult.getId(); //Obtener id de pago
-             DecidirResponse<PaymentResponse> confirmPayment = decidir.confirmPayment(paymentId, paymentRequest.getAmount(), "usuario_aprobador");
-             paymentResult = confirmPayment.getResult();
-         }
-         // Procesamiento de respuesta de ejecucion de pago
-         // ...codigo...
-     } catch (PaymentException pe) {
-         // Manejo de pago rechazado
-         // ...codigo...
-     } catch (DecidirException de) {
-         // Manejo de excepcion  de Decidir
-         // ...codigo...
-     } catch (Exception e) {
-         //Manejo de excepcion general
-         // ...codigo...
-     }
+   PaymentResponse paymentResult = paymentResponse.getResult();
+   // Confirmar pago preaprobado
+   if (Status.PRE_APPROVED.equals(paymentResult.getStatus())) {
+       Long paymentId = paymentResult.getId(); //Obtener id de pago
+       DecidirResponse<PaymentResponse> confirmPayment = decidir.confirmPayment(paymentId, paymentRequest.getAmount(), "usuario_aprobador");
+       paymentResult = confirmPayment.getResult();
+   }
+   // Procesamiento de respuesta de ejecucion de pago
+   // ...codigo...
+} catch (PaymentException pe) {
+   // Manejo de pago rechazado
+   // ...codigo...
+} catch (DecidirException de) {
+   // Manejo de excepcion  de Decidir
+   // ...codigo...
+} catch (Exception e) {
+   //Manejo de excepcion general
+   // ...codigo...
+}
  // ...codigo...
 ```
 
@@ -440,6 +441,7 @@ try {
 }
 // ...codigo...
 ```
+
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="deleterefund"></a>
@@ -925,6 +927,95 @@ DigitalGoodsFraudDetectionData digitalGoods=  new DigitalGoodsFraudDetectionData
 //Datos de vertical Digital Goods
 // ...codigo...
 paymentRequest.setFraud_detection(digitalGoods);
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="travel"></a>
+
+### Travel
+
+Se enviá un `TravelFraudDetectionData` con los [parámetros comunes](#parametros-comunes) y con los siguientes parámetros que se deben enviar específicamente para la vertical Travel. Además se deben enviar datos específicos de cada pasajero.
+
+```java
+// ...codigo...
+ TravelFraudDetectionData travel =  new TravelFraudDetectionData();
+//seteo de parámetros comunes
+// ...codigo...
+TravelTransactionData travelTransactionData = new TravelTransactionData();//Datos para la vertical Ticketing
+travelTransactionData.setReservation_code("GJH784"); //MANDATORIO
+travelTransactionData.setThird_party_booking(Boolean.FALSE); //MANDATORIO
+travelTransactionData.setDeparture_city("EZE");//OPCIONAL
+travelTransactionData.setFinal_destination_city("HND");//OPCIONAL
+travelTransactionData.setInternational_flight(Boolean.TRUE);//OPCIONAL
+travelTransactionData.setFrequent_flier_number("00000123");//OPCIONAL
+travelTransactionData.setClass_of_service("class");//OPCIONAL
+travelTransactionData.setDay_of_week_of_flight(DayOfWeekOfFlight.MONDAY);//OPCIONAL
+travelTransactionData.setWeek_of_year_of_flight(5);//OPCIONAL
+travelTransactionData.setAirline_code("AA");//OPCIONAL
+travelTransactionData.setCode_share("SKYTEAM");//OPCIONAL
+travelTransactionData.setAirline_number_of_passengers(1);//MANDATORIO
+//Lista de Pasajeros
+Passenger passenger = new Passenger();
+passenger.setEmail("juan@mail.com");//MANDATORIO
+passenger.setFirst_name("Juan");//MANDATORIO
+passenger.setLast_name("Perez");//MANDATORIO
+passenger.setPassport_id("412314851231"); //OPCIONAL
+passenger.setPhone("541134356768");//MANDATORIO
+passenger.setPassenger_status(PassengerStatus.GOLD);//MANDATORIO
+passenger.setPassenger_type(PassengerType.ADULT);//MANDATORIO
+travelTransactionData.setPassengers(Arrays.asList(passenger)); //Lista de pasajeros. MANDATORIO
+
+//Fecha de partida (horario del aeropuerto de partida)
+Calendar departureDateTime = Calendar.getInstance();
+departureDateTime.setTimeZone(TimeZone.getTimeZone("GMT-0300"));
+departureDateTime.set(2018, 06, 25, 8, 35);
+
+DepartureDate departureDate = new DepartureDate();//MANDATORIO. Fecha de partida
+departureDate.setDeparture_time(departureDateTime.getTime());//MANDATORIO. Horario de partida
+departureDate.setDeparture_zone("GMT-0300");//MANDATORIO. Zona horaria de aeropuerto de partida
+DecisionManagerTravel decisionManagerTravel = new DecisionManagerTravel();
+decisionManagerTravel.setComplete_route("EZE-LAX:LAX-HND");//MANDATORIO. Ruta completa del viaje. Formato = PP1-DD1:PP2-DD2:... -> PPx = Aeropuerto de partida para escala x; DDx = Aeropuerto destino para escala x; : = Separador de escalas
+decisionManagerTravel.setJourney_type(JourneyType.ONE_WAY);//MANDATORIO. Tipo de viaje
+decisionManagerTravel.setDeparture_date(departureDate);//MANDATORIO. Fecha de partida
+
+travelTransactionData.setDecision_manager_travel(decisionManagerTravel); ;//MANDATORIO
+travel.setTravel_transaction_data(travelTransactionData);//Datos de vertical Ticketing. MANDATORIO
+// ...codigo...
+```
+
+Para incorporar estos datos en el requerimiento inicial, se debe instanciar un objeto de la clase`TravelFraudDetectionData`  de la siguiente manera.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+PaymentRequest paymentRequest = new PaymentRequest();
+// Datos del pago
+ // ...codigo...
+ TravelFraudDetectionData travel =  new TravelFraudDetectionData();
+//Datos de vertical Travel
+// ...codigo...
+paymentRequest.setFraud_detection(travel);
 try {
 	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
 	// Procesamiento de respuesta de ejecucion de pago
