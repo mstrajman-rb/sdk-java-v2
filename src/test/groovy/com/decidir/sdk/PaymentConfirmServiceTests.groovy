@@ -21,7 +21,6 @@ class PaymentConfirmServiceTests extends Specification {
         setup:
         def paymentId = 657
         def paymentNewAmount = 200L
-        def user = "ccopello"
 
         when:
         def result = decidir.confirmPayment(paymentId, paymentNewAmount, user)

@@ -13,6 +13,7 @@ public class RefundPaymentResponse implements Serializable {
     
     private Long id;
     private Long amount;
+    private CardError status_details;
     private List<RefundSubPaymentResponse> sub_payments;
     private Status status;
 
@@ -46,5 +47,13 @@ public class RefundPaymentResponse implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public CardError getStatus_details() {
+        return status_details;
+    }
+
+    public void setStatus_details(CardError status_details) {
+        this.status_details = status_details;
     }
 }

@@ -6,6 +6,7 @@ import com.decidir.sdk.dto.CardFraudDetectionData
 import com.decidir.sdk.dto.CardTokenData
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
+import com.decidir.sdk.dto.Customer
 import com.decidir.sdk.dto.CustomerInSite
 import com.decidir.sdk.dto.DayOfWeekOfFlight
 import com.decidir.sdk.dto.DecisionManagerTravel
@@ -101,12 +102,15 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
@@ -140,12 +144,15 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
@@ -176,12 +183,14 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentPciCardRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
-
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
@@ -229,12 +238,14 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentPciTokenRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
-
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
@@ -274,12 +285,15 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.ticketing_transaction_data = ticketingTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = token
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()
@@ -368,12 +382,15 @@ class PaymentServiceTests extends Specification {
         fraudDetection.device_unique_id = "devicefingerprintid"
         fraudDetection.travel_transaction_data = travelTransactionData
 
+        def customer = new Customer()
+        customer.id = user_id
+
         def payment = new PaymentRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
         payment.token = "44b3915c-6135-4da2-9665-a25f0823bb57"
-        payment.user_id = user_id
+        payment.customer = customer
         payment.installments = 7
         payment.sub_payments = []
         payment.site_transaction_id = UUID.randomUUID().toString()

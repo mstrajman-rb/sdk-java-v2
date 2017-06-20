@@ -9,19 +9,14 @@ import java.util.List;
 public abstract class Payment implements Serializable {
 
 	private Long id = 0L;
-	private String user_id;
-	private User collector;
-	private String operation_type;
-	private User payer;
-	private Boolean binary_mode;
-	private Boolean live_mode;
+	private Customer customer;
 	private Currency currency;
 	private Long amount;
 	private int installments;
 	private String site_transaction_id;
 	private String bin;
 	private Integer payment_method_id;
-	private PaymentType payment_type; // single / distributed% / distributed$
+	private PaymentType payment_type; // single / distributed
 	private String site_id;
 	private List<SubPayment> sub_payments;
 	private FraudDetectionData fraud_detection;
@@ -37,52 +32,12 @@ public abstract class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-
-	public User getCollector() {
-		return collector;
-	}
-
-	public void setCollector(User collector) {
-		this.collector = collector;
-	}
-
-	public String getOperation_type() {
-		return operation_type;
-	}
-
-	public void setOperation_type(String operation_type) {
-		this.operation_type = operation_type;
-	}
-
-	public User getPayer() {
-		return payer;
-	}
-
-	public void setPayer(User payer) {
-		this.payer = payer;
-	}
-
-	public Boolean getBinary_mode() {
-		return binary_mode;
-	}
-
-	public void setBinary_mode(Boolean binary_mode) {
-		this.binary_mode = binary_mode;
-	}
-
-	public Boolean getLive_mode() {
-		return live_mode;
-	}
-
-	public void setLive_mode(Boolean live_mode) {
-		this.live_mode = live_mode;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Currency getCurrency() {

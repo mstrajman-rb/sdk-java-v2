@@ -10,14 +10,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PaymentResponse extends Payment implements Serializable {
 
-	
 	private String token;
-	
 	private String date;
 	private String date_created;
 	private String date_approved;
 	private String date_last_updated;
-	
 	private Status status;
 	private CardError status_details;
 	private ConfirmedPaymentData confirmed;
