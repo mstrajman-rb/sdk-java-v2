@@ -435,10 +435,10 @@ public final class Decidir {
 	}
 
 	/**
-	 *
+	 * Generate hash of data form
 	 * @param form
-	 * @return
-	 * @throws DecidirException
+	 * @return a {@link DecidirResponse} when success
+	 * @throws DecidirException when an error occurs
 	 */
 	public DecidirResponse<FormResponse> validate(DataForm form) throws DecidirException {
 		return formService.validate(form);
