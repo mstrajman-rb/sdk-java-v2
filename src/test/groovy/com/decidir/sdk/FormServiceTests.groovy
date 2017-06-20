@@ -16,10 +16,10 @@ class FormServiceTests extends Specification {
     public static final String secretAccessToken = '00290815'
     public static final String apiUrl = "http://localhost:9006"
 
-    def decidir
+    def form
 
     def setup(){
-        decidir = new Decidir(secretAccessToken, apiUrl, 15)
+        form = new Form(secretAccessToken, apiUrl, 2)
     }
 
     def "validate"() {
@@ -43,7 +43,7 @@ class FormServiceTests extends Specification {
         dataForm.cancel_url = "cancel_url"
 
         when:
-        def result = decidir.validate(dataForm)
+        def result = form.validate(dataForm)
 
         then:
         result.status == 201

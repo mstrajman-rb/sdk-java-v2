@@ -5,11 +5,12 @@ import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.CardTokenApi;
-import com.decidir.sdk.resources.FormApi;
 import com.decidir.sdk.resources.PaymentApi;
 import com.decidir.sdk.resources.RefundApi;
-import com.decidir.sdk.services.FormService;
-import com.decidir.sdk.services.*;
+import com.decidir.sdk.services.CardTokenService;
+import com.decidir.sdk.services.PaymentConfirmService;
+import com.decidir.sdk.services.PaymentsService;
+import com.decidir.sdk.services.RefundsService;
 
 
 public final class Decidir {
@@ -20,8 +21,7 @@ public final class Decidir {
 	private RefundsService refundsService;
 	private CardTokenService cardTokenService;
 	private PaymentConfirmService paymentConfirmService;
-	private FormService formService;
-	
+
 	/**
 	 * Creates a new instance to communicate with Decidir Api.  
 	 * @param secretAccessToken the provided apikey
@@ -91,8 +91,6 @@ public final class Decidir {
 				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
 		this.paymentConfirmService = PaymentConfirmService.getInstance(
 				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
-		this.formService = FormService.getInstance(
-				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, FormApi.class));
 	}
 	
 	/**
@@ -432,16 +430,6 @@ public final class Decidir {
 	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, Long amount, String user)
 			throws DecidirException {
 		return paymentConfirmService.paymentConfirm(paymentId, amount, user);
-	}
-
-	/**
-	 * Generate hash of data form
-	 * @param form
-	 * @return a {@link DecidirResponse} when success
-	 * @throws DecidirException when an error occurs
-	 */
-	public DecidirResponse<FormResponse> validate(DataForm form) throws DecidirException {
-		return formService.validate(form);
 	}
 
 }
