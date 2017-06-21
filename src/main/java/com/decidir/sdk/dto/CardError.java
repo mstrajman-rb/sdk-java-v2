@@ -15,7 +15,7 @@ public class CardError implements Serializable{
     private String code;
     private String actual_error;
     private String card_authorization_code;
-    private String card_reason;
+    private Integer card_reason;
 
     public CardErrorCode getError_type() {
         return error_type;
@@ -57,11 +57,11 @@ public class CardError implements Serializable{
         this.card_authorization_code = card_authorization_code;
     }
 
-    public String getCard_reason() {
+    public Integer getCard_reason() {
         return card_reason;
     }
 
-    public void setCard_reason(String card_reason) {
+    public void setCard_reason(Integer card_reason) {
         this.card_reason = card_reason;
     }
 }
