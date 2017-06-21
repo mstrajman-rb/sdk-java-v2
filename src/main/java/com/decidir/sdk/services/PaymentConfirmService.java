@@ -9,8 +9,12 @@ import com.decidir.sdk.dto.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
+import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
 
 /**
@@ -37,14 +41,24 @@ public class PaymentConfirmService {
     public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount, String user) {
         try {
             Response<PaymentResponse> response = this.paymentApi.paymentConfirm(user, paymentId, new ConfirmPaymentAmount(amount)).execute();
-            if (response.isSuccessful()) {
-                return paymentConverter.convert(response, response.body());
+            return processPaymentResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
+            throws IOException, JsonParseException, JsonMappingException {
+        if (response.isSuccessful()) {
+            return paymentConverter.convert(response, response.body());
+        } else {
+            if (response.code() == HTTP_402){
+                ObjectMapper objectMapper = new ObjectMapper();
+                throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
             } else {
                 DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 

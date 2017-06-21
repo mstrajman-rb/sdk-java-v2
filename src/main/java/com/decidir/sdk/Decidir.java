@@ -2,8 +2,10 @@ package com.decidir.sdk;
 
 import com.decidir.sdk.configuration.DecidirConfiguration;
 import com.decidir.sdk.dto.*;
+import com.decidir.sdk.exceptions.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
+import com.decidir.sdk.exceptions.RefundException;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
 import com.decidir.sdk.resources.RefundApi;
@@ -352,7 +354,7 @@ public final class Decidir {
 	 * @see #getPayments(Integer, Integer, String, String)
 	 */
 	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment, String user)
-			throws DecidirException {
+			throws RefundException, DecidirException {
 		return refundsService.refundPayment(paymentId, refundPayment, user);
 	}
 
@@ -366,7 +368,7 @@ public final class Decidir {
 	 * @see #getRefunds(Long)
 	 * @see #refundPayment(Long, RefundPayment, String)
 	 */
-	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) throws DecidirException {
+	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) throws AnnulRefundException, DecidirException {
 		return refundsService.cancelRefund(paymentId, refundId, user);
 	}
 
@@ -428,7 +430,7 @@ public final class Decidir {
 	 * @see #refundPayment(Long, RefundPayment, String)
 	 */
 	public DecidirResponse<PaymentResponse> confirmPayment(Long paymentId, Long amount, String user)
-			throws DecidirException {
+			throws PaymentException, DecidirException {
 		return paymentConfirmService.paymentConfirm(paymentId, amount, user);
 	}
 
