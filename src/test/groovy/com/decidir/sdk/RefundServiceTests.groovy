@@ -1,11 +1,12 @@
 package com.decidir.sdk
 
+import com.decidir.sdk.exceptions.RefundException
 import spock.lang.*
 import com.decidir.sdk.dto.*
 
 class RefundServiceTests extends Specification {
 
-  public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+  public static final String secretAccessToken = '00290815'//'4cf891e492384cdeadf211564aa87007'
   public static final String apiUrl = "http://localhost:9002"
 
   def decidir
@@ -16,18 +17,26 @@ class RefundServiceTests extends Specification {
 
   def "test payment annulled"() {
     setup:
-    def paymentId = 2173
+    def paymentId = 48277
     def refundPayment = new RefundPayment()
+    def refundSubPayment = new RefundSubPayment()
+    refundSubPayment.id = 7151
+    refundPayment.sub_payments = Arrays.asList(refundSubPayment)
+
     def user = "ccopello"
 
     when:
     def result = decidir.refundPayment(paymentId, refundPayment, user)
 
     then:
-    result.status == 200
+    then:
+    def exception = thrown(RefundException)
+    exception.status == 402
+    exception.refundPayment.status == Status.REJECTED
+    /*result.status == 200
     result.result.id != null
     result.result.amount != null
-    result.result.status == Status.ANNULLED
+    result.result.status == Status.ANNULLED*/
   }
 
   def "test payment refunded"() {
