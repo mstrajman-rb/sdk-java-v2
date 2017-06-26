@@ -15,8 +15,8 @@ public enum CardErrorCode {
     INSUFFICIENT_AMOUNT("insufficient_amount"),
     REQUEST_AUTHORIZATION_CARD("request_authorization_card"),
     CYBERSOURCE_ERROR("cybersource_error"),
-
-    CARD_DECLINED("card_declined"),//TODO: remove?
+    GROUP_REJECTED("group_rejected"),
+    CARD_DECLINED("card_declined"),
     PROCESSING_ERROR("processing_error"),//Error entre estados
     INVALID_CARD("invalid_card"); //generic error
 
