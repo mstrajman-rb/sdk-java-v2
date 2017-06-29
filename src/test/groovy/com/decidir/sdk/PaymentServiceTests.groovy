@@ -40,8 +40,8 @@ import java.time.ZoneOffset
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00111117'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "5cebb741-955b-4b82-a7b8-304f94b63594"
+    public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
+    public static final String token = "a1ca9dd2-5f76-45aa-bbdf-c7d17320a2c1"
     public static final String valid_bin = "450799"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"

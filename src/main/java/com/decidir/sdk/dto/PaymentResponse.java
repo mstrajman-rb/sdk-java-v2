@@ -18,6 +18,7 @@ public class PaymentResponse extends Payment implements Serializable {
 	private Status status;
 	private CardError status_details;
 	private ConfirmedPaymentData confirmed;
+	private String pan;
 
 	public String getToken() {
 		return token;
@@ -83,5 +84,11 @@ public class PaymentResponse extends Payment implements Serializable {
 		this.confirmed = confirmed;
 	}
 
+	public String getPan() {
+		return pan;
+	}
 
+	public void setPan(String pan) {
+		this.pan = pan;
+	}
 }
