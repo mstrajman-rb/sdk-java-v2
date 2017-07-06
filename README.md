@@ -33,6 +33,14 @@ Modulo para conexión con gateway de pago DECIDIR2
     + [Ticketing](#ticketing)
     + [Digital Goods](#digital-goods)
     + [Travel](#travel)
+  + [Manejo de Excepciones](#manejoExceptions)
+    + [PaymentException](#paymentException)
+    + [DecidirException](#decidirException)
+      + [ValidateException](#validateException)
+      + [ApiException](#apiException)
+      + [NotFoundException](#notFoundException)
+    + [RefundException](#refundException)
+    + [AnnulRefundException](#annulRefundException)
 + [Tablas de referencia](#tablasreferencia)
   + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
   + [Divisas Aceptadas](#divisasa)
@@ -1032,6 +1040,83 @@ try {
 }
 // ...codigo...
 ```
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="manejoExceptions"></a>
+
+## Manejo de Excepciones
+
+Todas las respuestas negativas tanto de transacciones rechazadas como de errores en los datos enviados al backend de DECIDIR deberán ser manejadas mediante Excepciones.
+
+<a name="paymentException"></a>
+### PaymentException()
+
+El <code>PaymentException</code> será lanzado cuando:
+
+* Un pago haya sido RECHAZADO
+* El control de CyberSource haya rechazado el Pago (Excepto para Pagos en dos pasos).
+
+```java
+try {
+	// Pago enviado a DECIDIR
+	// ...codigo...
+} catch (PaymentException pe) {
+	// Pago rechazado
+	// Error de autenticación
+	// ...codigo...
+}
+```
+
+<a name="decidirException"></a>
+### DecidirException()
+
+El <code>DecidirException</code> será lanzado cuando DECIDIR no pueda procesar una solicitud. Además es la superclass de las siguientes excepciones:
+
+<a name="validateException"></a>
+#### ValidateException()
+
+Es lanzado cuando DECIDIR intenta procesar datos con formatos no esperados.
+
+<a name="apiException"></a>
+#### ApiException()
+
+Es lanzado por los siguientes motivos:
+* Inconvenientes de acceso a los endpoints del API DECIDIR
+* ApiKey incorrecta
+* Llamadas demasiado frecuentes al API DECIDIR
+
+<a name="notFoundException"></a>
+#### NotFoundException()
+
+Es lanzado cuando DECIDIR intenta procesar datos incompletos.
+
+```java
+try {
+	// Pago enviado a DECIDIR
+	// ...codigo...
+} catch (NotFoundException nfe) {
+	// Datos incompletos
+	// Formato de datos no esperados
+	// etc.
+	// ...codigo...
+}
+```
+<a name="refundException"></a>
+### RefundException()
+
+Es lanzado cuando DECIDIR rechaza:
+
+* Devoluciones totales
+* Devoluciones parciales
+* Anulaciones
+
+<a name="annulRefundException"></a>
+### AnnulRefundException()
+
+Es lanzado cuando DECIDIR rechaza:
+
+* Anulaciones de devoluciones totales
+* Anulaciones de devoluciones parciales
 
 [<sub>Volver a inicio</sub>](#inicio)
 
