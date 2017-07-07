@@ -188,11 +188,14 @@ String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+Customer customer = new Customer();
+customer.setId("test");
+customer.setEmail("test@decidir.com");
 
 PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("ae9fc3e5-ff41-4de2-9c91-81030be1c4a6"); // token de pago
 paymentRequest.setSite_transaction_id("TX00001234"); //ID de transaccion asignada por el comercio, no puede repetirse
-paymentRequest.setUser_id("test");
+paymentRequest.setCustomer(customer);
 paymentRequest.setPayment_method_id(1); //VISA
 paymentRequest.setBin("450799");
 paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
