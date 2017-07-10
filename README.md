@@ -170,7 +170,8 @@ Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 
 ### Ejecución del Pago
 Una vez generado y almacenado el token de pago, se deberá ejecutar la solicitud de pago más el token previamente generado.
-Además del token de pago y los parámetros propios de la transacción, el comercio deberá identificar la compra con el site_transaction_id y el user_id.
+Además del token de pago y los parámetros propios de la transacción, el comercio deberá identificar la compra con el site_transaction_id y el user_id(id 
+del Customer).
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -610,7 +611,8 @@ try {
 
 ### Ejecución de pago tokenizado
 
-Una vez que se obtiene el token a partir de la tarjeta tokenizada, se deberá ejecutar la solicitud de pago. Además del token de pago y los parámetros propios de la transacción, el comercio deberá identificar la compra con el "site_transaction_id" y "user_id".
+Una vez que se obtiene el token a partir de la tarjeta tokenizada, se deberá ejecutar la solicitud de pago. Además del token de pago y los parámetros propios de la transacción, el comercio deberá identificar la compra con el "site_transaction_id" y "user_id"(id 
+del Customer).
 
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
