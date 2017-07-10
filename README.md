@@ -33,6 +33,7 @@ Modulo para conexión con gateway de pago DECIDIR2
     + [Ticketing](#ticketing)
     + [Digital Goods](#digital-goods)
     + [Travel](#travel)
+  + [Uso de Responses](#usoResponses)
   + [Manejo de Excepciones](#manejoExceptions)
     + [PaymentException](#paymentException)
     + [DecidirException](#decidirException)
@@ -189,8 +190,8 @@ int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 Customer customer = new Customer();
-customer.setId("test");
-customer.setEmail("test@decidir.com");
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
 
 PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("ae9fc3e5-ff41-4de2-9c91-81030be1c4a6"); // token de pago
@@ -239,6 +240,9 @@ String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
 
 Integer installments = 2;
 Long amount1 = 10000L;
@@ -246,7 +250,7 @@ Long amount2 = 25990L;
 PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
 paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
-paymentRequest.setUser_id("test");
+paymentRequest.setCustomer(customer);
 paymentRequest.setPayment_method_id(1); //VISA
 paymentRequest.setBin("450979");
 paymentRequest.setAmount(amount1 + amount2);//Suma de los pagos distribuidos
@@ -307,11 +311,14 @@ String urlSandbox = "http://localhost:9002/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
 
 PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("a6f05789-10df-4464-a318-887a1520204b"); // token de pago
 paymentRequest.setSite_transaction_id("TX0000000001"); //ID de transaccion asignada por el comercio, no puede repetirse
-paymentRequest.setUser_id("test");
+paymentRequest.setCustomer(customer);
 paymentRequest.setPayment_method_id(1); //VISA
 paymentRequest.setBin("450979");
 paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
@@ -614,11 +621,14 @@ String urlSandbox = "https://developers.decidir.com/api/v1/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
 
 PaymentRequest paymentRequest = new PaymentRequest();
 paymentRequest.setToken("ae9fc3e5-ff41-4de2-9c91-81030be1c4a6"); // token de pago
 paymentRequest.setSite_transaction_id("0001234");
-paymentRequest.setUser_id("test");
+paymentRequest.setCustomer(customer);
 paymentRequest.setPayment_method_id(1); //MASTERCARD
 paymentRequest.setBin("45079");
 paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
@@ -1043,6 +1053,43 @@ try {
 }
 // ...codigo...
 ```
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="usoResponses"></a>
+
+## Uso de Responses
+
+Luego de haber realizado una operación, DECIDIR devuelve los siguientes objetos:
+
+### PaymentResponse
+
+Es usado en:
+*   [Pago Simple]()
+*   [Pago Pci]()
+*   [Pago Pci por Token]()
+*   [Obtener Información de un Pago]()
+*   [Confirmar un Pago pre aprobado / Pago en dos pasos]()
+
+### Page
+*   [Obtener Pagos]()
+
+### RefundPaymentHistoryResponse
+*   [Obtener Devoluciones]()
+
+
+### RefundPaymentResponse
+*   [Realizar devoluciones totales]()
+*   [Realizar devoluciones parciales]()
+
+### AnnulRefundResponse
+*   [Anular devoluciones]()
+
+### CardTokens
+
+*   [Obtener Tokens de tarjetas según el user_id]()
+
+
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="manejoExceptions"></a>
