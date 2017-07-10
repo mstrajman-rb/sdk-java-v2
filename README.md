@@ -1065,29 +1065,30 @@ Luego de haber realizado una operación, DECIDIR devuelve los siguientes objetos
 ### PaymentResponse
 
 Es usado en:
-*   [Pago Simple]()
-*   [Pago Pci]()
-*   [Pago Pci por Token]()
-*   [Obtener Información de un Pago]()
-*   [Confirmar un Pago pre aprobado / Pago en dos pasos]()
+*   [Transacción Simple](#single)
+*   [Transacción PCI]()
+*   [Transacción Pci por Token]()
+*   [Información de un Pago](#getpaymentinfo)
+*   [Operación en dos pasos](#twosteps)
 
 ### Page
-*   [Obtener Pagos]()
+*   [Listado de Pagos](#getallpayments)
 
 ### RefundPaymentHistoryResponse
-*   [Obtener Devoluciones]()
+*   [Listado de Devoluciones]()
 
 
 ### RefundPaymentResponse
-*   [Realizar devoluciones totales]()
-*   [Realizar devoluciones parciales]()
+*   [Anulación / Devolución Total de Pago](#totalrefund)
+*   [Devolución Parcial de un Pago](#partialrefund)
 
 ### AnnulRefundResponse
-*   [Anular devoluciones]()
+*   [Anulación de Devolución Total](#deleterefund)
+*   [Anulación de Devolución Parcial](#deletepartialrefund)
 
 ### CardTokens
 
-*   [Obtener Tokens de tarjetas según el user_id]()
+*   [Listado de tarjetas tokenizadas](#listadotarjetastokenizadas)
 
 
 [<sub>Volver a inicio</sub>](#inicio)
