@@ -1,11 +1,6 @@
 package com.decidir.sdk.resources;
 
-import com.decidir.sdk.dto.ConfirmPaymentAmount;
-import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.PaymentRequest;
-import com.decidir.sdk.dto.PaymentPciCardRequest;
-import com.decidir.sdk.dto.PaymentPciTokenRequest;
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.*;
 
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -29,6 +24,9 @@ public interface PaymentApi {
   
   @POST("payments")
   Call<PaymentResponse> payPciToken(@Body PaymentPciTokenRequest payment);
+
+  @POST("payments")
+  Call<OfflinePaymentResponse> payOffline(@Body OfflinePaymentRequest offlinePayment);
   
   @PUT("payments/{paymentId}")
   Call<PaymentResponse> paymentConfirm(@Header("User") String user, @Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);

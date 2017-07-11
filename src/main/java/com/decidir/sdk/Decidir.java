@@ -434,4 +434,45 @@ public final class Decidir {
 		return paymentConfirmService.paymentConfirm(paymentId, amount, user);
 	}
 
+	/**
+	 * Executes a new offline payment using a generated payment token
+	 *
+	 * @param offlinePayment
+	 *            {@link OfflinePaymentRequest} request
+	 * @return a {@link DecidirResponse} with the approved {@link OfflinePayment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error occurs
+	 * <br>
+	 * <br>
+	 * <strong>Usage example</strong>
+	 * <pre>
+	 * {@code ...
+	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
+	 * OfflinePaymentRequest offlinePaymentRequest = new OfflinePaymentRequest();
+	 * //Fill payment request data - i.e. see {@link OfflinePaymentRequest}
+	 * ...
+	 * try {
+	 *	DecidirResponse<OfflinePaymentResponse> offlinePaymentResponse = decidir.offlinePayment(offlinePaymentRequest);
+	 *	//process offline payment response - see {@link DecidirResponse}
+	 *	...
+	 *	} catch (PaymentException pe) {
+	 *	 //Handle rejected payment - see {@link PaymentException}
+	 *	 ...
+	 *	} catch (DecidirException de) {
+	 *	 //Handle returned api exception - see {@link DecidirException}
+	 *	 ...
+	 *	} catch (Exception e) {
+	 *	 //Handle exception
+	 *	 ...
+	 *	}
+	 *	...
+	 * }
+	 * </pre>
+	 */
+	public DecidirResponse<OfflinePaymentResponse> offlinePayment(OfflinePaymentRequest offlinePayment)
+			throws PaymentException, DecidirException {
+		return paymentsService.offlinePayment(offlinePayment);
+	}
 }
