@@ -1,6 +1,7 @@
 package com.decidir.sdk.converters;
 
 import com.decidir.sdk.dto.DecidirResponse;
+import com.decidir.sdk.dto.OfflinePaymentResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.PaymentResponse;
 
@@ -23,6 +24,14 @@ public class PaymentConverter {
         DecidirResponse<Page> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(page);
+        dResponse.setMessage(response.message());
+        return dResponse;
+    }
+
+    public DecidirResponse<OfflinePaymentResponse> convert(Response<OfflinePaymentResponse> response, OfflinePaymentResponse payment){
+        DecidirResponse<OfflinePaymentResponse> dResponse = new DecidirResponse();
+        dResponse.setStatus(response.code());
+        dResponse.setResult(payment);
         dResponse.setMessage(response.message());
         return dResponse;
     }

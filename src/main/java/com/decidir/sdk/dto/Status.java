@@ -23,6 +23,10 @@ public enum Status {
     REFUND_APPROVED,
     GROUP_REJECTED,
     GROUP_ANNULLED,
+    INVOICE_GENERATED,
+    INVOICE_NOT_GENERATED,
+    REVERSED,
+    ADHERED,
     UNDEFINED;
 
     private static Map<String, Status> statusMap = new HashMap<>(13);
@@ -39,6 +43,10 @@ public enum Status {
         statusMap.put("refund_approved", REFUND_APPROVED);
         statusMap.put("group_rejected", GROUP_REJECTED);
         statusMap.put("group_annulled", GROUP_ANNULLED);
+        statusMap.put("invoice_generated", INVOICE_GENERATED);
+        statusMap.put("invoice_not_generated", INVOICE_NOT_GENERATED);
+        statusMap.put("reversed", REVERSED);
+        statusMap.put("adhered", ADHERED);
         statusMap.put("undefined", UNDEFINED);
     }
 

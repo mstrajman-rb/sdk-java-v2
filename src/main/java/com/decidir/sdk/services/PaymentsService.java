@@ -4,14 +4,7 @@ import java.io.IOException;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
-import com.decidir.sdk.dto.DecidirError;
-import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.Page;
-import com.decidir.sdk.dto.Payment;
-import com.decidir.sdk.dto.PaymentRequest;
-import com.decidir.sdk.dto.PaymentPciCardRequest;
-import com.decidir.sdk.dto.PaymentPciTokenRequest;
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
@@ -82,6 +75,21 @@ public class PaymentsService {
 		}
 	}
 
+    private DecidirResponse<OfflinePaymentResponse> processOfflinePaymentResponse(Response<OfflinePaymentResponse> response)
+            throws IOException, JsonParseException, JsonMappingException {
+        if (response.isSuccessful()) {
+            return paymentConverter.convert(response, response.body());
+        } else {
+            if (response.code() == HTTP_402){
+                ObjectMapper objectMapper = new ObjectMapper();
+                throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
+            } else {
+                DecidirResponse<DecidirError> error = errorConverter.convert(response);
+                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+            }
+        }
+    }
+
     public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String siteId) {
         try {
             Response<Page> response = this.paymentApi.getPayments(offset, pageSize, siteOperationId, siteId).execute();
@@ -105,6 +113,15 @@ public class PaymentsService {
                 DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<OfflinePaymentResponse> offlinePayment(OfflinePaymentRequest offlinePayment) {
+        try {
+            Response<OfflinePaymentResponse> response = this.paymentApi.payOffline(offlinePayment).execute();
+            return processOfflinePaymentResponse(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
