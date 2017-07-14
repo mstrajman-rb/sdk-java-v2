@@ -46,6 +46,7 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
   + [Divisas Aceptadas](#divisasa)
   + [Provincias](#provincias)
+  + [Atributos de Excepciones](#atributosExcepciones)
 
 <a name="introduccion"></a>
 ## Introducción
@@ -1127,7 +1128,7 @@ El <code>PaymentException</code> será lanzado cuando:
 	- message: String
 	- paymentResponse: PaymentResponse
 
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>PaymentException</code>:
 ```java
@@ -1164,7 +1165,7 @@ Es lanzado cuando DECIDIR intenta procesar datos con formatos no esperados.
     - status: int
     - message: String
     - errorDetail: ValidateError
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>ValidateException</code>:
 ```java
@@ -1194,7 +1195,7 @@ Es lanzado por los siguientes motivos:
     - status: int
     - message: String
     - errorDetail: ApiError
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>ApiException</code>:
 ```java
@@ -1221,7 +1222,7 @@ Es lanzado cuando DECIDIR intenta procesar datos incompletos.
     - status: int
     - message: String
     - errorDetail: NotFoundError
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>NotFoundException</code>:
 ```java
@@ -1253,7 +1254,7 @@ Es lanzado cuando DECIDIR rechaza:
     - message: String
     - refundPaymentResponse: RefundPaymentResponse
 
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>RefundException</code>:
 ```java
@@ -1284,7 +1285,7 @@ Es lanzado cuando DECIDIR rechaza:
     - message: String
     - annulRefundResponse: AnnulRefundResponse
 
-*Ver los valores posibles en la tabla de [Atributos posibles de Excepciones](#TODO)*
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
 Ejemplo de cómo capturar el <code>AnnulRefundException</code>:
 ```java
@@ -1404,5 +1405,25 @@ try {
 | Santiago del Estero | G |
 | Tierra del Fuego | V |
 | Tucumán | T |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="atributosExcepciones"></a>
+
+### Atributos de Excepciones
+
+|Atributo         |Tipo                  |Descripción                     |Pertenece a                                   |
+|:----------------|:---------------------|:-------------------------------|:---------------------------------------------|
+|status           |int                   |Estado HTTP                     |Todas                                         |
+|message          |String                |Descripción del Estado HTTP     |Todas                                         |
+|errorDetail      |ValidateError         |Descripción del error           |ValidateException                             |
+|errorDetail      |ApiError              |Descripción del error           |ApiException                                  |
+|errorDetail      |NotFoundError         |Descripción del error           |NotFoundException                             |
+|validation_errors|Lista[ValidationError]|Lista de Errores de validación  |ValidateError                                 |
+|code             |String                |Código de error                 |ValidationError<br/>ApiError<br/>NotFoundError|
+|param            |String                |Parámetro involucrado           |ValidationError                               |
+|message          |String                |Descripción del error           |ApiError<br/>NotFoundError                    |
+|id               |String                |valor identificatorio           |NotFoundError                                 |
+|entityName       |String                |Nombre de la entidad involucrada|NotFoundError                                 |
 
 [<sub>Volver a inicio</sub>](#inicio)
