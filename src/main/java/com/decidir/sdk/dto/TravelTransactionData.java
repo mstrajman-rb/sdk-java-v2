@@ -1,7 +1,6 @@
 package com.decidir.sdk.dto;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
 import java.util.List;
 
 /**
