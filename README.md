@@ -1230,7 +1230,7 @@ try {
 <a name="notFoundException"></a>
 #### NotFoundException
 
-Es lanzado cuando DECIDIR intenta procesar datos incompletos.
+Es lanzado cuando DECIDIR intenta procesar datos incompletos o no existentes en DECIDIR.
 
 #### Atributos
     - status: int
@@ -1245,7 +1245,6 @@ try {
     // Pago enviado a DECIDIR
     // ...codigo...
 } catch (NotFoundException nfe) {
-    // Estado general de la Excepción
     int httpStatus = nfe.getStatus();
     String exceptionMessage = nfe.getMessage();
 
