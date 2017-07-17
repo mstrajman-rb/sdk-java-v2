@@ -1,20 +1,10 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.BillingData
-import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
-import com.decidir.sdk.dto.Customer
-import com.decidir.sdk.dto.CustomerInSite
-import com.decidir.sdk.dto.FraudDetectionDataResponse
-import com.decidir.sdk.dto.Item
 import com.decidir.sdk.dto.OfflinePaymentRequest
 import com.decidir.sdk.dto.PaymentRequest
 import com.decidir.sdk.dto.PaymentType
-import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
-import com.decidir.sdk.dto.TicketingFraudDetectionData
-import com.decidir.sdk.dto.TicketingTransactionData
-import com.decidir.sdk.exceptions.PaymentException
 import spock.lang.Specification
 
 class OfflinePaymentServiceTests extends Specification {
@@ -40,7 +30,7 @@ class OfflinePaymentServiceTests extends Specification {
         payment.currency = Currency.ARS
         payment.payment_type = PaymentType.SINGLE
         payment.email = "persona@email.com"
-        payment.bank_code = 1
+        payment.bank_id = 1
         payment.invoice_expiration = "311219 2359"
 
         when:
