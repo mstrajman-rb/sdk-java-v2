@@ -452,11 +452,14 @@ try {
 	DecidirResponse<RefundPaymentResponse> devolucion = decidir. refundPayment(idPago, refundPayment, usuario)
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
+} catch (RefundException re) {
+    // Manejo de excepcion en devolucion
+    re.printStackTrace();
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
-	 // ...codigo...
+	// ...codigo...
 } catch (Exception e) {
-	 //Manejo de excepcion general
+	//Manejo de excepcion general
 	// ...codigo...
 }
 // ...codigo...
@@ -484,6 +487,10 @@ try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir. cancelRefund(idPago, idDevolucion, usuario)
 	// Procesamiento de respuesta de anulacion de devolucion
 	// ...codigo...
+} catch (AnnulRefundException are) {
+    are.printStackTrace();
+    // Manejo de excepcion de anulacion de devolucion
+    // ...codigo...
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -519,6 +526,9 @@ try {
 	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario)
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
+} catch (RefundException re) {
+    // Manejo de excepcion en devolucion
+    re.printStackTrace();
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -550,6 +560,10 @@ try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir.cancelRefund(idPago, idDevolucion, usuario)
 	// Procesamiento de respuesta de anulacion de devolucion
 	// ...codigo...
+} catch (AnnulRefundException are) {
+    are.printStackTrace();
+    // Manejo de excepcion de anulacion de devolucion
+    // ...codigo...
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -1423,7 +1437,7 @@ try {
 |code             |String               |Código de error                 |[ValidationError](#validateException)<br/>[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)|
 |param            |String               |Parámetro involucrado           |[ValidationError](#validateException)                                                                      |
 |message          |String               |Descripción del error           |[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)                                          |
-|id               |String               |valor identificatorio           |[NotFoundError](#notFoundException)                                                                        |
+|id               |String               |Valor identificatorio           |[NotFoundError](#notFoundException)                                                                        |
 |entityName       |String               |Nombre de la entidad involucrada|[NotFoundError](#notFoundException)                                                                        |
 
 [<sub>Volver a inicio</sub>](#inicio)
