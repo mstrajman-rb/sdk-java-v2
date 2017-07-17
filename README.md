@@ -1412,18 +1412,18 @@ try {
 
 ### Atributos de Excepciones
 
-|Atributo         |Tipo                  |Descripción                     |Pertenece a                                   |
-|:----------------|:---------------------|:-------------------------------|:---------------------------------------------|
-|status           |int                   |Estado HTTP                     |Todas                                         |
-|message          |String                |Descripción del Estado HTTP     |Todas                                         |
-|errorDetail      |ValidateError         |Descripción del error           |ValidateException                             |
-|errorDetail      |ApiError              |Descripción del error           |ApiException                                  |
-|errorDetail      |NotFoundError         |Descripción del error           |NotFoundException                             |
-|validation_errors|Lista[ValidationError]|Lista de Errores de validación  |ValidateError                                 |
-|code             |String                |Código de error                 |ValidationError<br/>ApiError<br/>NotFoundError|
-|param            |String                |Parámetro involucrado           |ValidationError                               |
-|message          |String                |Descripción del error           |ApiError<br/>NotFoundError                    |
-|id               |String                |valor identificatorio           |NotFoundError                                 |
-|entityName       |String                |Nombre de la entidad involucrada|NotFoundError                                 |
+|Atributo         |Tipo                 |Descripción                     |Pertenece a                                                                                                |
+|:----------------|:--------------------|:-------------------------------|:----------------------------------------------------------------------------------------------------------|
+|status           |int                  |Estado HTTP                     |Todas                                                                                                      |
+|message          |String               |Descripción del Estado HTTP     |Todas                                                                                                      |
+|errorDetail      |ValidateError        |Descripción del error           |[ValidateException](#validateException)                                                                    |
+|errorDetail      |ApiError             |Descripción del error           |[ApiException](#apiException)                                                                              |
+|errorDetail      |NotFoundError        |Descripción del error           |[NotFoundException](#notFoundException)                                                                    |
+|validation_errors|List<ValidationError>|Lista de Errores de validación  |[ValidateError](#validateException)                                                                        |
+|code             |String               |Código de error                 |[ValidationError](#validateException)<br/>[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)|
+|param            |String               |Parámetro involucrado           |[ValidationError](#validateException)                                                                      |
+|message          |String               |Descripción del error           |[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)                                          |
+|id               |String               |valor identificatorio           |[NotFoundError](#notFoundException)                                                                        |
+|entityName       |String               |Nombre de la entidad involucrada|[NotFoundError](#notFoundException)                                                                        |
 
 [<sub>Volver a inicio</sub>](#inicio)
