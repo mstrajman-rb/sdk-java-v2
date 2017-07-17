@@ -449,7 +449,7 @@ long idPago = 000123L; //ID devuelto por la operacion de pago (NO CONFUNDIR con 
 String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 RefundPayment refundPayment = new RefundPayment(); //Se instancia sin datos
 try {
-	DecidirResponse<RefundPaymentResponse> devolucion = decidir. refundPayment(idPago, refundPayment, usuario)
+	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario);
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
 } catch (RefundException re) {
