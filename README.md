@@ -4,6 +4,7 @@ Decidir SDK Java
 
 Modulo para conexión con gateway de pago DECIDIR2
 + [Introducción](#introduccion)
+  + [Soporte de Integración](#Soporte)
   + [Alcance](#scope)
   + [Diagrama de secuencia](#secuencia)
 + [Instalación](#instalacion)
@@ -78,6 +79,16 @@ Para generar el token de pago, la aplicaci&oacute;n cliente realizar&aacute; con
 
 ---
 <sup>_1 - Las API Keys serán provistas por el equipo de Soporte de DECIDIR (soporte@decidir.com.ar). _</sup>
+<a name="Soporte"></a>
+## Soporte de Integración
+**DECIDIR** ofrece un servicio de Soporte 24x7 con el siguiente alcance:
+•	Lunes a Viernes de 9 a 18 horas: Soporte Técnico, Atención Comercial y Soporte Transaccional.
+•	Fuera de Horario Laboral: Soporte Transaccional.
+**CANALES DE ATENCIÓN**
+•	Teléfono: +54 11 4379 3460
+•	Formulario de Contacto: click aquí
+•	Help Desk: soporte@decidir.com.ar
+•	Control de Red: controldered@decidir.com.ar (en caso de disrupción transaccional)
 
 [<sub>Volver a inicio</sub>](#inicio)
 
