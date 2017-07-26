@@ -4,6 +4,7 @@ import com.decidir.sdk.dto.BillingData
 import com.decidir.sdk.dto.CardData
 import com.decidir.sdk.dto.CardFraudDetectionData
 import com.decidir.sdk.dto.CardTokenData
+import com.decidir.sdk.dto.CardTrackInfo
 import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
 import com.decidir.sdk.dto.Customer
@@ -226,6 +227,63 @@ class PaymentServiceTests extends Specification {
         result.result.fraud_detection.status.decision == "green"
         result.result.fraud_detection.status.reason_code == "100"
         result.result.fraud_detection.status.description == "Decision Manager processing"
+    }
+
+    def "test confirmPayment PCI with valid CardTrack Info"() {
+        setup:
+        def fraudDetection = new TicketingFraudDetectionData()
+        fraudDetection.bill_to = billTo
+        fraudDetection.purchase_totals = purchaseTotals
+        fraudDetection.channel = Channel.WEB
+        fraudDetection.customer_in_site = customerInSite
+        fraudDetection.device_unique_id = "devicefingerprintid"
+        fraudDetection.ticketing_transaction_data = ticketingTransactionData
+
+        def customer = new Customer()
+        customer.id = user_id
+
+        def payment = new PaymentPciCardRequest()
+        payment.payment_type = PaymentType.SINGLE
+        payment.currency = Currency.ARS
+        payment.amount = 5
+        payment.customer = customer
+        payment.installments = 7
+        payment.sub_payments = []
+        payment.site_transaction_id = UUID.randomUUID().toString()
+        payment.bin = valid_bin
+
+        payment.payment_method_id = 1
+        payment.fraud_detection = fraudDetection
+
+        def cardTrackInfo = new CardTrackInfo()
+        cardTrackInfo.card_track_1 = "B4507990000004905^Valentin Santiago Gomez^2010datosdiscrecionales"
+        cardTrackInfo.card_track_2 = "4507990000004905=2010datosdiscrecionales"
+
+        def cardData = new CardData()
+        //cardData.card_number= "4507990000004905"
+        //cardData.card_expiration_month = "04"
+        //cardData.card_expiration_year = "20"
+        cardData.security_code = "123"
+        //cardData.card_holder_name ="Juan"
+        cardData.card_track_info = cardTrackInfo
+
+        def cardFraudDetectionData = new CardFraudDetectionData()
+        cardFraudDetectionData.device_unique_identifier ="12345"
+        cardData.fraud_detection = cardFraudDetectionData
+
+        def cardHolderIdentification = new Identification()
+        cardHolderIdentification.number =  "23968498"
+        cardHolderIdentification.type = IdentificationType.DNI
+        cardData.card_holder_identification = cardHolderIdentification
+
+        payment.card_data = cardData
+
+        when:
+        def result = decidir.payment(payment)
+
+        then:
+        result.status == 201
+        result.result.status == Status.APPROVED
     }
 
     def "test confirmPayment PCI with CardTokenData valid"() {
