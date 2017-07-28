@@ -10,6 +10,7 @@ public class CardTrackInfo implements Serializable {
 
     private String card_track_1;
     private String card_track_2;
+    private String input_mode;
 
     public String getCard_track_1() {
         return card_track_1;
@@ -25,5 +26,13 @@ public class CardTrackInfo implements Serializable {
 
     public void setCard_track_2(String card_track_2) {
         this.card_track_2 = card_track_2;
+    }
+
+    public String getInput_mode() {
+        return input_mode;
+    }
+
+    public void setInput_mode(String input_mode) {
+        this.input_mode = input_mode;
     }
 }

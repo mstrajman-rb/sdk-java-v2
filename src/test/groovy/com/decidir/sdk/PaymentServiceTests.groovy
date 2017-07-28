@@ -258,6 +258,7 @@ class PaymentServiceTests extends Specification {
         def cardTrackInfo = new CardTrackInfo()
         cardTrackInfo.card_track_1 = "B4507990000004905^Valentin Santiago Gomez^2010datosdiscrecionales"
         cardTrackInfo.card_track_2 = "4507990000004905=2010datosdiscrecionales"
+        cardTrackInfo.input_mode = "021"
 
         def cardData = new CardData()
         //cardData.card_number= "4507990000004905"
