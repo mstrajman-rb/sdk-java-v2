@@ -83,4 +83,27 @@ class RefundServiceTests extends Specification {
     result.result.parent.history.get(0) != null
   }
 
+  def "test payment refunded with card track info"() {
+    setup:
+    def paymentId = 10623
+    def refundPayment = new RefundPayment()
+    def user = "ccopello"
+    refundPayment.amount = 3
+
+    def cardTrackInfo = new CardTrackInfo()
+    cardTrackInfo.card_track_1 = "B4507990000004905^Valentin Santiago Gomez^2010datosdiscrecionales"
+    cardTrackInfo.card_track_2 = "4507990000004905=2010datosdiscrecionales"
+
+    refundPayment.card_track_info = cardTrackInfo
+
+    when:
+    def result = decidir.refundPayment(paymentId, refundPayment, user)
+
+    then:
+    result.status == 201
+    result.result.id != null
+    result.result.amount != null
+    result.result.status == Status.APPROVED
+  }
+
 }
