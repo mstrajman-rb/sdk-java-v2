@@ -85,7 +85,7 @@ class RefundServiceTests extends Specification {
 
   def "test payment refunded with card track info"() {
     setup:
-    def paymentId = 10623
+    def paymentId = 10642
     def refundPayment = new RefundPayment()
     def user = "ccopello"
     refundPayment.amount = 3
@@ -93,6 +93,7 @@ class RefundServiceTests extends Specification {
     def cardTrackInfo = new CardTrackInfo()
     cardTrackInfo.card_track_1 = "B4507990000004905^Valentin Santiago Gomez^2010datosdiscrecionales"
     cardTrackInfo.card_track_2 = "4507990000004905=2010datosdiscrecionales"
+    cardTrackInfo.input_mode = "021"
 
     refundPayment.card_track_info = cardTrackInfo
 
