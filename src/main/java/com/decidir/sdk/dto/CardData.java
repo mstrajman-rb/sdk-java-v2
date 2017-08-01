@@ -10,6 +10,7 @@ public class CardData extends PCICardData {
 	private String card_expiration_year;
 	private String card_holder_name;
 	private Identification card_holder_identification;
+	private CardTrackInfo card_track_info;
 	
 	public String getCard_number() {
 		return card_number;
@@ -41,5 +42,12 @@ public class CardData extends PCICardData {
 	public void setCard_holder_identification(Identification card_holder_identification) {
 		this.card_holder_identification = card_holder_identification;
 	}
-	
+
+	public CardTrackInfo getCard_track_info() {
+		return card_track_info;
+	}
+
+	public void setCard_track_info(CardTrackInfo card_track_info) {
+		this.card_track_info = card_track_info;
+	}
 }

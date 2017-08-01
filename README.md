@@ -46,6 +46,7 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
   + [Divisas Aceptadas](#divisasa)
   + [Provincias](#provincias)
+  + [Atributos de Excepciones](#atributosExcepciones)
 
 <a name="introduccion"></a>
 ## Introducción
@@ -448,14 +449,17 @@ long idPago = 000123L; //ID devuelto por la operacion de pago (NO CONFUNDIR con 
 String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 RefundPayment refundPayment = new RefundPayment(); //Se instancia sin datos
 try {
-	DecidirResponse<RefundPaymentResponse> devolucion = decidir. refundPayment(idPago, refundPayment, usuario)
+	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario);
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
+} catch (RefundException re) {
+    // Manejo de excepcion en devolucion
+    re.printStackTrace();
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
-	 // ...codigo...
+	// ...codigo...
 } catch (Exception e) {
-	 //Manejo de excepcion general
+	//Manejo de excepcion general
 	// ...codigo...
 }
 // ...codigo...
@@ -483,6 +487,10 @@ try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir. cancelRefund(idPago, idDevolucion, usuario)
 	// Procesamiento de respuesta de anulacion de devolucion
 	// ...codigo...
+} catch (AnnulRefundException are) {
+    are.printStackTrace();
+    // Manejo de excepcion de anulacion de devolucion
+    // ...codigo...
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -518,6 +526,9 @@ try {
 	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario)
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
+} catch (RefundException re) {
+    // Manejo de excepcion en devolucion
+    re.printStackTrace();
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -549,6 +560,10 @@ try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir.cancelRefund(idPago, idDevolucion, usuario)
 	// Procesamiento de respuesta de anulacion de devolucion
 	// ...codigo...
+} catch (AnnulRefundException are) {
+    are.printStackTrace();
+    // Manejo de excepcion de anulacion de devolucion
+    // ...codigo...
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -1099,63 +1114,147 @@ Es usado en:
 
 ## Manejo de Excepciones
 
-Todas las respuestas negativas tanto de transacciones rechazadas como de errores en los datos enviados al backend de DECIDIR deberán ser manejadas mediante Excepciones.
+Todas las respuestas negativas del backend de DECIDIR deberán ser manejadas mediante Excepciones.
+
+Las Excepciones tienen dos naturalezas:
+
+* Resultados de Transacciones y Operaciones:
+    * [PaymentException](#paymentException)
+    * [RefundException](#refundException)
+    * [AnnulRefundException](#annulRefundException)
+* Errores en el proceso de Transacción y Operaciones:
+    * [DecidirException](#decidirException)
+        * [ValidateException](#validateException)
+        * [ApiException](#apiException)
+        * [NotFoundException](#notFoundException)
+
 
 <a name="paymentException"></a>
-### PaymentException()
+### PaymentException
 
 El <code>PaymentException</code> será lanzado cuando:
 
 * Un pago haya sido RECHAZADO
 * El control de CyberSource haya rechazado el Pago (Excepto para Pagos en dos pasos).
 
+#### Atributos
+	- status: int
+	- message: String
+	- paymentResponse: PaymentResponse
+
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>PaymentException</code>:
 ```java
 try {
+    // ...codigo...
 	// Pago enviado a DECIDIR
 	// ...codigo...
 } catch (PaymentException pe) {
-	// Pago rechazado
-	// Error de autenticación
-	// ...codigo...
+    // Estado general de la Excepción
+    int httpStatus = pe.getStatus();
+    String exceptionMessage = pe.getMessage();
+
+    // Respuesta de DECIDIR
+    PaymentResponse paymentResponse = pe.getPayment();
 }
 ```
-
 <a name="decidirException"></a>
-### DecidirException()
+### DecidirException
 
-El <code>DecidirException</code> será lanzado cuando DECIDIR no pueda procesar una solicitud. Además es la superclass de las siguientes excepciones:
+El <code>DecidirException</code> será lanzado cuando DECIDIR no pueda procesar una solicitud.
+
+#### Atributos
+    - status: int
+    - message: String
+
+Además es <code>superclass</code> de las siguientes excepciones:
 
 <a name="validateException"></a>
-#### ValidateException()
+#### ValidateException
 
 Es lanzado cuando DECIDIR intenta procesar datos con formatos no esperados.
 
+#### Atributos
+    - status: int
+    - message: String
+    - errorDetail: ValidateError
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>ValidateException</code>:
+```java
+try {
+    // ...codigo...
+    // Pago enviado a DECIDIR
+    // ...codigo...
+} catch (ValidateException ve) {
+    // Estado general de la Excepción
+    int httpStatus = ve.getStatus();
+    String exceptionMessage = ve.getMessage();
+
+    // Detalle de error en DECIDIR
+    ValidateError errorDetail = ve.getErrorDetail();
+}
+```
+
 <a name="apiException"></a>
-#### ApiException()
+#### ApiException
 
 Es lanzado por los siguientes motivos:
 * Inconvenientes de acceso a los endpoints del API DECIDIR
 * ApiKey incorrecta
 * Llamadas demasiado frecuentes al API DECIDIR
 
-<a name="notFoundException"></a>
-#### NotFoundException()
+#### Atributos
+    - status: int
+    - message: String
+    - errorDetail: ApiError
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
 
-Es lanzado cuando DECIDIR intenta procesar datos incompletos.
-
+Ejemplo de cómo capturar el <code>ApiException</code>:
 ```java
 try {
-	// Pago enviado a DECIDIR
-	// ...codigo...
-} catch (NotFoundException nfe) {
-	// Datos incompletos
-	// Formato de datos no esperados
-	// etc.
-	// ...codigo...
+    // ...codigo...
+    // Pago enviado a DECIDIR
+    // ...codigo...
+} catch (ApiException ae) {
+    // Estado general de la Excepción
+    int httpStatus = ae.getStatus();
+    String exceptionMessage = ae.getMessage();
+
+    // Detalle de error en DECIDIR
+    ApiError errorDetail = ae.getErrorDetail();
 }
 ```
+
+<a name="notFoundException"></a>
+#### NotFoundException
+
+Es lanzado cuando DECIDIR intenta procesar datos incompletos o no existentes en DECIDIR.
+
+#### Atributos
+    - status: int
+    - message: String
+    - errorDetail: NotFoundError
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>NotFoundException</code>:
+```java
+try {
+    // ...codigo...
+    // Pago enviado a DECIDIR
+    // ...codigo...
+} catch (NotFoundException nfe) {
+    int httpStatus = nfe.getStatus();
+    String exceptionMessage = nfe.getMessage();
+
+    // Detalle de error en DECIDIR
+    NotFoundError errorDetail = nfe.getErrorDetail();
+}
+```
+
 <a name="refundException"></a>
-### RefundException()
+### RefundException
 
 Es lanzado cuando DECIDIR rechaza:
 
@@ -1163,13 +1262,59 @@ Es lanzado cuando DECIDIR rechaza:
 * Devoluciones parciales
 * Anulaciones
 
+#### Atributos
+    - status: int
+    - message: String
+    - refundPaymentResponse: RefundPaymentResponse
+
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>RefundException</code>:
+```java
+try {
+    // ...codigo...
+    // Devolución enviada a DECIDIR
+    // ...codigo...
+} catch (RefundException re) {
+    // Estado general de la Excepción
+    int httpStatus = re.getStatus();
+    String exceptionMessage = re.getMessage();
+    
+    // Respuesta de DECIDIR
+    RefundPaymentResponse refundPayment = re.getRefundPayment();
+}
+```
+
 <a name="annulRefundException"></a>
-### AnnulRefundException()
+### AnnulRefundException
 
 Es lanzado cuando DECIDIR rechaza:
 
 * Anulaciones de devoluciones totales
 * Anulaciones de devoluciones parciales
+
+#### Atributos
+    - status: int
+    - message: String
+    - annulRefundResponse: AnnulRefundResponse
+
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>AnnulRefundException</code>:
+```java
+try {
+    // ...codigo...
+    // Anulación de devolución enviada a DECIDIR
+    // ...codigo...
+} catch (AnnulRefundException are) {
+    // Estado general de la Excepción
+    int httpStatus = are.getStatus();
+    String exceptionMessage = are.getMessage();
+
+    // Respuesta de DECIDIR
+    AnnulRefundResponse annulRefund = are.getAnnulRefund();
+}
+```
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -1273,5 +1418,25 @@ Es lanzado cuando DECIDIR rechaza:
 | Santiago del Estero | G |
 | Tierra del Fuego | V |
 | Tucumán | T |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="atributosExcepciones"></a>
+
+### Atributos de Excepciones
+
+|Atributo         |Tipo                 |Descripción                     |Pertenece a                                                                                                |
+|:----------------|:--------------------|:-------------------------------|:----------------------------------------------------------------------------------------------------------|
+|status           |int                  |Estado HTTP                     |Todas                                                                                                      |
+|message          |String               |Descripción del Estado HTTP     |Todas                                                                                                      |
+|errorDetail      |ValidateError        |Descripción del error           |[ValidateException](#validateException)                                                                    |
+|errorDetail      |ApiError             |Descripción del error           |[ApiException](#apiException)                                                                              |
+|errorDetail      |NotFoundError        |Descripción del error           |[NotFoundException](#notFoundException)                                                                    |
+|validation_errors|List<ValidationError>|Lista de Errores de validación  |[ValidateError](#validateException)                                                                        |
+|code             |String               |Código de error                 |[ValidationError](#validateException)<br/>[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)|
+|param            |String               |Parámetro involucrado           |[ValidationError](#validateException)                                                                      |
+|message          |String               |Descripción del error           |[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)                                          |
+|id               |String               |Valor identificatorio           |[NotFoundError](#notFoundException)                                                                        |
+|entityName       |String               |Nombre de la entidad involucrada|[NotFoundError](#notFoundException)                                                                        |
 
 [<sub>Volver a inicio</sub>](#inicio)

@@ -24,7 +24,7 @@ public abstract class Payment implements Serializable {
 	private Aggregator aggregate_data;
 	private String establishment_name;
 	private String email;
-    private String bank_code;
+    private Integer bank_id;
     private String invoice_expiration;
 
 	public Long getId() {
@@ -155,12 +155,12 @@ public abstract class Payment implements Serializable {
 		this.email = email;
 	}
 
-    public String getBank_code() {
-        return bank_code;
+    public Integer getBank_id() {
+        return bank_id;
     }
 
-    public void setBank_code(String bank_code) {
-        this.bank_code = bank_code;
+    public void setBank_id(Integer bank_id) {
+        this.bank_id = bank_id;
     }
 
     public String getInvoice_expiration() {

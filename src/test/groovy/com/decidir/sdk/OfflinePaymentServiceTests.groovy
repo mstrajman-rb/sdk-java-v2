@@ -1,26 +1,16 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.BillingData
-import com.decidir.sdk.dto.Channel
 import com.decidir.sdk.dto.Currency
-import com.decidir.sdk.dto.Customer
-import com.decidir.sdk.dto.CustomerInSite
-import com.decidir.sdk.dto.FraudDetectionDataResponse
-import com.decidir.sdk.dto.Item
 import com.decidir.sdk.dto.OfflinePaymentRequest
 import com.decidir.sdk.dto.PaymentRequest
 import com.decidir.sdk.dto.PaymentType
-import com.decidir.sdk.dto.PurchaseTotals
 import com.decidir.sdk.dto.Status
-import com.decidir.sdk.dto.TicketingFraudDetectionData
-import com.decidir.sdk.dto.TicketingTransactionData
-import com.decidir.sdk.exceptions.PaymentException
 import spock.lang.Specification
 
 class OfflinePaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00040407'//'660b244e41bf404b821789c0113c6337'
-    public static final String token = "2252e216-ba8c-44cd-8044-37a230a79e73"
+    public static final String secretAccessToken = '28464383'//'660b244e41bf404b821789c0113c6337'
+    public static final String token = "00cb11bf-11f2-4007-8411-107ca0117111"
     public static final String apiUrl = "http://localhost:9002"
 
     def decidir
@@ -40,7 +30,7 @@ class OfflinePaymentServiceTests extends Specification {
         payment.currency = Currency.ARS
         payment.payment_type = PaymentType.SINGLE
         payment.email = "persona@email.com"
-        payment.bank_code = "ISEL"
+        payment.bank_id = 1
         payment.invoice_expiration = "311219 2359"
 
         when:
