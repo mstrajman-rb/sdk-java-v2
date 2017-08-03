@@ -10,6 +10,8 @@ public class PaymentForm implements Serializable {
 
     private Currency currency;
     private Long amount;
+    private Integer installments;
+    private Integer payment_method_id;
     private PaymentType payment_type; // single / distributed
     private List<SubPayment> sub_payments;
 
@@ -29,7 +31,23 @@ public class PaymentForm implements Serializable {
         this.amount = amount;
     }
 
-    public PaymentType getPayment_type() {
+    public Integer getInstallments() {
+		return installments;
+	}
+
+	public void setInstallments(Integer installments) {
+		this.installments = installments;
+	}
+
+	public Integer getPayment_method_id() {
+		return payment_method_id;
+	}
+
+	public void setPayment_method_id(Integer payment_method_id) {
+		this.payment_method_id = payment_method_id;
+	}
+
+	public PaymentType getPayment_type() {
         return payment_type;
     }
 
