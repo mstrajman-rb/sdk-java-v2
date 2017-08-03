@@ -1,5 +1,7 @@
 package com.decidir.sdk.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
@@ -22,6 +24,7 @@ public abstract class FraudDetectionDataRequest implements FraudDetectionData {
 	private CopyPasteCardData copy_paste_card_data;
 	private Boolean send_to_cs;
 	private String device_unique_id;
+	private List<Csmdd> csmdds;
 
 	public BillingData getBill_to() {
 		return bill_to;
@@ -85,5 +88,13 @@ public abstract class FraudDetectionDataRequest implements FraudDetectionData {
 
 	public void setDevice_unique_id(String device_unique_id) {
 		this.device_unique_id = device_unique_id;
+	}
+
+	public List<Csmdd> getCsmdds() {
+		return csmdds;
+	}
+
+	public void setCsmdds(List<Csmdd> csmdds) {
+		this.csmdds = csmdds;
 	}
 }
