@@ -1519,17 +1519,6 @@ la distribución de pagos se realiza estáticamente.
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-
-<a name="parametrosDevolucion"></a>
-#### Parámetros para Devoluciones parciales, totales y Anulaciones.
-
-
-|Campo |Definición                                                                                                                                                                                                                       |Obligatorio(SI/NO)|Validación                                                                                          |Ejemplo     |
-|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:---------------------------------------------------------------------------------------------------|:-----------|
-|amount|Importe del pago a devolver.</br> Si se completa el campo antes del cierre por un monto menor al de la compra se toma como devolucion parcial</br> Si se ingresa el monto total o no se envia dicho campo se toma como anulacion.|NO                |Monto total para un pago = 9223372036854775807. Este mismo se debe distribuir sobre los subpayments.|amount: 1000|
-
-[<sub>Volver a inicio</sub>](#inicio)
-
 <a name="parametrosAgregador"></a>
 ##### Parámetros para pagos de Comercios Agregadores.
 
@@ -1547,6 +1536,17 @@ la distribución de pagos se realiza estáticamente.
 |category             |Código de actividad (rubro)                                                          |SI (Visa), NO (Master)|Alfanumérico 5 caracteres.                                                           |"category" : "1234m"                   |
 |channel              |Código de canal                                                                      |SI (Visa), NO (Master)|Alfanumérico 3 caracteres.                                                           |"channel" : "89j"                      |
 |geographic_code      |Código geográfico del vendedor                                                       |SI (Visa), NO (Master)|Alfanumérico 5 caracteres.                                                           |"geographic_code" : "12345"            |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="parametrosDevolucion"></a>
+#### Parámetros para Devoluciones parciales, totales y Anulaciones.
+
+
+|Campo |Definición                                                                                                                                                                                                                       |Obligatorio(SI/NO)|Validación                                                                                          |Ejemplo     |
+|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:---------------------------------------------------------------------------------------------------|:-----------|
+|amount|Importe del pago a devolver.</br> Si se completa el campo antes del cierre por un monto menor al de la compra se toma como devolucion parcial</br> Si se ingresa el monto total o no se envia dicho campo se toma como anulacion.|NO                |Monto total para un pago = 9223372036854775807. Este mismo se debe distribuir sobre los subpayments.|amount: 1000|
 
 [<sub>Volver a inicio</sub>](#inicio)
 
