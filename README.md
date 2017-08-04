@@ -17,6 +17,10 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Transacción simple](#single)
       + [Transacción distribuida](#distributed)
       + [Operación en dos pasos](#twosteps)
+      <!--- + [Transacción de Pagos VTE VISA](#pagoAgregador)(TODO) -->
+      <!--- + [Transacción de Comercio Agregador](#pagoAgregador)(TODO) -->
+      <!--- + [Transacción Offline](#pagoOffline) (TODO) -->
+      <!--- + [Transacción PMC](#pagoPMC)(TODO) -->
     + [Listado de Pagos](#getallpayments)
     + [Información de un Pago](#getpaymentinfo)
     + [Devoluciones de pagos](#refunds)
@@ -24,6 +28,7 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Anulación de Devolución Total](#deleterefund)
       + [Devolución Parcial de un Pago](#partialrefund)
       + [Anulación de Devolución Parcial](#deletepartialrefund)
+      <!--- + [Historial de Devoluciones](#historyrefund) (TODO) -->
   + [Tokenización de tarjetas de crédito](#tokenizaciontarjeta)
     + [Listado de tarjetas tokenizadas](#listadotarjetastokenizadas)
     + [Ejecución de pago tokenizado](#pagotokenizado)
@@ -47,6 +52,14 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Códigos de Medios de Pago](#codigos-de-medios-de-pago)
   + [Divisas Aceptadas](#divisasa)
   + [Provincias](#provincias)
+  + [Parámetros](#parametros)
+    + [Parámetros de Pagos](#parametrosPago)
+        + [Parámetros para PagoMisCuentas](#parametrosPMC)
+        + [Parámetros para Pago Offline](#parametrosOffline)
+        + [Parámetros para Pago Distribuido por Monto](#parametrosDistMonto)
+        + [Parámetros para Pago Distribuido por Porcentaje](#parametrosDistPorc)
+        + [Parámetros de Devolución](#parametrosDevolucion)
+        + [Parámetros de Comercio Agregador](#parametrosAgregador)
   + [Atributos de Excepciones](#atributosExcepciones)
 
 <a name="introduccion"></a>
@@ -245,6 +258,13 @@ Existen transacciones distribuidas definidas por monto o por porcentaje. Para in
 
 A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n distribuida por monto sin [Cybersource](#cybersource).
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+*Nota Técnica*: A diferencia de las Transacciones Simples, para las Transacciones Distribuidas, el parámetro payment_type debe ser <code>PaymentType.DISTRIBUTED</code>; y el parámetro sub_payments 
+se debe popular con los sub-sitios y los montos distribuidos de manera dinámica.
+
+* En Transacciones distribuidas por Monto, la sumatoria de los montos distribuidos debe ser exactamente igual al monto total de la operación Padre.
+* En Transacciones distribuidas por Porcentaje, el parámetro sub_payments no debe completarse, pues la distribución es estática 
+y se configura en el SAC.
 
 ```java
 // ...codigo...
@@ -1429,6 +1449,104 @@ try {
 | Santiago del Estero | G |
 | Tierra del Fuego | V |
 | Tucumán | T |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="parametros"></a>
+
+### Parámetros
+En ésta sección se describirán todos los parámetros utilizados por la SDK para realizar Operaciones 
+y Transacciones.
+
+<a name="parametrosPago"></a>
+#### Parámetros de Pagos
+
+|Campo              |Definición                                                                                                                                               |Obligatorio(SI/NO)|Validación                                                                                                        |Ejemplo                                |
+|:------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:-----------------------------------------------------------------------------------------------------------------|:--------------------------------------|
+|user_id            |usuario que esta haciendo uso del sitio (se utiliza para tokenizacion)                                                                                   |Condicional       |Sin validacion                                                                                                    |user_id: "marcos"                      |
+|site_transaction_id|nro de operacion                                                                                                                                         |SI                |Alfanumerico de hasta 39 caracteres                                                                               |site_transaction_id: "prueba 1"        |
+|site_id            |Site relacionado a otro site, este mismo no requiere del uso de la apikey ya que para el pago se utiliza la apikey del site al que se encuentra asociado.|NO                |Se debe encontrar configurado en la tabla site_merchant como merchant_id del site_id</br>Numérico de 8 caracteres.|site_id: "28464385"                    |
+|token              |token generado en el primer paso                                                                                                                         |SI                |Alfanumerico de hasta 36 caracteres. No se podra ingresar un token utilizado para un  pago generado anteriormente.|token: ""                              |
+|payment_method_id  |id del medio de pago                                                                                                                                     |SI                |El id debe coincidir con el medio de pago de tarjeta ingresada.                                                   |payment_method_id: 1                   |
+|bin                |primeros 6 numeros de la tarjeta                                                                                                                         |SI                |Se valida que sean los primeros 6 digitos de la tarjeta ingresada al generar el token.                            |bin: "456578"                          |
+|amount             |importe del pago                                                                                                                                         |SI                |Importe minimo = 1 ($0.01)</br> Importe Maximo = 9223372036854775807 ($92233720368547758.07)                      |amount: 20000                          |
+|currency           |moneda                                                                                                                                                   |SI                |Valor permitido: ARS                                                                                              |currency: "ARS"                        |
+|installments       |cuotas del pago                                                                                                                                          |SI                |Valor minimo = 1</br>Valor maximo = 99                                                                            |installments: 1                        |
+|payment_type       |forma de pago                                                                                                                                            |SI                |Valor permitido: single / distributed                                                                             |payment_type: "single"                 |
+|establishment_name |nombre de comercio                                                                                                                                       |Condicional       |Alfanumerico de hasta 25 caracteres                                                                               |establishment_name : "prueba desa soft"|
+
+
+<a name="parametrosPMC"></a>
+##### Parámetros para PagoMisCuentas
+
+|Campo             |Definición                                                                                                                    |Obligatorio(SI/NO)|Validación          |Ejemplo                           |
+|:-----------------|:-----------------------------------------------------------------------------------------------------------------------------|:-----------------|:-------------------|:---------------------------------|
+|bank_code         |ID del banco que se utilizara para realizar el pago.</br>Se guarda en la tabla spstransac.idbanco                             |SI                |Dato variable       |bank_code : "17"                  |
+|invoice_expiration|Fecha y hora de vencimiento de la factura. Puede omitirse las 'horas' y 'minutos', informando solo la fecha con formato DDMMYY|SI                |Formato: DDMMYY HHMM|invoice_expiration : "311219 2359"|
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="parametrosOffline"></a>
+##### Parámetros para Pagos Offline
+
+|Campo             |Definición                                                                                                                                    |Obligatorio(SI/NO)|Validación                            |Ejemplo                        |
+|:-----------------|:---------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:-------------------------------------|:------------------------------|
+|cod_p3            |Son los días que existen entre el 1º y 2º vencimiento de la factura. Poner “00” si la factura no tiene 2º vencimiento.                        |SI                |Longitud 2 caracteres numéricos       |"cod_p3": "11"                 |
+|cod_p4            |Son los días después del 1º vencimiento y hasta el que el cliente puede pagar la factura por Rapipago.                                        |SI                |Longitud 3 caracteres numéricos       |"cod_p4": "134"                |
+|client            |-Código de cliente provisto al momento de habilitar al comercio.</br>-Nro de establecimiento visa dentro de visa, nro fijo para cada comercio|SI                |8 dígitos numericos , dato fijo       |"client": "12345678"           |
+|surcharge         |Recargo por Vto. del plazo, dato generado por el comercio. Es un monto (no un porcentaje). 5 cifras enteras y 2 decimales.                    |SI                |Longitud máxima 7 caracteres numericos|"surcharge": 1234567           |
+|invoice_expiration|Fecha de vencimiento para el pago del cupón, dato generado por el comercio                                                                    |SI                |Formato: AAMMDD                       |"invoice_expiration" : "191223"|
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="parametrosDistMonto"></a>
+##### Parámetros para Pagos Distribuidos por Monto
+
+
+|Campo                    |Definición                    |Obligatorio(SI/NO)|Validación                                                                          |Ejemplo            |
+|:------------------------|:-----------------------------|:-----------------|:-----------------------------------------------------------------------------------|:------------------|
+|sub_payments.site_id     |site_id del sub_payment       |SI                |Numérico de 8 caracteres, se debe encontrar habilitado y vinculado al site padre    |site_id: "28464384"|
+|sub_payments.installments|Cuotas del sub_payment        |SI                |Valor minimo = 1 </br> Valor maximo = 99                                            |installments: 5    |
+|sub_payments.amount      |Monto que lleva el sub_payment|SI                |Monto total para un pago = 9223372036854775807. Este mismo es parte del amount Total|amount: 10000      |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="parametrosDistPorc"></a>
+##### Parámetros para Pagos Distribuidos por Porcentaje
+
+Las transacciones distribuidas por Porcentaje no llevan parámetros adicionales pues 
+la distribución de pagos se realiza estáticamente.
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="parametrosDevolucion"></a>
+##### Parámetros para Devoluciones parciales, totales y Anulaciones.
+
+
+|Campo |Definición                                                                                                                                                                                                                       |Obligatorio(SI/NO)|Validación                                                                                          |Ejemplo     |
+|:-----|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:---------------------------------------------------------------------------------------------------|:-----------|
+|amount|Importe del pago a devolver.</br> Si se completa el campo antes del cierre por un monto menor al de la compra se toma como devolucion parcial</br> Si se ingresa el monto total o no se envia dicho campo se toma como anulacion.|NO                |Monto total para un pago = 9223372036854775807. Este mismo se debe distribuir sobre los subpayments.|amount: 1000|
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="parametrosAgregador"></a>
+##### Parámetros para pagos de Comercios Agregadores.
+
+
+|Campo                |Definición                                                                           |Obligatorio(SI/NO)    |Validación                                                                           |Ejemplo                                |
+|:--------------------|:------------------------------------------------------------------------------------|:---------------------|:------------------------------------------------------------------------------------|:--------------------------------------|
+|indicator            |Indicador del tipo de documento                                                      |SI                    |Numérico, 1 dígito.</br>Valores posibles: 0 CUIT, 1 CUIL, 2 Número único             |"indicator" : "0"                      |
+|identification_number|Numero de CUIT, CUIL o Numero Único (en este caso completar con ceros a la izquierda)|SI                    |Caracter, 11 posiciones                                                              |"identification_number" : "20380902325"|
+|bill_to_pay          |Numero de Factura a Pagar                                                            |SI (Visa), NO (Master)|Alfanumérico 12 caracteres.                                                          |"bill_to_pay" : "1234km1"              |
+|bill_to_refund       |Número de factura de anulación/Devolución                                            |SI (Visa), NO (Master)|Alfanumérico 12 caracteres.                                                          |"bill_to_refund" : "1234567m90120"     |
+|merchant_name        |Nombre de comercio o nombre y apellido del vendedor                                  |SI (Visa), NO (Master)|Alfanumérico 20 caracteres. En caso de nombre y apellido, deben estar separados por /|"merchant_name" : "dario/gomez"        |
+|street               |Dirección del comercio o del vendedor                                                |SI (Visa), NO (Master)|Alfanumérico 20 caracteres.                                                          |"street" : "Jose Maria"                |
+|number               |Número de puerta                                                                     |SI (Visa), NO (Master)|Alfanumérico 6 caracteres.                                                           |"number" : "9898"                      |
+|postal_code          |Código postal                                                                        |SI (Visa), NO (Master)|Alfanumérico 8 caracteres.                                                           |"postal_code" : "1234"                 |
+|category             |Código de actividad (rubro)                                                          |SI (Visa), NO (Master)|Alfanumérico 5 caracteres.                                                           |"category" : "1234m"                   |
+|channel              |Código de canal                                                                      |SI (Visa), NO (Master)|Alfanumérico 3 caracteres.                                                           |"channel" : "89j"                      |
+|geographic_code      |Código geográfico del vendedor                                                       |SI (Visa), NO (Master)|Alfanumérico 5 caracteres.                                                           |"geographic_code" : "12345"            |
 
 [<sub>Volver a inicio</sub>](#inicio)
 
