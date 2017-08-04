@@ -58,8 +58,8 @@ Modulo para conexión con gateway de pago DECIDIR2
         + [Parámetros para Pago Offline](#parametrosOffline)
         + [Parámetros para Pago Distribuido por Monto](#parametrosDistMonto)
         + [Parámetros para Pago Distribuido por Porcentaje](#parametrosDistPorc)
-        + [Parámetros de Devolución](#parametrosDevolucion)
         + [Parámetros de Comercio Agregador](#parametrosAgregador)
+    + [Parámetros de Devolución](#parametrosDevolucion)
   + [Atributos de Excepciones](#atributosExcepciones)
 
 <a name="introduccion"></a>
@@ -1521,7 +1521,7 @@ la distribución de pagos se realiza estáticamente.
 
 
 <a name="parametrosDevolucion"></a>
-##### Parámetros para Devoluciones parciales, totales y Anulaciones.
+#### Parámetros para Devoluciones parciales, totales y Anulaciones.
 
 
 |Campo |Definición                                                                                                                                                                                                                       |Obligatorio(SI/NO)|Validación                                                                                          |Ejemplo     |
