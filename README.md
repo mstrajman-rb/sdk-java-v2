@@ -61,6 +61,7 @@ Modulo para conexión con gateway de pago DECIDIR2
         + [Parámetros de Comercio Agregador](#parametrosAgregador)
     + [Parámetros de Devolución](#parametrosDevolucion)
   + [Atributos de Excepciones](#atributosExcepciones)
+  + [Errores de Sistema](#erroresSistema)
 
 <a name="introduccion"></a>
 ## Introducción
@@ -1567,5 +1568,20 @@ la distribución de pagos se realiza estáticamente.
 |message          |String               |Descripción del error           |[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)                                          |
 |id               |String               |Valor identificatorio           |[NotFoundError](#notFoundException)                                                                        |
 |entityName       |String               |Nombre de la entidad involucrada|[NotFoundError](#notFoundException)                                                                        |
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="erroresSistema"></a>
+
+### Errores de Sistema
+Estos códigos de Errores son los status en las Excepciones.
+
+|Código(HTTP)|Mensaje                |Descripción                                     |
+|:-----------|:----------------------|:-----------------------------------------------|
+|400         |malformed_request_error|Error en la comunicación del SDK con el API REST|
+|401         |authentication_error   |ApiKey Inválido                                 |
+|402         |invalid_request_error  |Error por datos inválidos                       |
+|404         |not_found_error        |Error con datos no encontrados                  |
+|409         |api_error              |Error inesperado en la API REST                 |
 
 [<sub>Volver a inicio</sub>](#inicio)
