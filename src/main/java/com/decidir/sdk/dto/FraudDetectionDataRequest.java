@@ -18,7 +18,7 @@ public abstract class FraudDetectionDataRequest implements FraudDetectionData {
 
 	private BillingData bill_to;
 	private PurchaseTotals purchase_totals;
-	private Channel channel;
+	private String channel;
 	private String dispatch_method;
 	private CustomerInSite customer_in_site;
 	private CopyPasteCardData copy_paste_card_data;
@@ -42,11 +42,15 @@ public abstract class FraudDetectionDataRequest implements FraudDetectionData {
 		this.purchase_totals = purchase_totals;
 	}
 
-	public Channel getChannel() {
+	public String getChannel() {
 		return channel;
 	}
 
 	public void setChannel(Channel channel) {
+		this.channel = channel.toValue();
+	}
+
+	public void setChannel(String channel) {
 		this.channel = channel;
 	}
 
