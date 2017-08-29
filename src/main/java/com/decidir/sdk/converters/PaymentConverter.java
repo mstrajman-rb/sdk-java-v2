@@ -5,7 +5,10 @@ import com.decidir.sdk.dto.OfflinePaymentResponse;
 import com.decidir.sdk.dto.Page;
 import com.decidir.sdk.dto.PaymentResponse;
 
+import com.decidir.sdk.payments.GDSPaymentResponse;
 import retrofit2.Response;
+
+import java.io.Serializable;
 
 /**
  * Created by biandra on 08/07/16.
@@ -32,6 +35,14 @@ public class PaymentConverter {
         DecidirResponse<OfflinePaymentResponse> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(payment);
+        dResponse.setMessage(response.message());
+        return dResponse;
+    }
+
+    public DecidirResponse<GDSPaymentResponse> convert(Response<GDSPaymentResponse> response, GDSPaymentResponse body) {
+        DecidirResponse<GDSPaymentResponse> dResponse = new DecidirResponse();
+        dResponse.setStatus(response.code());
+        dResponse.setResult(body);
         dResponse.setMessage(response.message());
         return dResponse;
     }

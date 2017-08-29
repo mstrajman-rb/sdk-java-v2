@@ -1,5 +1,7 @@
 package com.decidir.sdk.dto;
 
+import com.decidir.sdk.payments.Payment;
+
 /**
  * DTO Payment PCI with card data used to communicate with Decidir's Payment Service 
  * <br>
@@ -10,7 +12,7 @@ package com.decidir.sdk.dto;
  * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
  * CardData card_data = ... // {@link CardData}
  * paymentRequest.setCard_data(card_data);  
- * //common payment data - i.e. see {@link Payment}
+ * //common payment data - i.e. see {@link Payment }
  * paymentRequest.setSite_transaction_id("0001234");
  * paymentRequest.setUser_id("client_username");
  * paymentRequest.setPayment_method_id(15); //mastercard

@@ -1,4 +1,6 @@
-package com.decidir.sdk.dto;
+package com.decidir.sdk.payments;
+
+import com.decidir.sdk.dto.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +28,7 @@ public abstract class Payment implements Serializable {
 	private String email;
     private Integer bank_id;
     private String invoice_expiration;
+	private String payment_mode;
 
 	public Long getId() {
 		return id;
@@ -170,4 +173,12 @@ public abstract class Payment implements Serializable {
     public void setInvoice_expiration(String invoice_expiration) {
         this.invoice_expiration = invoice_expiration;
     }
+
+	public String getPayment_mode() {
+		return payment_mode;
+	}
+
+	protected void setPayment_mode(String payment_mode) {
+		this.payment_mode = payment_mode;
+	}
 }

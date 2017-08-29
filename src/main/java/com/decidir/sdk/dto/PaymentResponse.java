@@ -2,6 +2,7 @@ package com.decidir.sdk.dto;
 
 import java.io.Serializable;
 
+import com.decidir.sdk.payments.Payment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**

@@ -2,6 +2,7 @@ package com.decidir.sdk.resources;
 
 import com.decidir.sdk.dto.*;
 
+import com.decidir.sdk.payments.GDSPaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -27,7 +28,10 @@ public interface PaymentApi {
 
   @POST("payments")
   Call<OfflinePaymentResponse> payOffline(@Body OfflinePaymentRequest offlinePayment);
-  
+
+  @PUT("payments")
+  Call<GDSPaymentResponse> payGdsNoPci(@Body GDSPaymentRequest gdsPayment);
+
   @PUT("payments/{paymentId}")
   Call<PaymentResponse> paymentConfirm(@Header("User") String user, @Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);
 }

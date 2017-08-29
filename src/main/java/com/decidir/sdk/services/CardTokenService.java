@@ -5,6 +5,7 @@ import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.dto.CardTokens;
 import com.decidir.sdk.dto.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
+import com.decidir.sdk.dto.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.CardTokenApi;
 import retrofit2.Response;

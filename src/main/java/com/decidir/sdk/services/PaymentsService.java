@@ -7,6 +7,7 @@ import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
+import com.decidir.sdk.payments.GDSPaymentResponse;
 import com.decidir.sdk.resources.PaymentApi;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -124,6 +125,24 @@ public class PaymentsService {
             return processOfflinePaymentResponse(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<GDSPaymentResponse> gdsPaymentNoPci(GDSPaymentRequest gdsPayment) {
+        try {
+            Response<GDSPaymentResponse> response = this.paymentApi.payGdsNoPci(gdsPayment).execute();
+            return processGDSPaymentResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    private DecidirResponse<GDSPaymentResponse> processGDSPaymentResponse(Response<GDSPaymentResponse> response)
+                    throws IOException, JsonParseException, JsonMappingException {
+        if (response.isSuccessful()) {
+            return paymentConverter.convert(response, response.body());
+        } else {
+            throw new Error("ask what to do here"); // TODO consultar como manejar el error
         }
     }
 
