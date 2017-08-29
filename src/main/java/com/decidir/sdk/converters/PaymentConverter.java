@@ -15,35 +15,12 @@ import java.io.Serializable;
  */
 public class PaymentConverter {
 
-    public DecidirResponse<PaymentResponse> convert(Response<PaymentResponse> response, PaymentResponse payment){
-        DecidirResponse<PaymentResponse> dResponse = new DecidirResponse();
-        dResponse.setStatus(response.code());
-        dResponse.setResult(payment);
-        dResponse.setMessage(response.message());
-        return dResponse;
-    }
-
-    public DecidirResponse<Page> convert(Response<Page> response, Page page) {
-        DecidirResponse<Page> dResponse = new DecidirResponse();
-        dResponse.setStatus(response.code());
-        dResponse.setResult(page);
-        dResponse.setMessage(response.message());
-        return dResponse;
-    }
-
-    public DecidirResponse<OfflinePaymentResponse> convert(Response<OfflinePaymentResponse> response, OfflinePaymentResponse payment){
-        DecidirResponse<OfflinePaymentResponse> dResponse = new DecidirResponse();
-        dResponse.setStatus(response.code());
-        dResponse.setResult(payment);
-        dResponse.setMessage(response.message());
-        return dResponse;
-    }
-
-    public DecidirResponse<GDSPaymentResponse> convert(Response<GDSPaymentResponse> response, GDSPaymentResponse body) {
-        DecidirResponse<GDSPaymentResponse> dResponse = new DecidirResponse();
+    public <A> DecidirResponse<A>  convert(Response<A> response, A body) {
+        DecidirResponse<A> dResponse = new DecidirResponse();
         dResponse.setStatus(response.code());
         dResponse.setResult(body);
         dResponse.setMessage(response.message());
         return dResponse;
     }
+
 }
