@@ -29,7 +29,7 @@ public interface PaymentApi {
   @POST("payments")
   Call<OfflinePaymentResponse> payOffline(@Body OfflinePaymentRequest offlinePayment);
 
-  @PUT("payments")
+  @POST("payments")
   Call<GDSPaymentResponse> payGdsNoPci(@Body GDSPaymentRequest gdsPayment);
 
   @PUT("payments/{paymentId}")
