@@ -25,7 +25,7 @@ public abstract class Payment implements Serializable {
 	private String plan_id;
 	private Aggregator aggregate_data;
 	private String establishment_name;
-	private String payment_mode;
+	protected String payment_mode;
 
 	public Long getId() {
 		return id;
