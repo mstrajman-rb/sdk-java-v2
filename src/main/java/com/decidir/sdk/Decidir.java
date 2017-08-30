@@ -204,7 +204,7 @@ public final class Decidir {
 	/**
 	 * Executes a new offline payment using a generated payment token
 	 *
-	 * @param gdsPayment
+	 * @param gdsPaymentNoPci
 	 *            {@link OfflinePaymentRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link OfflinePayment}
 	 * @throws PaymentException

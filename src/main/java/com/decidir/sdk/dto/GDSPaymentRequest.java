@@ -1,4 +1,6 @@
 package com.decidir.sdk.dto;
 
-public class GDSPaymentRequest extends PaymentRequest{
+import com.decidir.sdk.payments.GDSPaymentResponse;
+
+public class GDSPaymentRequest extends GDSPaymentResponse{
 }
