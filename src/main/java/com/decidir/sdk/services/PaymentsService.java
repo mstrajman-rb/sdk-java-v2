@@ -21,7 +21,6 @@ import retrofit2.Response;
 public class PaymentsService {
 
     public static final int HTTP_500 = 500;
-    public static final int HTTP_402 = 402;
     private PaymentApi paymentApi;
     private PaymentConverter paymentConverter;
     private ErrorConverter errorConverter;
@@ -63,31 +62,22 @@ public class PaymentsService {
 
 	private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
 			throws IOException, JsonParseException, JsonMappingException {
-		if (response.isSuccessful()) {
-		    return paymentConverter.convert(response, response.body());
-		} else {
-		    if (response.code() == HTTP_402){
-		        ObjectMapper objectMapper = new ObjectMapper();
-		        throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
-		    } else {
-		        DecidirResponse<DecidirError> error = errorConverter.convert(response);
-		        throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-		    }
-		}
-	}
+        return this.paymentConverter.convertOrThrowError(response);
+    }
 
     private DecidirResponse<OfflinePaymentResponse> processOfflinePaymentResponse(Response<OfflinePaymentResponse> response)
             throws IOException, JsonParseException, JsonMappingException {
-        if (response.isSuccessful()) {
-            return paymentConverter.convert(response, response.body());
-        } else {
-            if (response.code() == HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
-                throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
+        return this.paymentConverter.convertOrThrowError(response);
+    }
+
+
+
+    public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
+            return this.paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 
@@ -96,24 +86,11 @@ public class PaymentsService {
             Response<Page> response = this.paymentApi.getPayments(offset, pageSize, siteOperationId, siteId).execute();
             if (response.isSuccessful()) {
                 return paymentConverter.convert(response, response.body());
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
 
-    public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
-            if (response.isSuccessful()) {
-                return paymentConverter.convert(response, response.body());
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
+            DecidirResponse<DecidirError> error = errorConverter.convert(response);
+            throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }

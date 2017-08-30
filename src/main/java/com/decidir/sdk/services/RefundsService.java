@@ -1,12 +1,10 @@
 package com.decidir.sdk.services;
 
 import com.decidir.sdk.converters.ErrorConverter;
-import com.decidir.sdk.converters.RefundConverter;
+import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.PaymentException;
-import com.decidir.sdk.exceptions.RefundException;
 import com.decidir.sdk.resources.RefundApi;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -21,26 +19,25 @@ import java.io.IOException;
 public class RefundsService {
 
     public static final int HTTP_500 = 500;
-    public static final int HTTP_402 = 402;
     private RefundApi refundApi;
-    private RefundConverter refundConverter;
+    private PaymentConverter paymentConverter;
     private ErrorConverter errorConverter;
 
-    private RefundsService(RefundApi refundApi, RefundConverter refundConverter, ErrorConverter errorConverter){
+    private RefundsService(RefundApi refundApi, PaymentConverter paymentConverter, ErrorConverter errorConverter){
         this.refundApi = refundApi;
-        this.refundConverter = refundConverter;
+        this.paymentConverter = paymentConverter;
         this.errorConverter = errorConverter;
     }
 
     public static RefundsService getInstance(RefundApi refundApi) {
-        return new RefundsService(refundApi, new RefundConverter(), new ErrorConverter());
+        return new RefundsService(refundApi, new PaymentConverter(), new ErrorConverter());
     }
 
     public DecidirResponse<RefundPaymentHistoryResponse> getRefunds(Long paymentId) {
         try {
             Response<RefundPaymentHistoryResponse> response = this.refundApi.getRefunds(paymentId).execute();
             if (response.isSuccessful()) {
-                return refundConverter.convert(response, response.body());
+                return paymentConverter.convert(response, response.body());
             } else {
                 DecidirResponse<DecidirError> error = errorConverter.convert(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
@@ -61,17 +58,7 @@ public class RefundsService {
 
     private DecidirResponse<RefundPaymentResponse> processRefundPaymentResponse(Response<RefundPaymentResponse> response)
             throws IOException, JsonParseException, JsonMappingException {
-        if (response.isSuccessful()) {
-            return refundConverter.convert(response, response.body());
-        } else {
-            if (response.code() == HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
-                throw new RefundException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), RefundPaymentResponse.class));
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
-        }
+        return this.paymentConverter.convertOrThrowError(response);
     }
 
     public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) {
@@ -86,9 +73,9 @@ public class RefundsService {
     private DecidirResponse<AnnulRefundResponse> processAnnulRefundResponse(Response<AnnulRefundResponse> response)
             throws IOException, JsonParseException, JsonMappingException {
         if (response.isSuccessful()) {
-            return refundConverter.convert(response, response.body());
+            return paymentConverter.convert(response, response.body());
         } else {
-            if (response.code() == HTTP_402){
+            if (response.code() == paymentConverter.HTTP_402){
                 ObjectMapper objectMapper = new ObjectMapper();
                 throw new AnnulRefundException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), AnnulRefundResponse.class));
             } else {

@@ -49,17 +49,7 @@ public class PaymentConfirmService {
 
     private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
             throws IOException, JsonParseException, JsonMappingException {
-        if (response.isSuccessful()) {
-            return paymentConverter.convert(response, response.body());
-        } else {
-            if (response.code() == HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
-                throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
-        }
+        return this.paymentConverter.convertOrThrowError(response);
     }
 
 }
