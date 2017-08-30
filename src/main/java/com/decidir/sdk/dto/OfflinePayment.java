@@ -10,6 +10,7 @@ import java.util.List;
 
 public abstract class OfflinePayment implements Serializable{
     private Long id = 0L;
+    private Integer bank_id;
     private String site_transaction_id;
     private Integer payment_method_id;
     private Long amount;
@@ -143,5 +144,13 @@ public abstract class OfflinePayment implements Serializable{
 
     public void setSurcharge(Long surcharge) {
         this.surcharge = surcharge;
+    }
+
+    public Integer getBank_id() {
+        return bank_id;
+    }
+
+    public void setBank_id(Integer bank_id) {
+        this.bank_id = bank_id;
     }
 }

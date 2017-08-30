@@ -116,11 +116,7 @@ public class PaymentsService {
 
     private DecidirResponse<GDSPaymentResponse> processGDSPaymentResponse(Response<GDSPaymentResponse> response)
                     throws IOException, JsonParseException, JsonMappingException {
-        if (response.isSuccessful()) {
-            return paymentConverter.convert(response, response.body());
-        } else {
-            throw new Error("ask what to do here"); // TODO consultar como manejar el error
-        }
+        return paymentConverter.convertOrThrowError(response);
     }
 
 }
