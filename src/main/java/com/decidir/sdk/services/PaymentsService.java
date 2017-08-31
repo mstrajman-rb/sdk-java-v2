@@ -6,12 +6,11 @@ import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.PaymentException;
+import com.decidir.sdk.payments.GDSPaymentPciCardRequest;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 import com.decidir.sdk.resources.PaymentApi;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import retrofit2.Response;
 
@@ -119,4 +118,17 @@ public class PaymentsService {
         return paymentConverter.convertOrThrowError(response);
     }
 
+    public DecidirResponse<GDSPaymentResponse> gdsPaymentPciCard(GDSPaymentPciCardRequest gdsPayment) {
+        try {
+            Response<GDSPaymentResponse> response = this.paymentApi.payGdsPciCard(gdsPayment).execute();
+            return processGdsPaymentPciCardResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<GDSPaymentResponse> processGdsPaymentPciCardResponse(Response<GDSPaymentResponse> gdsPaymentResponse)
+            throws IOException, JsonParseException, JsonMappingException{
+        return paymentConverter.convertOrThrowError(gdsPaymentResponse);
+    }
 }
