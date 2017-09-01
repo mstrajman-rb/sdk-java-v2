@@ -8,10 +8,9 @@ import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.RefundApi;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
-
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by biandra on 22/09/16.
@@ -62,26 +61,28 @@ public class RefundsService {
     }
 
     public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) {
+        DecidirResponse<AnnulRefundResponse> result = null;
         try {
+
             Response<AnnulRefundResponse> response = this.refundApi.cancelRefund(user, paymentId, refundId).execute();
-            return processAnnulRefundResponse(response);
+            result = processAnnulRefundResponse(response);
+
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
+        return result;
     }
 
     private DecidirResponse<AnnulRefundResponse> processAnnulRefundResponse(Response<AnnulRefundResponse> response)
-            throws IOException, JsonParseException, JsonMappingException {
-        if (response.isSuccessful()) {
-            return paymentConverter.convert(response, response.body());
-        } else {
-            if (response.code() == paymentConverter.HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
-                throw new AnnulRefundException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), AnnulRefundResponse.class));
-            } else {
-                DecidirResponse<DecidirError> error = errorConverter.convert(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
-        }
+            throws IOException, JsonParseException, JsonMappingException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        return this.paymentConverter.convertOrThrowSpecError(response, AnnulRefundException.class);
     }
 }
