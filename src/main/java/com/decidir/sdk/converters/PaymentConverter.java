@@ -1,10 +1,12 @@
 package com.decidir.sdk.converters;
 
+import com.decidir.sdk.dto.AnnulRefundResponse;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.PaymentException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import com.decidir.sdk.dto.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.PaymentResponse;
@@ -41,5 +43,24 @@ public class PaymentConverter {
         DecidirError decidirError = objectMapper.readValue(response.errorBody().string(), DecidirError.class);
         return this.convert(response,decidirError);
     }
+
+    public <A,E extends RuntimeException> DecidirResponse<A> convertOrThrowSpecError(Response<A> response, Class specError) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if (response.isSuccessful()) {
+            return this.convert(response, response.body());
+        } else {
+            if (response.code() == HTTP_402){
+                ObjectMapper objectMapper = new ObjectMapper();
+                Class[] cArg = new Class[3];
+                cArg[0] = int.class;
+                cArg[1] = String.class;
+                cArg[2] = AnnulRefundResponse.class;
+                throw (E) specError.getDeclaredConstructor(cArg).newInstance(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), specError));
+            } else {
+                DecidirResponse<DecidirError> error = this.convertError(response);
+                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
+            }
+        }
+    }
+
 
 }
