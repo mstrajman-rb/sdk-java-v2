@@ -801,7 +801,7 @@ fraudDetectionData.setCopy_paste_card_data(copyPasteCardData);//Subclase de com.
 5.  _**Otros campos**_
 ```java
 // ...codigo...
-fraudDetectionData.setChannel(Channel.WEB);
+fraudDetectionData.setChannel(Channel.WEB);//Tambien puede recibir un valor de tipo String 
 fraudDetectionData.setDispatch_method("domicilio");//{domicilio, click and collect, courrier}
 fraudDetectionData.setSend_to_cs(Boolean.true);// true o false
 fraudDetectionData.setDevice_unique_id("fingerprint-del-cliente");//Subclase de com.decidir.sdk.dto.FraudDetectionDataRequest
@@ -933,6 +933,91 @@ TicketingTransactionData ticketing =  new TicketingTransactionData();
 //Datos de vertical Ticketing
 // ...codigo...
 paymentRequest.setFraud_detection(ticketing);
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="retailTP"></a>
+
+### RetailTP
+Se enviá un `RetailTPFraudDetectionData` con los [parámetros comunes](#parametros-comunes) y con los siguientes parámetros que se deben enviar específicamente para la vertical RetailTP. Además se deben enviar datos específicos de cada producto involucrado en la transacción.
+
+```java
+// ...codigo...
+RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+//seteo de parámetros comunes
+// ...codigo...
+RetailTPTransactionData retailTPTransactionData = new RetailTPTransactionData();//Datos para la vertical RetailTP
+//Datos de envio
+ShippingData shipTo = new ShippingData();
+shipTo.setCity("Buenos Aires"); //Ciudad de envío, MANDATORIO.
+shipTo.setCountry("AR"); //País de envío. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)
+shipTo.setEmail("usuario@email.com.ar");//Mail del destinatario. MANDATORIO.
+shipTo.setFirst_name("Usuario"); //Nombre del destinatario. MANDATORIO.
+shipTo.setLast_name("Prueba");//Apellido del destinatario. MANDATORIO.
+shipTo.setPhone_number("54116763329");//Teléfono del destinatario. No utilizar guiones, puntos o espacios. Incluir código de país. MANDATORIO.
+shipTo.setPostal_code("1414");//Código Postal de la dirección de envío. MANDATORIO.
+shipTo.setState("C");//Provincia de la dirección de envío. MANDATORIO. Ver tabla anexa de provincias.
+shipTo.setStreet1("THAMES 677");//Domicilio de envío (calle y nro). MANDATORIO.
+shipTo.setStreet2("4to F");//Complemento del domicilio. (piso, departamento). OPCIONAL.
+retailTPTransactionData.setShip_to(shipTo);//Datos de envio. MANDATORIO
+retailTPTransactionData.setDays_to_delivery("2");
+retailTPTransactionData.setTax_voucher_required(Boolean.TRUE);
+retailTPTransactionData.setCustomer_loyality_number("123232");
+setCoupon_code("cupon22");
+//Items de compra (Al menos un item)
+Item item = new Item();
+item.setCode("popblacksabbat2016");  //MANDATORIO
+item.setDescription("Popular Black Sabbath 2016"); //OPCIONAL
+item.setName("popblacksabbat2016ss");//MANDATORIO
+item.setSku("sku");//MANDATORIO
+item.setTotal_amount(34900L);//MANDATORIO
+item.setQuantity(1);//MANDATORIO
+item.setUnit_price(34900L);//MANDATORIO
+ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
+
+retailTPTransactionData.setAccount_antiquity("account_antiquity");
+retailTPTransactionData.setAccount_category("account_category");
+retailTPTransactionData.setAccount_id("account_id");
+retailTPTransactionData.setAccount_name("name account");
+retailTPTransactionData.setAccount_type("account_type");
+retailTPTransactionData.setToken_tp("tokentp");
+        
+retailTP.setRetailTP_transaction_data(retailTPTransactionData);//Datos de vertical RetailTP. MANDATORIO
+// ...codigo...
+```
+
+Para incorporar estos datos en el requerimiento inicial, se debe instanciar un objeto de la clase `RetailTPFraudDetectionData` de la siguiente manera.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+PaymentRequest paymentRequest = new PaymentRequest();
+// Datos del pago
+ // ...codigo...
+ RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+//Datos de vertical RetailTP
+// ...codigo...
+paymentRequest.setFraud_detection(retailTP);
 try {
 	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
 	// Procesamiento de respuesta de ejecucion de pago
