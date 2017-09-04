@@ -1,11 +1,12 @@
-package com.decidir.sdk.exceptions;
+package com.decidir.sdk.exceptions.responses;
 
 import com.decidir.sdk.dto.RefundPaymentResponse;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 
 /**
  * Created by biandra on 08/07/16.
  */
-public class RefundException extends RuntimeException{
+public class RefundException extends RuntimeException implements ResponseException<RefundPaymentResponse>{
 
     private int status;
     private String message;
@@ -17,9 +18,7 @@ public class RefundException extends RuntimeException{
         this.refundPaymentResponse = refundPaymentResponse;
     }
 
-    public int getStatus() {
-        return status;
-    }
+
 
     public void setStatus(int status) {
         this.status = status;
@@ -34,11 +33,14 @@ public class RefundException extends RuntimeException{
         this.message = message;
     }
 
-    public RefundPaymentResponse getRefundPayment() {
-        return refundPaymentResponse;
+
+    @Override
+    public int getStatus() {
+        return this.status;
     }
 
-    public void setRefundPayment(RefundPaymentResponse refundPaymentResponse) {
-        this.refundPaymentResponse = refundPaymentResponse;
+    @Override
+    public RefundPaymentResponse getResponse() {
+        return this.refundPaymentResponse;
     }
 }

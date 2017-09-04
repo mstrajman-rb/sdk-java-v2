@@ -30,11 +30,9 @@ import com.decidir.sdk.dto.TicketingFraudDetectionData
 import com.decidir.sdk.dto.TicketingTransactionData
 import com.decidir.sdk.dto.TravelFraudDetectionData
 import com.decidir.sdk.dto.TravelTransactionData
-import com.decidir.sdk.exceptions.PaymentException
+import com.decidir.sdk.exceptions.responses.PaymentException
 import com.decidir.sdk.exceptions.ValidateException
 import spock.lang.Specification
-
-import java.time.ZoneOffset
 
 /**
  * Created by biandra on 05/10/16.

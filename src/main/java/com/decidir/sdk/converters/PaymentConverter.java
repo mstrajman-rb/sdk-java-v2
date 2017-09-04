@@ -2,10 +2,13 @@ package com.decidir.sdk.converters;
 
 import com.decidir.sdk.dto.AnnulRefundResponse;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.PaymentException;
+import com.decidir.sdk.exceptions.responses.AnnulRefundException;
+import com.decidir.sdk.exceptions.responses.PaymentException;
+import com.decidir.sdk.exceptions.responses.ResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import com.decidir.sdk.dto.DecidirError;
@@ -45,24 +48,20 @@ public class PaymentConverter {
         return this.convert(response,decidirError);
     }
 
-    public <A,E extends RuntimeException> DecidirResponse<A> convertOrThrowSpecError(Response<A> response, Class specError) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public <A,E extends RuntimeException & ResponseException> DecidirResponse<A> convertOrThrowSpecError(Response<A> response, Class specError, Class responseErr)
+            throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if (response.isSuccessful()) {
             return this.convert(response, response.body());
         } else {
             if (response.code() == HTTP_402){
                 ObjectMapper objectMapper = new ObjectMapper();
                 Constructor<E> ctor = specError.getConstructor();
-                Class[] cArg = new Class[3];
-                cArg[0] = int.class;
-                cArg[1] = String.class;
-                cArg[2] = AnnulRefundResponse.class;
-                throw ctor.newInstance(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), specError));
+                throw ctor.newInstance(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), responseErr));
             } else {
                 DecidirResponse<DecidirError> error = this.convertError(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
             }
         }
     }
-
 
 }

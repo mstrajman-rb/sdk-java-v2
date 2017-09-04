@@ -2,10 +2,10 @@ package com.decidir.sdk;
 
 import com.decidir.sdk.configuration.DecidirConfiguration;
 import com.decidir.sdk.dto.*;
-import com.decidir.sdk.exceptions.AnnulRefundException;
+import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.PaymentException;
-import com.decidir.sdk.exceptions.RefundException;
+import com.decidir.sdk.exceptions.responses.PaymentException;
+import com.decidir.sdk.exceptions.responses.RefundException;
 import com.decidir.sdk.payments.GDSPaymentPciCardRequest;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 import com.decidir.sdk.payments.Payment;

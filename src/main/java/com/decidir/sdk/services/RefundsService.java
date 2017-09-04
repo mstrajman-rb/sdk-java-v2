@@ -3,7 +3,7 @@ package com.decidir.sdk.services;
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
-import com.decidir.sdk.exceptions.AnnulRefundException;
+import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.RefundApi;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -83,6 +83,6 @@ public class RefundsService {
 
     private DecidirResponse<AnnulRefundResponse> processAnnulRefundResponse(Response<AnnulRefundResponse> response)
             throws IOException, JsonParseException, JsonMappingException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        return this.paymentConverter.convertOrThrowSpecError(response, AnnulRefundException.class);
+        return this.paymentConverter.convertOrThrowSpecError(response, AnnulRefundException.class, AnnulRefundResponse.class);
     }
 }

@@ -1,11 +1,14 @@
-package com.decidir.sdk.exceptions;
+package com.decidir.sdk.exceptions.responses;
 
 import com.decidir.sdk.dto.AnnulRefundResponse;
+
+import javax.xml.ws.Response;
+import java.io.Serializable;
 
 /**
  * Created by biandra on 08/07/16.
  */
-public class AnnulRefundException extends RuntimeException{
+public class AnnulRefundException extends RuntimeException implements ResponseException<AnnulRefundResponse>{
 
     private int status;
     private String message;
@@ -17,12 +20,14 @@ public class AnnulRefundException extends RuntimeException{
         this.annulRefundResponse = annulRefundResponse;
     }
 
+    @Override
     public int getStatus() {
-        return status;
+        return this.status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    @Override
+    public AnnulRefundResponse getResponse() {
+        return this.annulRefundResponse;
     }
 
     @Override
@@ -34,11 +39,16 @@ public class AnnulRefundException extends RuntimeException{
         this.message = message;
     }
 
-    public AnnulRefundResponse getAnnulRefund() {
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public AnnulRefundResponse getAnnulRefundResponse() {
         return annulRefundResponse;
     }
 
-    public void setAnnulRefund(AnnulRefundResponse annulRefundResponse) {
+    public void setAnnulRefundResponse(AnnulRefundResponse annulRefundResponse) {
         this.annulRefundResponse = annulRefundResponse;
     }
+
 }

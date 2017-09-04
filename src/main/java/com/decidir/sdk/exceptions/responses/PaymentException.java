@@ -1,11 +1,11 @@
-package com.decidir.sdk.exceptions;
+package com.decidir.sdk.exceptions.responses;
 
 import com.decidir.sdk.dto.PaymentResponse;
 
 /**
  * Created by biandra on 08/07/16.
  */
-public class PaymentException extends RuntimeException{
+public class PaymentException extends RuntimeException implements ResponseException<PaymentResponse>{
 
     private int status;
     private String message;
@@ -17,14 +17,6 @@ public class PaymentException extends RuntimeException{
         this.paymentResponse = paymentResponse;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     @Override
     public String getMessage() {
         return message;
@@ -34,11 +26,21 @@ public class PaymentException extends RuntimeException{
         this.message = message;
     }
 
-    public PaymentResponse getPayment() {
-        return paymentResponse;
+    @Override
+    public int getStatus() {
+        return this.status;
     }
 
-    public void setPayment(PaymentResponse payment) {
-        this.paymentResponse = payment;
+    @Override
+    public PaymentResponse getResponse() {
+        return this.paymentResponse;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setPaymentResponse(PaymentResponse paymentResponse) {
+        this.paymentResponse = paymentResponse;
     }
 }

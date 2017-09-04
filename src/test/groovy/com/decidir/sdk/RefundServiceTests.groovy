@@ -1,6 +1,6 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.exceptions.RefundException
+import com.decidir.sdk.exceptions.responses.RefundException
 import spock.lang.*
 import com.decidir.sdk.dto.*
 
