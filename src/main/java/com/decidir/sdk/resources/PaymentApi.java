@@ -42,9 +42,13 @@ public interface PaymentApi {
   @POST("payments")
   Call<BSAPaymentResponse> payBsaPciCard(BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
 
+  @POST("payments")
+  Call<AgroPaymentResponse> payAgroPciCard(AgroPaymentRequestPCI agroPaymentRequestPCI);
+
+  @POST("payments")
+  Call<AgroPaymentResponse> payAgroNoPci(AgroPaymentRequestNoPCI agroPaymentRequestNoPCI);
+
   @PUT("payments/{paymentId}")
   Call<PaymentResponse> paymentConfirm(@Header("User") String user, @Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);
-
-
 
 }

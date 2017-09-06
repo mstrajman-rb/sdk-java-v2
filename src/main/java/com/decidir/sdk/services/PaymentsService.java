@@ -128,4 +128,22 @@ public class PaymentsService {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
+
+    public DecidirResponse<AgroPaymentResponse> agroPaymentRequestPCI(AgroPaymentRequestPCI agroPaymentRequestPCI) {
+        try {
+            Response<AgroPaymentResponse> response = this.paymentApi.payAgroPciCard(agroPaymentRequestPCI).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<AgroPaymentResponse> agroPaymentRequestNoPCI(AgroPaymentRequestNoPCI agroPaymentRequestNoPCI) {
+        try {
+            Response<AgroPaymentResponse> response = this.paymentApi.payAgroNoPci(agroPaymentRequestNoPCI).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
 }
