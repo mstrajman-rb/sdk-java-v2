@@ -203,51 +203,9 @@ public final class Decidir {
 	}
 
 	/**
-	 * Executes a new offline payment using a generated payment token
-	 *
-	 * @param gdsPaymentNoPci
-	 *            {@link OfflinePaymentRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link OfflinePayment}
-	 * @throws PaymentException
-	 *             when the payment was rejected
-	 * @throws DecidirException
-	 *             when an error occurs
-	 * <br>
-	 * <br>
-	 * <strong>Usage example</strong>
-	 * <pre>
-	 * {@code ...
-	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * OfflinePaymentRequest offlinePaymentRequest = new OfflinePaymentRequest();
-	 * //Fill payment request data - i.e. see {@link OfflinePaymentRequest}
-	 * ...
-	 * try {
-	 *	DecidirResponse<OfflinePaymentResponse> offlinePaymentResponse = decidir.offlinePayment(offlinePaymentRequest);
-	 *	//process offline payment response - see {@link DecidirResponse}
-	 *	...
-	 *	} catch (PaymentException pe) {
-	 *	 //Handle rejected payment - see {@link PaymentException}
-	 *	 ...
-	 *	} catch (DecidirException de) {
-	 *	 //Handle returned api exception - see {@link DecidirException}
-	 *	 ...
-	 *	} catch (Exception e) {
-	 *	 //Handle exception
-	 *	 ...
-	 *	}
-	 *	...
-	 * }
-	 * </pre>
-	 */
-	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentRequest gdsPaymentNoPci)
-			throws PaymentException, DecidirException {
-		return paymentsService.gdsPaymentNoPci(gdsPaymentNoPci);
-	}
-
-	/**
 	 * Executes a new payment(PCI) using the card data
 	 *
-	 * @param payment
+	 * @param bsaPaymentRequestPCI
 	 *            {@link PaymentPciCardRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
@@ -291,6 +249,97 @@ public final class Decidir {
 	public DecidirResponse<BSAPaymentResponse> payment(BSAPaymentRequestPCI bsaPaymentRequestPCI)
 			throws PaymentException, DecidirException {
 		return paymentsService.bsaPaymentRequestPCI(bsaPaymentRequestPCI);
+	}
+
+	/**
+	 * Executes a new payment(PCI) using the card data
+	 *
+	 * @param bsaPaymentRequestNoPCI
+	 *            {@link PaymentPciCardRequest} request
+	 * @return a {@link DecidirResponse} with the approved {@link Payment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error occurs
+	 * <br>
+	 * <br>
+	 * <strong>Usage example</strong>
+	 * <pre>
+	 * {@code ...
+	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
+	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * ...
+	 * try {
+	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	 *	//process payment response - see {@link DecidirResponse}
+	 *	...
+	 *	} catch (PaymentException pe) {
+	 *	 //Handle rejected payment - see {@link PaymentException}
+	 *	 ...
+	 *	} catch (DecidirException de) {
+	 *	 //Handle returned api exception - see {@link DecidirException}
+	 *	 ...
+	 *	} catch (Exception e) {
+	 *	 //Handle exception
+	 *	 ...
+	 *	}
+	 *	...
+	 * }
+	 * </pre>
+	 * @see #payment(PaymentRequest)
+	 * @see #payment(PaymentPciTokenRequest)
+	 * @see #confirmPayment(Long, Long, String)
+	 * @see #getPayment(Long)
+	 * @see #getPayments(Integer, Integer, String, String)
+	 * @see #refundPayment(Long, RefundPayment, String)
+	 */
+
+	public DecidirResponse<BSAPaymentResponse> payment(BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI)
+			throws PaymentException, DecidirException {
+		return paymentsService.bsaPaymentRequestNoPCI(bsaPaymentRequestNoPCI);
+	}
+
+	/**
+	 * Executes a new offline payment using a generated payment token
+	 *
+	 * @param gdsPaymentNoPci
+	 *            {@link OfflinePaymentRequest} request
+	 * @return a {@link DecidirResponse} with the approved {@link OfflinePayment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error occurs
+	 * <br>
+	 * <br>
+	 * <strong>Usage example</strong>
+	 * <pre>
+	 * {@code ...
+	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
+	 * OfflinePaymentRequest offlinePaymentRequest = new OfflinePaymentRequest();
+	 * //Fill payment request data - i.e. see {@link OfflinePaymentRequest}
+	 * ...
+	 * try {
+	 *	DecidirResponse<OfflinePaymentResponse> offlinePaymentResponse = decidir.offlinePayment(offlinePaymentRequest);
+	 *	//process offline payment response - see {@link DecidirResponse}
+	 *	...
+	 *	} catch (PaymentException pe) {
+	 *	 //Handle rejected payment - see {@link PaymentException}
+	 *	 ...
+	 *	} catch (DecidirException de) {
+	 *	 //Handle returned api exception - see {@link DecidirException}
+	 *	 ...
+	 *	} catch (Exception e) {
+	 *	 //Handle exception
+	 *	 ...
+	 *	}
+	 *	...
+	 * }
+	 * </pre>
+	 */
+	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentRequest gdsPaymentNoPci)
+			throws PaymentException, DecidirException {
+		return paymentsService.gdsPaymentNoPci(gdsPaymentNoPci);
 	}
 
 	/**
