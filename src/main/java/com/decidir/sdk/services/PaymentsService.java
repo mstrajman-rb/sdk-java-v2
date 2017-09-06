@@ -34,52 +34,6 @@ public class PaymentsService {
         return new PaymentsService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<PaymentResponse> paymentNoPci(PaymentRequest payment) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
-            return processPaymentResponse(response);
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-    public DecidirResponse<PaymentResponse> paymentPciCard(PaymentPciCardRequest payment) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.payPciCard(payment).execute();
-            return processPaymentResponse(response);
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-    public DecidirResponse<PaymentResponse> paymentPciToken(PaymentPciTokenRequest payment) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.payPciToken(payment).execute();
-            return processPaymentResponse(response);
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-
-	private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
-			throws IOException, JsonParseException, JsonMappingException {
-        return this.paymentConverter.convertOrThrowError(response);
-    }
-
-    private DecidirResponse<OfflinePaymentResponse> processOfflinePaymentResponse(Response<OfflinePaymentResponse> response)
-            throws IOException, JsonParseException, JsonMappingException {
-        return this.paymentConverter.convertOrThrowError(response);
-    }
-
-
-
-    public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
-            return this.paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-
     public DecidirResponse<Page> getPayments(Integer offset, Integer pageSize, String siteOperationId, String siteId) {
         try {
             Response<Page> response = this.paymentApi.getPayments(offset, pageSize, siteOperationId, siteId).execute();
@@ -95,10 +49,44 @@ public class PaymentsService {
         }
     }
 
+    public DecidirResponse<PaymentResponse> paymentNoPci(PaymentRequest payment) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+    public DecidirResponse<PaymentResponse> paymentPciCard(PaymentPciCardRequest payment) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.payPciCard(payment).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+    public DecidirResponse<PaymentResponse> paymentPciToken(PaymentPciTokenRequest payment) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.payPciToken(payment).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
+        try {
+            Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
     public DecidirResponse<OfflinePaymentResponse> offlinePayment(OfflinePaymentRequest offlinePayment) {
         try {
             Response<OfflinePaymentResponse> response = this.paymentApi.payOffline(offlinePayment).execute();
-            return processOfflinePaymentResponse(response);
+            return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
@@ -107,28 +95,27 @@ public class PaymentsService {
     public DecidirResponse<GDSPaymentResponse> gdsPaymentNoPci(GDSPaymentRequest gdsPayment) {
         try {
             Response<GDSPaymentResponse> response = this.paymentApi.payGdsNoPci(gdsPayment).execute();
-            return processGDSPaymentResponse(response);
+            return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
-    }
-
-    private DecidirResponse<GDSPaymentResponse> processGDSPaymentResponse(Response<GDSPaymentResponse> response)
-                    throws IOException, JsonParseException, JsonMappingException {
-        return paymentConverter.convertOrThrowError(response);
     }
 
     public DecidirResponse<GDSPaymentResponse> gdsPaymentPciCard(GDSPaymentPciCardRequest gdsPayment) {
         try {
             Response<GDSPaymentResponse> response = this.paymentApi.payGdsPciCard(gdsPayment).execute();
-            return processGdsPaymentPciCardResponse(response);
+            return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 
-    public DecidirResponse<GDSPaymentResponse> processGdsPaymentPciCardResponse(Response<GDSPaymentResponse> gdsPaymentResponse)
-            throws IOException, JsonParseException, JsonMappingException{
-        return paymentConverter.convertOrThrowError(gdsPaymentResponse);
+    public DecidirResponse<BSAPaymentResponse> bsaPaymentRequestPCI(BSAPaymentRequestPCI bsaPaymentRequestPCI) {
+        try {
+            Response<BSAPaymentResponse> response = this.paymentApi.payBsaPciCard(bsaPaymentRequestPCI).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
     }
 }

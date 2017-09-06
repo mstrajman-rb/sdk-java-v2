@@ -36,7 +36,11 @@ public interface PaymentApi {
   @POST("payments")
   Call<GDSPaymentResponse> payGdsPciCard(GDSPaymentPciCardRequest gdsPayment);
 
+  @POST("payments")
+  Call<BSAPaymentResponse> payBsaPciCard(BSAPaymentRequestPCI bsaPaymentRequestPCI);
+
   @PUT("payments/{paymentId}")
   Call<PaymentResponse> paymentConfirm(@Header("User") String user, @Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);
+
 
 }
