@@ -6,7 +6,7 @@ import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.exceptions.responses.RefundException;
-import com.decidir.sdk.payments.GDSPaymentPciCardRequest;
+import com.decidir.sdk.payments.GDSPaymentRequestPCI;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 import com.decidir.sdk.payments.Payment;
 import com.decidir.sdk.resources.CardTokenApi;
@@ -191,7 +191,7 @@ public final class Decidir {
 	 *	...
 	 * }
 	 * </pre>
-	 * @see #payment(PaymentPciCardRequest)
+	 * @see #payment(PaymentPciRequest)
 	 * @see #payment(PaymentPciTokenRequest)
 	 * @see #confirmPayment(Long, Long, String)
 	 * @see #getPayment(Long)
@@ -206,7 +206,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 *
 	 * @param bsaPaymentRequestPCI
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -218,8 +218,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -255,7 +255,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 *
 	 * @param bsaPaymentRequestNoPCI
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -267,8 +267,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -304,7 +304,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 *
 	 * @param agroPaymentRequestPCI
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -316,8 +316,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -353,7 +353,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 *
 	 * @param agroPaymentRequestNoPCI
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -365,8 +365,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -435,7 +435,7 @@ public final class Decidir {
 	 * }
 	 * </pre>
 	 */
-	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentRequest gdsPaymentNoPci)
+	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentRequestNoPCI gdsPaymentNoPci)
 			throws PaymentException, DecidirException {
 		return paymentsService.gdsPaymentNoPci(gdsPaymentNoPci);
 	}
@@ -444,7 +444,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 *
 	 * @param payment
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -456,8 +456,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -484,7 +484,7 @@ public final class Decidir {
 	 * @see #refundPayment(Long, RefundPayment, String)
 	 */
 
-	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentPciCardRequest payment) throws PaymentException, DecidirException {
+	public DecidirResponse<GDSPaymentResponse> payment(GDSPaymentRequestPCI payment) throws PaymentException, DecidirException {
 		return paymentsService.gdsPaymentPciCard(payment);
 	}
 
@@ -492,7 +492,7 @@ public final class Decidir {
 	 * Executes a new payment(PCI) using the card data
 	 * 
 	 * @param payment
-	 *            {@link PaymentPciCardRequest} request
+	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
 	 * @throws PaymentException
 	 *             when the payment was rejected
@@ -504,8 +504,8 @@ public final class Decidir {
 	 * <pre>
 	 * {@code ...
 	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciCardRequest}
+	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
+	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
 	 * ...
 	 * try {
 	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
@@ -531,7 +531,7 @@ public final class Decidir {
 	 * @see #getPayments(Integer, Integer, String, String)
 	 * @see #refundPayment(Long, RefundPayment, String)
 	 */
-	public DecidirResponse<PaymentResponse> payment(PaymentPciCardRequest payment) throws PaymentException, DecidirException {
+	public DecidirResponse<PaymentResponse> payment(PaymentPciRequest payment) throws PaymentException, DecidirException {
 		return paymentsService.paymentPciCard(payment);
 	}
 	/**
@@ -571,7 +571,7 @@ public final class Decidir {
 	 * }
 	 * </pre>    
 	 * @see #payment(PaymentRequest)
-	 * @see #payment(PaymentPciCardRequest)
+	 * @see #payment(PaymentPciRequest)
 	 * @see #confirmPayment(Long, Long, String)
 	 * @see #getPayments(Integer, Integer, String, String)
 	 * @see #getPayment(Long) 
@@ -713,7 +713,7 @@ public final class Decidir {
 	 * @throws DecidirException when an error occurs 
 	 *
 	 * @see #payment(PaymentRequest)
-	 * @see #payment(PaymentPciCardRequest)
+	 * @see #payment(PaymentPciRequest)
 	 * @see #payment(PaymentPciTokenRequest)
 	 * @see #getPayment(Long) 
 	 * @see #getPayments(Integer, Integer, String, String)

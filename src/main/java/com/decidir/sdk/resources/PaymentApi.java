@@ -2,7 +2,7 @@ package com.decidir.sdk.resources;
 
 import com.decidir.sdk.dto.*;
 
-import com.decidir.sdk.payments.GDSPaymentPciCardRequest;
+import com.decidir.sdk.payments.GDSPaymentRequestPCI;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -22,7 +22,7 @@ public interface PaymentApi {
   Call<PaymentResponse> payNoPci(@Body PaymentRequest payment);
   
   @POST("payments")
-  Call<PaymentResponse> payPciCard(@Body PaymentPciCardRequest payment);
+  Call<PaymentResponse> payPciCard(@Body PaymentPciRequest payment);
   
   @POST("payments")
   Call<PaymentResponse> payPciToken(@Body PaymentPciTokenRequest payment);
@@ -31,22 +31,22 @@ public interface PaymentApi {
   Call<OfflinePaymentResponse> payOffline(@Body OfflinePaymentRequest offlinePayment);
 
   @POST("payments")
-  Call<GDSPaymentResponse> payGdsNoPci(@Body GDSPaymentRequest gdsPayment);
+  Call<GDSPaymentResponse> payGdsNoPci(@Body GDSPaymentRequestNoPCI gdsPayment);
 
   @POST("payments")
-  Call<GDSPaymentResponse> payGdsPciCard(GDSPaymentPciCardRequest gdsPayment);
+  Call<GDSPaymentResponse> payGdsPci(@Body GDSPaymentRequestPCI gdsPayment);
 
   @POST("payments")
-  Call<BSAPaymentResponse> payBsaPciCard(BSAPaymentRequestPCI bsaPaymentRequestPCI);
+  Call<BSAPaymentResponse> payBsaPci(@Body BSAPaymentRequestPCI bsaPaymentRequestPCI);
 
   @POST("payments")
-  Call<BSAPaymentResponse> payBsaPciCard(BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
+  Call<BSAPaymentResponse> payBsaPci(@Body BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
 
   @POST("payments")
-  Call<AgroPaymentResponse> payAgroPciCard(AgroPaymentRequestPCI agroPaymentRequestPCI);
+  Call<AgroPaymentResponse> payAgroPci(@Body AgroPaymentRequestPCI agroPaymentRequestPCI);
 
   @POST("payments")
-  Call<AgroPaymentResponse> payAgroNoPci(AgroPaymentRequestNoPCI agroPaymentRequestNoPCI);
+  Call<AgroPaymentResponse> payAgroNoPci(@Body AgroPaymentRequestNoPCI agroPaymentRequestNoPCI);
 
   @PUT("payments/{paymentId}")
   Call<PaymentResponse> paymentConfirm(@Header("User") String user, @Path("paymentId") Long id, @Body ConfirmPaymentAmount confirmPayment);

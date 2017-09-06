@@ -21,7 +21,7 @@ import com.decidir.sdk.dto.Passenger
 import com.decidir.sdk.dto.PassengerStatus
 import com.decidir.sdk.dto.PassengerType
 import com.decidir.sdk.dto.PaymentRequest
-import com.decidir.sdk.dto.PaymentPciCardRequest
+import com.decidir.sdk.dto.PaymentPciRequest
 import com.decidir.sdk.dto.PaymentPciTokenRequest
 import com.decidir.sdk.dto.PaymentType
 import com.decidir.sdk.dto.PurchaseTotals
@@ -185,7 +185,7 @@ class PaymentServiceTests extends Specification {
         def customer = new Customer()
         customer.id = user_id
 
-        def payment = new PaymentPciCardRequest()
+        def payment = new PaymentPciRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5
@@ -240,7 +240,7 @@ class PaymentServiceTests extends Specification {
         def customer = new Customer()
         customer.id = user_id
 
-        def payment = new PaymentPciCardRequest()
+        def payment = new PaymentPciRequest()
         payment.payment_type = PaymentType.SINGLE
         payment.currency = Currency.ARS
         payment.amount = 5

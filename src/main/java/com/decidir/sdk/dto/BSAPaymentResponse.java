@@ -1,4 +1,4 @@
 package com.decidir.sdk.dto;
 
-public class BSAPaymentResponse {
+public class BSAPaymentResponse extends PaymentResponse{
 }

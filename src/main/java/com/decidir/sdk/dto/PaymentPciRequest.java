@@ -9,7 +9,7 @@ import com.decidir.sdk.payments.Payment;
  * <strong>Usage example</strong>
  * <pre>
  * {@code ...
- * PaymentPciCardRequest paymentRequest = new PaymentPciCardRequest();
+ * PaymentPciRequest paymentRequest = new PaymentPciRequest();
  * CardData card_data = ... // {@link CardData}
  * paymentRequest.setCard_data(card_data);  
  * //common payment data - i.e. see {@link Payment }
@@ -30,7 +30,7 @@ import com.decidir.sdk.payments.Payment;
  * </pre>
  */
 
-public class PaymentPciCardRequest extends Payment {
+public class PaymentPciRequest extends Payment {
 
 	private CardData card_data;
 
