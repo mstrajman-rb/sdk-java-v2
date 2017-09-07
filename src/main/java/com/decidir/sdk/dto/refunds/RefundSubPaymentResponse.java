@@ -15,7 +15,7 @@ public class RefundSubPaymentResponse implements Serializable {
     private Long id;
     private Long amount;
     private Long refund_id;
-    private CardError status_details;
+    private CardError error;
     private Status status;
 
     public Long getId() {
@@ -50,11 +50,11 @@ public class RefundSubPaymentResponse implements Serializable {
         this.status = status;
     }
 
-    public CardError getStatus_details() {
-        return status_details;
+    public CardError getError() {
+        return error;
     }
 
-    public void setStatus_details(CardError status_details) {
-        this.status_details = status_details;
+    public void setError(CardError error) {
+        this.error = error;
     }
 }

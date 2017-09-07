@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.decidir.sdk.dto.CardError;
 import com.decidir.sdk.dto.Status;
+import com.decidir.sdk.dto.StatusDetails;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -18,7 +19,7 @@ public class OfflinePaymentResponse extends OfflinePayment implements Serializab
 //    private String date_approved;
 //    private String date_last_updated;
     private Status status;
-    private CardError status_details;
+    private StatusDetails status_details;
 //    private ConfirmedPaymentData confirmed;
 //    private String pan;
     private String barcode;
@@ -47,11 +48,11 @@ public class OfflinePaymentResponse extends OfflinePayment implements Serializab
         this.status = status;
     }
 
-    public CardError getStatus_details() {
+    public StatusDetails getStatus_details() {
         return status_details;
     }
 
-    public void setStatus_details(CardError status_details) {
+    public void setStatus_details(StatusDetails status_details) {
         this.status_details = status_details;
     }
 

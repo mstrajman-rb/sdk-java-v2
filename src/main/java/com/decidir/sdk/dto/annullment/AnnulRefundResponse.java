@@ -3,9 +3,7 @@ package com.decidir.sdk.dto.annullment;
 import com.decidir.sdk.dto.CardError;
 import com.decidir.sdk.dto.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by biandra on 22/09/16.
@@ -14,7 +12,7 @@ import java.util.List;
 public class AnnulRefundResponse implements Serializable {
     
     private Long amount;
-    private CardError status_details;
+    private CardError error;
     private Status status;
 
     public Long getAmount() {
@@ -33,11 +31,11 @@ public class AnnulRefundResponse implements Serializable {
         this.status = status;
     }
 
-    public CardError getStatus_details() {
-        return status_details;
+    public CardError getError() {
+        return error;
     }
 
-    public void setStatus_details(CardError status_details) {
-        this.status_details = status_details;
+    public void setError(CardError error) {
+        this.error = error;
     }
 }
