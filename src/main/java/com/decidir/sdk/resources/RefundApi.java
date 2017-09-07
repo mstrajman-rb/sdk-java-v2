@@ -1,9 +1,9 @@
 package com.decidir.sdk.resources;
 
-import com.decidir.sdk.dto.AnnulRefundResponse;
-import com.decidir.sdk.dto.RefundPayment;
-import com.decidir.sdk.dto.RefundPaymentHistoryResponse;
-import com.decidir.sdk.dto.RefundPaymentResponse;
+import com.decidir.sdk.dto.annullment.AnnulRefundResponse;
+import com.decidir.sdk.dto.refunds.RefundPayment;
+import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
+import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 

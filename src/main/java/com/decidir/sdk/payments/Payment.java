@@ -1,6 +1,7 @@
 package com.decidir.sdk.payments;
 
-import com.decidir.sdk.dto.*;
+import com.decidir.sdk.dto.cybersource.FraudDetectionData;
+import com.decidir.sdk.dto.payments.*;
 
 import java.io.Serializable;
 import java.util.List;

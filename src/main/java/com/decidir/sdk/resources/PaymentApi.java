@@ -1,7 +1,17 @@
 package com.decidir.sdk.resources;
 
-import com.decidir.sdk.dto.*;
-
+import com.decidir.sdk.dto.confirms.ConfirmPaymentAmount;
+import com.decidir.sdk.dto.payments.*;
+import com.decidir.sdk.dto.payments.agro.AgroPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.agro.AgroPaymentResponse;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
+import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
+import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
 import com.decidir.sdk.payments.GDSPaymentRequestPCI;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 import retrofit2.Call;

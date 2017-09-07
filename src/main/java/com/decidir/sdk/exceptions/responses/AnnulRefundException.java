@@ -1,9 +1,6 @@
 package com.decidir.sdk.exceptions.responses;
 
-import com.decidir.sdk.dto.AnnulRefundResponse;
-
-import javax.xml.ws.Response;
-import java.io.Serializable;
+import com.decidir.sdk.dto.annullment.AnnulRefundResponse;
 
 /**
  * Created by biandra on 08/07/16.

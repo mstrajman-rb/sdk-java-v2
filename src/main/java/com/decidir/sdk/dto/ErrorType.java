@@ -1,5 +1,6 @@
 package com.decidir.sdk.dto;
 
+import com.decidir.sdk.exceptions.ValidationError;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package com.decidir.sdk.converters;
 
-import com.decidir.sdk.dto.CardTokens;
+import com.decidir.sdk.dto.tokens.CardTokens;
 import com.decidir.sdk.dto.DecidirResponse;
 import retrofit2.Response;
 

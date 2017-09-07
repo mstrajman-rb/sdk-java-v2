@@ -1,6 +1,6 @@
 package com.decidir.sdk.payments;
 
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.payments.PaymentResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;

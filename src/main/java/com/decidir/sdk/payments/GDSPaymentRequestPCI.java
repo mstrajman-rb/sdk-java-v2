@@ -1,6 +1,6 @@
 package com.decidir.sdk.payments;
 
-import com.decidir.sdk.dto.PaymentPciRequest;
+import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 
 public class GDSPaymentRequestPCI extends PaymentPciRequest {
 

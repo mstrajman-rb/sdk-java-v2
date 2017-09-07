@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
-import com.decidir.sdk.dto.ConfirmPaymentAmount;
+import com.decidir.sdk.dto.confirms.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.payments.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.resources.PaymentApi;
 
