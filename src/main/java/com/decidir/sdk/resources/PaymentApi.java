@@ -12,8 +12,8 @@ import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
-import com.decidir.sdk.payments.GDSPaymentRequestPCI;
-import com.decidir.sdk.payments.GDSPaymentResponse;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestPCI;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 

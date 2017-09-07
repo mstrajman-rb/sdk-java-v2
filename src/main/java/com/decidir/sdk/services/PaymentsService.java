@@ -18,8 +18,8 @@ import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
 import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.payments.GDSPaymentRequestPCI;
-import com.decidir.sdk.payments.GDSPaymentResponse;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestPCI;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentResponse;
 import com.decidir.sdk.resources.PaymentApi;
 
 import retrofit2.Response;
