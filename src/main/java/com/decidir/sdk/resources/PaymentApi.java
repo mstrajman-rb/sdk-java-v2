@@ -40,7 +40,7 @@ public interface PaymentApi {
   Call<BSAPaymentResponse> payBsaPci(@Body BSAPaymentRequestPCI bsaPaymentRequestPCI);
 
   @POST("payments")
-  Call<BSAPaymentResponse> payBsaPci(@Body BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
+  Call<BSAPaymentResponse> payBsaNoPci(@Body BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
 
   @POST("payments")
   Call<AgroPaymentResponse> payAgroPci(@Body AgroPaymentRequestPCI agroPaymentRequestPCI);

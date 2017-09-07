@@ -120,7 +120,7 @@ public class PaymentsService {
 
     public DecidirResponse<BSAPaymentResponse> bsaPaymentRequestNoPCI(BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI) {
         try {
-            Response<BSAPaymentResponse> response = this.paymentApi.payBsaPci(bsaPaymentRequestNoPCI).execute();
+            Response<BSAPaymentResponse> response = this.paymentApi.payBsaNoPci(bsaPaymentRequestNoPCI).execute();
             return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
