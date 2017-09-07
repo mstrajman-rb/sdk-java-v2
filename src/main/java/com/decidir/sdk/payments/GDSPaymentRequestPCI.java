@@ -6,7 +6,6 @@ public class GDSPaymentRequestPCI extends PaymentPciRequest {
 
     private String nro_location;
     private String iata_code;
-    private String id_merchant;
 
     public GDSPaymentRequestPCI() {
         this.setPayment_mode("gds");
@@ -28,11 +27,4 @@ public class GDSPaymentRequestPCI extends PaymentPciRequest {
         this.iata_code = iata_code;
     }
 
-    public String getId_merchant() {
-        return id_merchant;
-    }
-
-    public void setId_merchant(String id_merchant) {
-        this.id_merchant = id_merchant;
-    }
 }

@@ -3,20 +3,11 @@ package com.decidir.sdk.dto;
 import com.decidir.sdk.payments.GDSPaymentResponse;
 
 public class GDSPaymentRequestNoPCI extends PaymentRequest{
-    private String id_merchant;
     private String nro_location;
     private String iata_code;
 
     public GDSPaymentRequestNoPCI() {
         this.setPayment_mode("gds");
-    }
-
-    public String getId_merchant() {
-        return id_merchant;
-    }
-
-    public void setId_merchant(String id_merchant) {
-        this.id_merchant = id_merchant;
     }
 
     public String getNro_location() {
