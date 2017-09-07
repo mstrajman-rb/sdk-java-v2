@@ -1,7 +1,7 @@
 package com.decidir.sdk.converters;
 
 import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.FormResponse;
+import com.decidir.sdk.dto.forms.FormResponse;
 import retrofit2.Response;
 
 /**

@@ -1,7 +1,6 @@
 package com.decidir.sdk.exceptions.responses;
 
-import com.decidir.sdk.dto.RefundPaymentResponse;
-import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
+import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
 
 /**
  * Created by biandra on 08/07/16.

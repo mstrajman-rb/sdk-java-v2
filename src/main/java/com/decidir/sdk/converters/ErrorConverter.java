@@ -1,6 +1,6 @@
 package com.decidir.sdk.converters;
 
-import com.decidir.sdk.dto.DecidirError;
+import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;

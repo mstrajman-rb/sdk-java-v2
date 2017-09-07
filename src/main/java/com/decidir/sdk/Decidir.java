@@ -2,6 +2,23 @@ package com.decidir.sdk;
 
 import com.decidir.sdk.configuration.DecidirConfiguration;
 import com.decidir.sdk.dto.*;
+import com.decidir.sdk.dto.annullment.AnnulRefundResponse;
+import com.decidir.sdk.dto.payments.*;
+import com.decidir.sdk.dto.payments.agro.AgroPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.agro.AgroPaymentResponse;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
+import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.offline.OfflinePayment;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
+import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
+import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
+import com.decidir.sdk.dto.refunds.RefundPayment;
+import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
+import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
+import com.decidir.sdk.dto.tokens.CardTokens;
 import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.responses.PaymentException;
@@ -21,7 +38,7 @@ import com.decidir.sdk.services.RefundsService;
 public final class Decidir {
 
 	private static String apiUrl = "https://live.decidir.com/api/v1";
-	private static Integer timeOut = 20;
+	private static Integer timeOut = 79;
 	private PaymentsService paymentsService;
 	private RefundsService refundsService;
 	private CardTokenService cardTokenService;

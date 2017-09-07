@@ -1,5 +1,8 @@
 package com.decidir.sdk
 
+import com.decidir.sdk.dto.payments.pci.CardTrackInfo
+import com.decidir.sdk.dto.refunds.RefundPayment
+import com.decidir.sdk.dto.refunds.RefundSubPayment
 import com.decidir.sdk.exceptions.responses.RefundException
 import spock.lang.*
 import com.decidir.sdk.dto.*

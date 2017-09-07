@@ -1,6 +1,6 @@
 package com.decidir.sdk.exceptions.responses;
 
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.payments.PaymentResponse;
 
 /**
  * Created by biandra on 08/07/16.

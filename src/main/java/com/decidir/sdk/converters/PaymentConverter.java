@@ -1,19 +1,16 @@
 package com.decidir.sdk.converters;
 
-import com.decidir.sdk.dto.AnnulRefundResponse;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.exceptions.responses.ResponseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import com.decidir.sdk.dto.DecidirError;
+import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.dto.DecidirResponse;
-import com.decidir.sdk.dto.PaymentResponse;
+import com.decidir.sdk.dto.payments.PaymentResponse;
 /**
  * Created by biandra on 08/07/16.
  */

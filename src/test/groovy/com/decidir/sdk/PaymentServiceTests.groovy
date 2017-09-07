@@ -1,35 +1,35 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.BillingData
-import com.decidir.sdk.dto.CardData
-import com.decidir.sdk.dto.CardFraudDetectionData
-import com.decidir.sdk.dto.CardTokenData
-import com.decidir.sdk.dto.CardTrackInfo
-import com.decidir.sdk.dto.Channel
-import com.decidir.sdk.dto.Currency
-import com.decidir.sdk.dto.Customer
-import com.decidir.sdk.dto.CustomerInSite
-import com.decidir.sdk.dto.DayOfWeekOfFlight
-import com.decidir.sdk.dto.DecisionManagerTravel
-import com.decidir.sdk.dto.DepartureDate
-import com.decidir.sdk.dto.FraudDetectionDataResponse
-import com.decidir.sdk.dto.Identification
-import com.decidir.sdk.dto.IdentificationType
-import com.decidir.sdk.dto.Item
-import com.decidir.sdk.dto.JourneyType
-import com.decidir.sdk.dto.Passenger
-import com.decidir.sdk.dto.PassengerStatus
-import com.decidir.sdk.dto.PassengerType
-import com.decidir.sdk.dto.PaymentRequest
-import com.decidir.sdk.dto.PaymentPciRequest
-import com.decidir.sdk.dto.PaymentPciTokenRequest
-import com.decidir.sdk.dto.PaymentType
-import com.decidir.sdk.dto.PurchaseTotals
+import com.decidir.sdk.dto.cybersource.BillingData
+import com.decidir.sdk.dto.payments.pci.CardData
+import com.decidir.sdk.dto.payments.pci.CardFraudDetectionData
+import com.decidir.sdk.dto.payments.pci.CardTokenData
+import com.decidir.sdk.dto.payments.pci.CardTrackInfo
+import com.decidir.sdk.dto.cybersource.Channel
+import com.decidir.sdk.dto.payments.Currency
+import com.decidir.sdk.dto.payments.Customer
+import com.decidir.sdk.dto.forms.CustomerInSite
+import com.decidir.sdk.dto.cybersource.verticals.travels.DayOfWeekOfFlight
+import com.decidir.sdk.dto.cybersource.verticals.travels.DecisionManagerTravel
+import com.decidir.sdk.dto.cybersource.verticals.travels.DepartureDate
+import com.decidir.sdk.dto.cybersource.FraudDetectionDataResponse
+import com.decidir.sdk.dto.payments.Identification
+import com.decidir.sdk.dto.payments.IdentificationType
+import com.decidir.sdk.dto.cybersource.Item
+import com.decidir.sdk.dto.cybersource.verticals.travels.JourneyType
+import com.decidir.sdk.dto.cybersource.verticals.travels.Passenger
+import com.decidir.sdk.dto.cybersource.verticals.travels.PassengerStatus
+import com.decidir.sdk.dto.cybersource.verticals.travels.PassengerType
+import com.decidir.sdk.dto.payments.PaymentRequest
+import com.decidir.sdk.dto.payments.pci.PaymentPciRequest
+import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest
+import com.decidir.sdk.dto.payments.PaymentType
+import com.decidir.sdk.dto.cybersource.PurchaseTotals
 import com.decidir.sdk.dto.Status
-import com.decidir.sdk.dto.TicketingFraudDetectionData
-import com.decidir.sdk.dto.TicketingTransactionData
-import com.decidir.sdk.dto.TravelFraudDetectionData
-import com.decidir.sdk.dto.TravelTransactionData
+import com.decidir.sdk.dto.cybersource.verticals.ticketing.TicketingFraudDetectionData
+import com.decidir.sdk.dto.cybersource.verticals.ticketing.TicketingTransactionData
+import com.decidir.sdk.dto.cybersource.verticals.travels.TravelFraudDetectionData
+import com.decidir.sdk.dto.cybersource.verticals.travels.TravelTransactionData
 import com.decidir.sdk.exceptions.responses.PaymentException
 import com.decidir.sdk.exceptions.ValidateException
 import spock.lang.Specification
@@ -40,8 +40,8 @@ import spock.lang.Specification
 class PaymentServiceTests extends Specification {
 
     public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "a1ca9dd2-5f76-45aa-bbdf-c7d17320a2c1"
-    public static final String valid_bin = "450799"
+    public static final String token = "c15d2664-c0f5-4779-94d0-f17a45e1c7ca"
+    public static final String valid_bin = "450979"
     public static final String user_id = "decidir_test"
     public static final String apiUrl = "http://localhost:9002"
 

@@ -1,9 +1,9 @@
 package com.decidir.sdk
 
-import com.decidir.sdk.dto.Currency
-import com.decidir.sdk.dto.OfflinePaymentRequest
-import com.decidir.sdk.dto.PaymentRequest
-import com.decidir.sdk.dto.PaymentType
+import com.decidir.sdk.dto.payments.Currency
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest
+import com.decidir.sdk.dto.payments.PaymentRequest
+import com.decidir.sdk.dto.payments.PaymentType
 import com.decidir.sdk.dto.Status
 import spock.lang.Specification
 
