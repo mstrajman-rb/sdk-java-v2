@@ -43,9 +43,6 @@ public interface PaymentApi {
   Call<BSAPaymentResponse> payBsaNoPci(@Body BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
 
   @POST("payments")
-  Call<AgroPaymentResponse> payAgroPci(@Body AgroPaymentRequestPCI agroPaymentRequestPCI);
-
-  @POST("payments")
   Call<AgroPaymentResponse> payAgroNoPci(@Body AgroPaymentRequestNoPCI agroPaymentRequestNoPCI);
 
   @PUT("payments/{paymentId}")

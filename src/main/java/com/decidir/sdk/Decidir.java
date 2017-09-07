@@ -303,55 +303,6 @@ public final class Decidir {
 	/**
 	 * Executes a new payment(PCI) using the card data
 	 *
-	 * @param agroPaymentRequestPCI
-	 *            {@link PaymentPciRequest} request
-	 * @return a {@link DecidirResponse} with the approved {@link Payment}
-	 * @throws PaymentException
-	 *             when the payment was rejected
-	 * @throws DecidirException
-	 *             when an error occurs
-	 * <br>
-	 * <br>
-	 * <strong>Usage example</strong>
-	 * <pre>
-	 * {@code ...
-	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
-	 * PaymentPciRequest paymentRequest = new PaymentPciRequest();
-	 * //Fill payment request data - i.e. see {@link PaymentPciRequest }
-	 * ...
-	 * try {
-	 *	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
-	 *	//process payment response - see {@link DecidirResponse}
-	 *	...
-	 *	} catch (PaymentException pe) {
-	 *	 //Handle rejected payment - see {@link PaymentException}
-	 *	 ...
-	 *	} catch (DecidirException de) {
-	 *	 //Handle returned api exception - see {@link DecidirException}
-	 *	 ...
-	 *	} catch (Exception e) {
-	 *	 //Handle exception
-	 *	 ...
-	 *	}
-	 *	...
-	 * }
-	 * </pre>
-	 * @see #payment(PaymentRequest)
-	 * @see #payment(PaymentPciTokenRequest)
-	 * @see #confirmPayment(Long, Long, String)
-	 * @see #getPayment(Long)
-	 * @see #getPayments(Integer, Integer, String, String)
-	 * @see #refundPayment(Long, RefundPayment, String)
-	 */
-
-	public DecidirResponse<AgroPaymentResponse> payment(AgroPaymentRequestPCI agroPaymentRequestPCI)
-			throws PaymentException, DecidirException {
-		return paymentsService.agroPaymentRequestPCI(agroPaymentRequestPCI);
-	}
-
-	/**
-	 * Executes a new payment(PCI) using the card data
-	 *
 	 * @param agroPaymentRequestNoPCI
 	 *            {@link PaymentPciRequest} request
 	 * @return a {@link DecidirResponse} with the approved {@link Payment}
