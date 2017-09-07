@@ -1,4 +1,4 @@
-package com.decidir.sdk.payments;
+package com.decidir.sdk.dto.payments.gds;
 
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 
