@@ -5,7 +5,7 @@ import java.util.List;
 public class AgroPaymentRequestNoPCI extends PaymentRequest{
     private String token_type;
     private int days_agreement;
-    private List<InstallmentData> installments;
+    private List<InstallmentData> installmentList;
     private Boolean payment_method_is_agro;
     private int token_resolution_code;
 
@@ -29,14 +29,6 @@ public class AgroPaymentRequestNoPCI extends PaymentRequest{
         this.days_agreement = days_agreement;
     }
 
-    public List<InstallmentData> getInstallmentList() {
-        return installments;
-    }
-
-    public void setInstallmentList(List<InstallmentData> installments) {
-        this.installments = installments;
-    }
-
     public Boolean getPayment_method_is_agro() {
         return payment_method_is_agro;
     }
@@ -51,5 +43,13 @@ public class AgroPaymentRequestNoPCI extends PaymentRequest{
 
     public void setToken_resolution_code(int token_resolution_code) {
         this.token_resolution_code = token_resolution_code;
+    }
+
+    public List<InstallmentData> getInstallmentList() {
+        return installmentList;
+    }
+
+    public void setInstallmentList(List<InstallmentData> installmentList) {
+        this.installmentList = installmentList;
     }
 }
