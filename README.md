@@ -15,6 +15,9 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Operatoria del Gateway](#operatoria)
     + [Ejecución del Pago](#payment)
       + [Transacción simple](#single)
+      + [Transacción PCI](#pci)
+      + [Transacción GDS](#gds)
+      + [Transacción GDS PCI](#gdspci)
       + [Transacción distribuida](#distributed)
       + [Operación en dos pasos](#twosteps)
       <!--- + [Transacción de Pagos VTE VISA](#pagoAgregador)(TODO) -->
@@ -233,6 +236,199 @@ paymentRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
 List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
 paymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
 
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+<a name="pci"></a>
+
+#### Transacción PCI
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
+
+PaymentPciRequest paymentPciRequest = new PaymentPciRequest();
+CardData cardData = new CardData();
+cardData.setCard_expiration_month("12");
+cardData.setCard_expiration_year("20");
+
+IdentificationType type = IdentificationType.fromId(1); //tipo de documento, ejemplo dni
+String number = "23968498"; // nro de documento
+
+Identification identification = new Identification(); //identificacion personal
+identification.setNumber(number);
+identification.setType(type);
+cardData.setCard_holder_identification(identification);
+cardData.setCard_holder_name("Juan");
+cardData.setCard_number("4509790113276723");
+//RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+ServicesFraudDetectionData services =  new ServicesFraudDetectionData();
+
+paymentPciRequest.setCard_data(cardData);
+paymentPciRequest.setSite_transaction_id("TX00001234"); //ID de transaccion asignada por el comercio, no puede repetirse
+paymentPciRequest.setCustomer(customer);
+paymentPciRequest.setPayment_method_id(1); //VISA
+paymentPciRequest.setBin("450979");
+paymentPciRequest.setAmount(23250L);//Valor en centavos: $232.50
+paymentPciRequest.setCurrency(Currency.ARS);
+paymentPciRequest.setInstallments(1);
+paymentPciRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+paymentPciRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
+
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+
+<a name="single"></a>
+
+#### Transacción GDS
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
+
+GDSPaymentRequestNoPCI gdsPaymentRequest = new GDSPaymentRequestNoPCI();
+//RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+ServicesFraudDetectionData services =  new ServicesFraudDetectionData();
+
+gdsPaymentRequest.setToken("a00373a5-b8d7-4d7d-b14d-4aa447726fd9"); // token de pago
+gdsPaymentRequest.setSite_transaction_id("TX00001234"); //ID de transaccion asignada por el comercio, no puede repetirse
+gdsPaymentRequest.setCustomer(customer);
+gdsPaymentRequest.setPayment_method_id(1); //VISA
+gdsPaymentRequest.setBin("450979");
+gdsPaymentRequest.setAmount(23250L);//Valor en centavos: $232.50
+gdsPaymentRequest.setCurrency(Currency.ARS);
+gdsPaymentRequest.setInstallments(1);
+gdsPaymentRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+gdsPaymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
+gdsPaymentRequest.setIata_code("4354437656"); // iata_code (logitud menor o igual 10)
+gdsPaymentRequest.setNro_location("11140407"); // Id site del locator (longitud 8)
+
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+<a name="pci"></a>
+
+#### Transacción GDS PCI
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
+
+GDSPaymentRequestPCI gdsPaymentRequest = new GDSPaymentRequestPCI();
+CardData cardData = new CardData();
+cardData.setCard_expiration_month("12");
+cardData.setCard_expiration_year("20");
+
+IdentificationType type = IdentificationType.fromId(1);
+String number = "23968498";
+
+Identification identification = new Identification();
+identification.setNumber(number);
+identification.setType(type);
+cardData.setCard_holder_identification(identification);
+cardData.setCard_holder_name("Juan");
+cardData.setCard_number("4509790113276723");
+//RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+ServicesFraudDetectionData services =  new ServicesFraudDetectionData();
+
+gdsPaymentRequest.setCard_data(cardData);
+gdsPaymentRequest.setSite_transaction_id("pci001"); //ID de transaccion asignada por el comercio, no puede repetirse
+gdsPaymentRequest.setCustomer(customer);
+gdsPaymentRequest.setPayment_method_id(1); //VISA
+gdsPaymentRequest.setBin("450979");
+gdsPaymentRequest.setAmount(23250L);//Valor en centavos: $232.50
+gdsPaymentRequest.setCurrency(Currency.ARS);
+gdsPaymentRequest.setInstallments(1);
+gdsPaymentRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+gdsPaymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
+gdsPaymentRequest.setIata_code("iata1"); // iata_code (logitud menor o igual 10)
+gdsPaymentRequest.setNro_location("22240407"); // Id site del locator (longitud 8)
 try {
 	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
 	// Procesamiento de respuesta de ejecucion de pago
@@ -1200,7 +1396,9 @@ Luego de haber realizado una operación, DECIDIR devuelve los siguientes objetos
 
 Es usado en:
 *   [Transacción Simple](#single)
-*   [Transacción PCI]()
+*   [Transacción PCI](#pci)
+*   [Transacción GDS](#gds)
+*   [Transacción GDS PCI](#gdspci)
 *   [Transacción Pci por Token]()
 *   [Información de un Pago](#getpaymentinfo)
 *   [Operación en dos pasos](#twosteps)
