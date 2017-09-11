@@ -18,6 +18,7 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Transacción PCI](#pci)
       + [Transacción GDS](#gds)
       + [Transacción GDS PCI](#gdspci)
+      + [Transacción BSA PCI](#bsapci)
       + [Transacción distribuida](#distributed)
       + [Operación en dos pasos](#twosteps)
       <!--- + [Transacción de Pagos VTE VISA](#pagoAgregador)(TODO) -->
@@ -324,7 +325,7 @@ try {
 [<sub>Volver a inicio</sub>](#inicio)
 
 
-<a name="single"></a>
+<a name="gds"></a>
 
 #### Transacción GDS
 A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
@@ -379,7 +380,7 @@ try {
 // ...codigo...
 ```
 
-<a name="pci"></a>
+<a name="gdspci"></a>
 
 #### Transacción GDS PCI
 A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
@@ -429,6 +430,92 @@ List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso d
 gdsPaymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
 gdsPaymentRequest.setIata_code("iata1"); // iata_code (logitud menor o igual 10)
 gdsPaymentRequest.setNro_location("22240407"); // Id site del locator (longitud 8)
+try {
+	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
+	// Procesamiento de respuesta de ejecucion de pago
+	// ...codigo...
+} catch (PaymentException pe) {
+	 // Manejo de pago rechazado
+	 // ...codigo...
+} catch (DecidirException de) {
+	// Manejo de excepcion  de Decidir
+	 // ...codigo...
+} catch (Exception e) {
+	 //Manejo de excepcion general
+	// ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
+<a name="gdsbsa"></a>
+
+#### Transacción BSA PCI
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
+
+BSAPaymentRequestPCI bsaPaymentRequestPCI = new BSAPaymentRequestPCI();
+
+
+IdentificationType type = IdentificationType.fromId(1);
+String number = "23968498";
+
+Identification identification = new Identification();
+identification.setNumber(number);
+identification.setType(type);
+
+bsaPaymentRequestPCI.setCard_holder_identification(identification);
+
+
+//RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+ServicesFraudDetectionData services = new ServicesFraudDetectionData();
+
+bsaPaymentRequestPCI.setSite_transaction_id("bsapci015"); //ID de transaccion asignada por el comercio, no puede repetirse
+
+bsaPaymentRequestPCI.setCustomer(customer);
+bsaPaymentRequestPCI.setPayment_method_id(1); //VISA
+bsaPaymentRequestPCI.setBin("450799");
+bsaPaymentRequestPCI.setAmount(23250L);//Valor en centavos: $232.50
+bsaPaymentRequestPCI.setCurrency(Currency.ARS);
+bsaPaymentRequestPCI.setInstallments(1);
+bsaPaymentRequestPCI.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+bsaPaymentRequestPCI.setSub_payments(sub_payments); //Debe enviarse una lista vacia
+
+Card_token_bsa bsaCardData = new Card_token_bsa();
+
+bsaCardData.setPublic_token("4507993431624905");
+bsaCardData.setIssue_date("20170908");
+
+bsaCardData.setPublic_request_key("12345678");
+
+
+bsaCardData.setVolatile_encrypted_data("AvqyWXV1dXXPjUl8azlldQ5HK/gny6UJU4Wo3RFkYy2W9+D0kRfEoKeIIsFWiZh84CxKXvPX+u1j4Eqysg==");
+bsaCardData.setCard_holder_name("sarla");
+bsaCardData.setFlag_pei("1");
+bsaCardData.setFlag_security_code("1");
+bsaCardData.setFlag_selector_key("1");
+bsaCardData.setFlag_tokenization("0");
+
+bsaPaymentRequestPCI.setCard_token_bsa(bsaCardData);
+
+bsaPaymentRequestPCI.setFraud_detection(services);
+
 try {
 	DecidirResponse<PaymentResponse> paymentResponse = decidir.payment(paymentRequest);
 	// Procesamiento de respuesta de ejecucion de pago
@@ -1399,6 +1486,7 @@ Es usado en:
 *   [Transacción PCI](#pci)
 *   [Transacción GDS](#gds)
 *   [Transacción GDS PCI](#gdspci)
+*   [Transacción BSA PCI](#bsapci)
 *   [Transacción Pci por Token]()
 *   [Información de un Pago](#getpaymentinfo)
 *   [Operación en dos pasos](#twosteps)
