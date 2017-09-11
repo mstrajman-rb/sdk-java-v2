@@ -29,7 +29,7 @@ public enum Status {
     ADHERED,
     UNDEFINED;
 
-    private static Map<String, Status> statusMap = new HashMap<>(13);
+    private static Map<String, Status> statusMap = new HashMap(13);
     static {
         statusMap.put("approved", APPROVED);
         statusMap.put("pre_approved", PRE_APPROVED);

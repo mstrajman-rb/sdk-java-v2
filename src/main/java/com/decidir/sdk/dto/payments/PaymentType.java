@@ -15,7 +15,7 @@ public enum PaymentType {
     SINGLE,
     DISTRIBUTED;
 
-    private static Map<String, PaymentType> paymentTypeMap = new HashMap<>(2);
+    private static Map<String, PaymentType> paymentTypeMap = new HashMap(2);
     static {
         paymentTypeMap.put("single", SINGLE);
         paymentTypeMap.put("distributed", DISTRIBUTED);
