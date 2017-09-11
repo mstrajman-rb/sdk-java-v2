@@ -8,7 +8,6 @@ import com.decidir.sdk.dto.*;
 import com.decidir.sdk.dto.payments.*;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentResponse;
-import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
@@ -123,16 +122,6 @@ public class PaymentsService {
     public DecidirResponse<BSAPaymentResponse> bsaPaymentRequestPCI(BSAPaymentRequestPCI bsaPaymentRequestPCI) {
         try {
             Response<BSAPaymentResponse> response = this.paymentApi.payBsaPci(bsaPaymentRequestPCI).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
-
-
-    public DecidirResponse<BSAPaymentResponse> bsaPaymentRequestNoPCI(BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI) {
-        try {
-            Response<BSAPaymentResponse> response = this.paymentApi.payBsaNoPci(bsaPaymentRequestNoPCI).execute();
             return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
