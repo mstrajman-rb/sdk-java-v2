@@ -24,6 +24,8 @@ public class SubPayment implements Serializable {
   private String site_id;
   private Integer installments;
   private Long amount;
+  private String ticket;
+  private String card_autorization_code;
   private Long subpayment_id;
   private Status status;
 
@@ -49,6 +51,22 @@ public class SubPayment implements Serializable {
 
   public void setAmount(Long amount) {
     this.amount = amount;
+  }
+
+  public String getTicket() {
+    return ticket;
+  }
+
+  public void setTicket(String ticket) {
+    this.ticket = ticket;
+  }
+
+  public String getCard_autorization_code() {
+    return card_autorization_code;
+  }
+
+  public void setCard_autorization_code(String card_autorization_code) {
+    this.card_autorization_code = card_autorization_code;
   }
 
   public Long getSubpayment_id() {
