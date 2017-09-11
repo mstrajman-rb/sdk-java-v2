@@ -4,7 +4,6 @@ import com.decidir.sdk.dto.confirms.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.payments.*;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentResponse;
-import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
@@ -48,9 +47,6 @@ public interface PaymentApi {
 
   @POST("payments")
   Call<BSAPaymentResponse> payBsaPci(@Body BSAPaymentRequestPCI bsaPaymentRequestPCI);
-
-  @POST("payments")
-  Call<BSAPaymentResponse> payBsaNoPci(@Body BSAPaymentRequestNoPCI bsaPaymentRequestNoPCI);
 
   @POST("payments")
   Call<AgroPaymentResponse> payAgroNoPci(@Body AgroPaymentRequestNoPCI agroPaymentRequestNoPCI);

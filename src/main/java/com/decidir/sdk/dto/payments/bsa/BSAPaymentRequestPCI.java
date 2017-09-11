@@ -1,24 +1,30 @@
 package com.decidir.sdk.dto.payments.bsa;
 
 import com.decidir.sdk.dto.payments.Identification;
-import com.decidir.sdk.dto.cybersource.FraudDetectionData;
 import com.decidir.sdk.payments.Payment;
 
 public class BSAPaymentRequestPCI extends Payment{
-    String volatile_encrypted_data ;
-    String public_request_key;
-    String public_token;
-    String issue_date;
-    String flag_security_code;
-    String flag_tokenization;
-    String flag_selector_key;
-    String flag_pei;
-    String card_holder_name;
+
     Identification card_holder_identification;
-    FraudDetectionData fraud_detection;
-    BsaCardData bsa_card_data;
+    CardTokenBsa card_token_bsa;
 
     public BSAPaymentRequestPCI() {
         this.setPayment_mode("bsa");
+    }
+
+    public Identification getCard_holder_identification() {
+        return card_holder_identification;
+    }
+
+    public void setCard_holder_identification(Identification card_holder_identification) {
+        this.card_holder_identification = card_holder_identification;
+    }
+
+    public CardTokenBsa getCard_token_bsa() {
+        return card_token_bsa;
+    }
+
+    public void setCard_token_bsa(CardTokenBsa card_token_bsa) {
+        this.card_token_bsa = card_token_bsa;
     }
 }
