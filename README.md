@@ -19,6 +19,7 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Transacción GDS](#gds)
       + [Transacción GDS PCI](#gdspci)
       + [Transacción BSA PCI](#bsapci)
+      + [Transacción BSA no PCI](#bsapci)
       + [Transacción distribuida](#distributed)
       + [Operación en dos pasos](#twosteps)
       <!--- + [Transacción de Pagos VTE VISA](#pagoAgregador)(TODO) -->
@@ -322,8 +323,6 @@ try {
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-[<sub>Volver a inicio</sub>](#inicio)
-
 
 <a name="gds"></a>
 
@@ -449,7 +448,7 @@ try {
 
 [<sub>Volver a inicio</sub>](#inicio)
 
-<a name="gdsbsa"></a>
+<a name="bsapci"></a>
 
 #### Transacción BSA PCI
 A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
@@ -532,6 +531,12 @@ try {
 }
 // ...codigo...
 ```
+
+<a name="bsanopci"></a>
+
+#### Transacción BSA no PCI
+
+Las transacciones BSA no PCI operan de manera idéntica a las [transacciones simples](#single), para realizar una operacion por bsa no pci basta con seguir el mismo ejemplo que el visto en las transacciones simples.
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -1487,6 +1492,7 @@ Es usado en:
 *   [Transacción GDS](#gds)
 *   [Transacción GDS PCI](#gdspci)
 *   [Transacción BSA PCI](#bsapci)
+*   [Transacción BSA no PCI](#bsanopci)
 *   [Transacción Pci por Token]()
 *   [Información de un Pago](#getpaymentinfo)
 *   [Operación en dos pasos](#twosteps)
