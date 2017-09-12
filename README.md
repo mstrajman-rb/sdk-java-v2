@@ -496,7 +496,7 @@ bsaPaymentRequestPCI.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
 List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
 bsaPaymentRequestPCI.setSub_payments(sub_payments); //Debe enviarse una lista vacia
 
-Card_token_bsa bsaCardData = new Card_token_bsa();
+CardTokenBsa bsaCardData = new CardTokenBsa();
 
 bsaCardData.setPublic_token("4507993431624905");
 bsaCardData.setIssue_date("20170908");
