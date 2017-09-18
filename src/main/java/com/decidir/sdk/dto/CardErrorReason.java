@@ -9,7 +9,7 @@ public class CardErrorReason implements Serializable{
 
     private Integer id;
     private String description;
-    private String aditional_description;
+    private String additional_description;
 
     public Integer getId() {
         return id;
@@ -27,11 +27,11 @@ public class CardErrorReason implements Serializable{
         this.description = description;
     }
 
-    public String getAditional_description() {
-        return aditional_description;
+    public String getAdditional_description() {
+        return additional_description;
     }
 
-    public void setAditional_description(String aditional_description) {
-        this.aditional_description = aditional_description;
+    public void setAdditional_description(String additional_description) {
+        this.additional_description = additional_description;
     }
 }

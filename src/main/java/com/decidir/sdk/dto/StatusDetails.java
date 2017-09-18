@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class StatusDetails implements Serializable {
 
     private String ticket;
-    private String card_autorization_code;
+    private String card_authorization_code;
     private String address_validation_code;
     private CardError error;
 
@@ -20,12 +20,12 @@ public class StatusDetails implements Serializable {
         this.ticket = ticket;
     }
 
-    public String getCard_autorization_code() {
-        return card_autorization_code;
+    public String getCard_authorization_code() {
+        return card_authorization_code;
     }
 
-    public void setCard_autorization_code(String card_autorization_code) {
-        this.card_autorization_code = card_autorization_code;
+    public void setCard_authorization_code(String card_authorization_code) {
+        this.card_authorization_code = card_authorization_code;
     }
 
     public String getAddress_validation_code() {
