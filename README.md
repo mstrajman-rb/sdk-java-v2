@@ -1353,13 +1353,23 @@ item.setQuantity(1);//MANDATORIO
 item.setUnit_price(34900L);//MANDATORIO
 ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
 
-retailTPTransactionData.setAccount_antiquity("account_antiquity");
-retailTPTransactionData.setAccount_category("account_category");
-retailTPTransactionData.setAccount_id("account_id");
-retailTPTransactionData.setAccount_name("name account");
-retailTPTransactionData.setAccount_type("account_type");
-retailTPTransactionData.setToken_tp("tokentp");
-        
+Account account = new Account();
+account.setId("account_id");
+account.setType("account_type");
+account.setName("account_name");
+account.setCategory(123);
+account.setAntiquity(12);
+
+Wallet wallet = new Wallet();
+wallet.setId("wallet_id");
+wallet.setAntiquity(12);
+
+retailTPTransactionData.setAccount(account);
+retailTPTransactionData.setWallet_account(wallet);
+retailTPTransactionData.setPayment_method_risk_level(33);
+retailTPTransactionData.setEnroled_card_quantity(22);
+retailTPTransactionData.setDouble_factor_tp(1);
+
 retailTP.setRetailTP_transaction_data(retailTPTransactionData);//Datos de vertical RetailTP. MANDATORIO
 // ...codigo...
 ```
