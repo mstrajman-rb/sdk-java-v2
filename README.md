@@ -19,7 +19,8 @@ Modulo para conexión con gateway de pago DECIDIR2
       + [Transacción GDS](#gds)
       + [Transacción GDS PCI](#gdspci)
       + [Transacción BSA PCI](#bsapci)
-      + [Transacción BSA no PCI](#bsapci)
+      + [Transacción BSA no PCI](#bsanopci)
+      + [Transacción Agro no PCI](#agronopci)
       + [Transacción distribuida](#distributed)
       + [Operación en dos pasos](#twosteps)
       <!--- + [Transacción de Pagos VTE VISA](#pagoAgregador)(TODO) -->
@@ -258,7 +259,7 @@ try {
 <a name="pci"></a>
 
 #### Transacción PCI
-A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n pci sin [Cybersource](#cybersource).
 
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
@@ -327,7 +328,7 @@ try {
 <a name="gds"></a>
 
 #### Transacción GDS
-A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n GDS simple sin [Cybersource](#cybersource).
 
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
@@ -382,7 +383,7 @@ try {
 <a name="gdspci"></a>
 
 #### Transacción GDS PCI
-A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n PCI sin [Cybersource](#cybersource).
 
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
@@ -451,7 +452,7 @@ try {
 <a name="bsapci"></a>
 
 #### Transacción BSA PCI
-A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple sin [Cybersource](#cybersource).
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n BSA PCI sin [Cybersource](#cybersource).
 
 *Aclaracion* : amount es un campo long el cual representa el valor en centavos.
 
@@ -539,6 +540,79 @@ try {
 Las transacciones BSA no PCI operan de manera idéntica a las [transacciones simples](#single), para realizar una operacion por bsa no pci basta con seguir el mismo ejemplo que el visto en las transacciones simples.
 
 [<sub>Volver a inicio</sub>](#inicio)
+
+<a name="bsapci"></a>
+
+#### Transacción Agro no PCI
+A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n Agro simple sin [Cybersource](#cybersource).
+
+*Aclaracion* : amount es un campo long el cual representa el valor en centavos.
+
+```java
+// ...codigo...
+String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
+String urlSandbox = "https://developers.decidir.com/api/v1/";
+int timeout = 10; // 10 segundos de timeout
+//Ejemplo para el ambiente Sandbox
+Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
+
+Customer customer = new Customer();
+customer.setId("test"); // user_id
+customer.setEmail("test@decidir.com"); // user_email
+
+AgroPaymentRequestNoPCI agroPaymentRequestNoPCI = new AgroPaymentRequestNoPCI();
+//RetailFraudDetectionData retail =  new RetailFraudDetectionData();
+//RetailTPFraudDetectionData retailTP =  new RetailTPFraudDetectionData();
+ServicesFraudDetectionData services = new ServicesFraudDetectionData();
+
+agroPaymentRequestNoPCI.setToken("2f9c80b0-ebb9-4c75-b5e7-098a8c32b63a"); // token de pago
+agroPaymentRequestNoPCI.setSite_transaction_id("agro0016"); //ID de transaccion asignada por el comercio, no puede repetirse
+agroPaymentRequestNoPCI.setCustomer(customer);
+agroPaymentRequestNoPCI.setPayment_method_id(80); //VISA
+agroPaymentRequestNoPCI.setBin("448459");
+agroPaymentRequestNoPCI.setAmount(23250L);//Valor en centavos: $232.50
+agroPaymentRequestNoPCI.setCurrency(Currency.ARS);
+//agroPaymentRequestNoPCI.setInstallments(1);
+
+InstallmentData i1 = new InstallmentData();
+i1.setId(1);
+i1.setAmount(23250L);
+i1.setDate(new Date());
+List<InstallmentData> l = new ArrayList<InstallmentData>();
+l.add(i1);
+agroPaymentRequestNoPCI.setInstallmentList(l);
+
+agroPaymentRequestNoPCI.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+
+AgroData agroData = new AgroData();
+agroData.setToken("123456");
+agroData.setToken_type("T");
+agroData.setDays_agreement(360);
+
+agroPaymentRequestNoPCI.setAgro_data(agroData);
+
+List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
+agroPaymentRequestNoPCI.setSub_payments(sub_payments); //Debe enviarse una lista vacia
+
+try {
+    DecidirResponse<AgroPaymentResponse> paymentResponse = decidir.payment(agroPaymentRequestNoPCI);
+    System.out.println(paymentResponse.getMessage());
+    System.out.println("aaa");
+} catch (PaymentException pe) {
+    // Manejo de pago rechazado
+    // ...codigo...
+} catch (DecidirException de) {
+    // Manejo de excepcion  de Decidir
+    // ...codigo...
+} catch (Exception e) {
+    //Manejo de excepcion general
+    // ...codigo...
+}
+// ...codigo...
+```
+
+[<sub>Volver a inicio</sub>](#inicio)
+
 
 <a name="distributed"></a>
 
@@ -1279,13 +1353,23 @@ item.setQuantity(1);//MANDATORIO
 item.setUnit_price(34900L);//MANDATORIO
 ticketingTransactionData.setItems(Arrays.asList(item); //Items de compra. MANDATORIO
 
-retailTPTransactionData.setAccount_antiquity("account_antiquity");
-retailTPTransactionData.setAccount_category("account_category");
-retailTPTransactionData.setAccount_id("account_id");
-retailTPTransactionData.setAccount_name("name account");
-retailTPTransactionData.setAccount_type("account_type");
-retailTPTransactionData.setToken_tp("tokentp");
-        
+Account account = new Account();
+account.setId("account_id");
+account.setType("account_type");
+account.setName("account_name");
+account.setCategory(123);
+account.setAntiquity(12);
+
+Wallet wallet = new Wallet();
+wallet.setId("wallet_id");
+wallet.setAntiquity(12);
+
+retailTPTransactionData.setAccount(account);
+retailTPTransactionData.setWallet_account(wallet);
+retailTPTransactionData.setPayment_method_risk_level(33);
+retailTPTransactionData.setEnroled_card_quantity(22);
+retailTPTransactionData.setDouble_factor_tp(1);
+
 retailTP.setRetailTP_transaction_data(retailTPTransactionData);//Datos de vertical RetailTP. MANDATORIO
 // ...codigo...
 ```
@@ -1493,6 +1577,7 @@ Es usado en:
 *   [Transacción GDS PCI](#gdspci)
 *   [Transacción BSA PCI](#bsapci)
 *   [Transacción BSA no PCI](#bsanopci)
+*   [Transacción Agro no PCI](#agronopci)
 *   [Transacción Pci por Token]()
 *   [Información de un Pago](#getpaymentinfo)
 *   [Operación en dos pasos](#twosteps)

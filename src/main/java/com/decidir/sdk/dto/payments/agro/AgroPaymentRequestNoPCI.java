@@ -1,34 +1,19 @@
 package com.decidir.sdk.dto.payments.agro;
 
 import com.decidir.sdk.dto.payments.PaymentRequest;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class AgroPaymentRequestNoPCI extends PaymentRequest {
-    private String token_type;
-    private int days_agreement;
+    @JsonProperty("installments")
     private List<InstallmentData> installmentList;
+    private AgroData agro_data;
     private Boolean payment_method_is_agro;
     private int token_resolution_code;
 
     public AgroPaymentRequestNoPCI() {
         this.setPayment_mode("agro");
-    }
-
-    public String getToken_type() {
-        return token_type;
-    }
-
-    public void setToken_type(String token_type) {
-        this.token_type = token_type;
-    }
-
-    public int getDays_agreement() {
-        return days_agreement;
-    }
-
-    public void setDays_agreement(int days_agreement) {
-        this.days_agreement = days_agreement;
     }
 
     public Boolean getPayment_method_is_agro() {
@@ -53,5 +38,13 @@ public class AgroPaymentRequestNoPCI extends PaymentRequest {
 
     public void setInstallmentList(List<InstallmentData> installmentList) {
         this.installmentList = installmentList;
+    }
+
+    public AgroData getAgro_data() {
+        return agro_data;
+    }
+
+    public void setAgro_data(AgroData agro_data) {
+        this.agro_data = agro_data;
     }
 }
