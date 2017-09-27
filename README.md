@@ -156,8 +156,8 @@ import com.decidir.sdk.Decidir;
 
 public class MiClase {
 	String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-	String urlSandbox = "https://developers.decidir.com/api/v1/";
-	String urlProduccion = "https://live.decidir.com/api/v1/";
+	String urlSandbox = "https://developers.decidir.com/api/v2/";
+	String urlProduccion = "https://live.decidir.com/api/v2/";
 	int timeout = 10; // 10 segundos de timeout
 	//Para el ambiente Sandbox
 	Decidir decidirSandbox = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -185,7 +185,7 @@ A partir de ahora y por el resto de la documentaci&oacute;n, se ejemplificar&aac
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -218,7 +218,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple si
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -266,7 +266,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n pci sin [
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -335,7 +335,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n GDS simpl
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -390,7 +390,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n PCI sin [
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -459,7 +459,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n BSA PCI s
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -551,7 +551,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n Agro simp
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -632,7 +632,7 @@ y se configura en el SAC.
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -697,7 +697,7 @@ A continuaci&oacute;n se muestra un ejemplo con una transacci&oacute;n simple si
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -761,7 +761,7 @@ Este recurso admite la posibilidad de agregar filtros adicionales
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -796,7 +796,7 @@ Mediante este recurso, se genera una solicitud de información de un pago previa
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -835,7 +835,7 @@ Mediante este recurso, se genera una solicitud de anulación / devolución total
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -869,7 +869,7 @@ Mediante este recurso, se genera una solicitud de anulación de devolución tota
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -905,7 +905,7 @@ Mediante este recurso, se genera una solicitud de devolución parcial de un pago
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -943,7 +943,7 @@ Mediante este recurso, se genera una solicitud de anulación de devolución parc
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -989,7 +989,7 @@ Este recurso admite la posibilidad de agregar filtros adicionales.
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1028,7 +1028,7 @@ del Customer).
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1077,7 +1077,7 @@ El servicio da la posibilidad de eliminar un token de tarjeta generadas, esto se
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1219,7 +1219,7 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1283,7 +1283,7 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1379,7 +1379,7 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1442,7 +1442,7 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
@@ -1531,7 +1531,7 @@ Para incorporar estos datos en el requerimiento inicial, se debe instanciar un o
 ```java
 // ...codigo...
 String privateApiKey = "92b71cf711ca41f78362a7134f87ff65";//Private API Key habilitada para operar en ambiente Sandbox
-String urlSandbox = "https://developers.decidir.com/api/v1/";
+String urlSandbox = "https://developers.decidir.com/api/v2/";
 int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
