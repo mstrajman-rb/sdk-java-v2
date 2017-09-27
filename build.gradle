@@ -53,10 +53,11 @@ publishing {
     repositories {
         maven {
           credentials {
-            username "admin"
-            password "R3dB33575"
+            username "readwrite"
+            password "YFeTajaS!FW%3!s5"
           }
-          url "http://repo.dev.redbee.io/content/repositories/decidir-sdk-snapshot"
+          url "http://repo.dev.redbee.io/content/repositories/decidir-sdk"
+          //url "http://repo.dev.redbee.io/content/repositories/decidir-sdk-snapshot"
         }
     }
 }
