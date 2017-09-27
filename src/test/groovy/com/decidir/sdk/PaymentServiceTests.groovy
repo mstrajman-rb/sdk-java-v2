@@ -1,6 +1,7 @@
 package com.decidir.sdk
 
 import com.decidir.sdk.dto.cybersource.BillingData
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest
 import com.decidir.sdk.dto.payments.pci.CardData
 import com.decidir.sdk.dto.payments.pci.CardFraudDetectionData
 import com.decidir.sdk.dto.payments.pci.CardTokenData
@@ -39,11 +40,11 @@ import spock.lang.Specification
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00040407'//'4cf891e492384cdeadf211564aa87007'
-    public static final String token = "c15d2664-c0f5-4779-94d0-f17a45e1c7ca"
+    public static final String secretAccessToken = '781d3b4ed99d4ef6ab94a2f5d923d401'//'4cf891e492384cdeadf211564aa87007'
+    public static final String token = "0748b6e8-e2aa-4d9c-b303-a67ce2c2b4d0"
     public static final String valid_bin = "450979"
     public static final String user_id = "decidir_test"
-    public static final String apiUrl = "http://localhost:9002"
+    public static final String apiUrl = "https://developers.decidir.com/api/v2/"
 
 
     def decidir
@@ -466,5 +467,32 @@ class PaymentServiceTests extends Specification {
         result.result.fraud_detection.status.decision == "green"
         result.result.fraud_detection.status.reason_code == "100"
         result.result.fraud_detection.status.description == "Decision Manager processing"
+    }
+
+    def "test offline"() {
+        setup:
+
+        def payment = new OfflinePaymentRequest()
+        payment.site_transaction_id = "00000045"
+        payment.token = "3a392c0c-3ed9-4d5e-8ec1-0dfa2eccecf6"
+        payment.payment_method_id = 48
+        payment.amount = 5
+        payment.currency = Currency.ARS
+        payment.payment_type = PaymentType.SINGLE
+        payment.email = "max@gmail.com"
+        payment.invoice_expiration = "191123"
+        payment.cod_p3 = "1"
+        payment.cod_p4 = "134"
+        payment.client = "12345678"
+        payment.surcharge = 1001
+        payment.second_invoice_expiration = "191223"
+
+
+        when:
+        def result = decidir.offlinePayment(payment)
+
+        then:
+        result.status == 201
+        result.result.status == Status.APPROVED
     }
 }
