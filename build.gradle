@@ -5,7 +5,7 @@ apply plugin: "maven-publish"
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.7
-version = '1.5.0'
+version = '1.5.0-SNAPSHOT'
 group = 'com.decidir.api'
 
 jar {
@@ -52,12 +52,16 @@ publishing {
 publishing {
     repositories {
         maven {
-          credentials {
-            username "readwrite"
-            password "YFeTajaS!FW%3!s5"
-          }
-          url "http://repo.dev.redbee.io/content/repositories/decidir-sdk"
-          //url "http://repo.dev.redbee.io/content/repositories/decidir-sdk-snapshot"
+            credentials {
+                username "readwrite"
+                password "YFeTajaS!FW%3!s5"
+            }
+
+            if(project.version.endsWith('-SNAPSHOT')) {
+                url "http://repo.dev.redbee.io/content/repositories/decidir-sdk-snapshot"
+            } else {
+                url "http://repo.dev.redbee.io/content/repositories/decidir-sdk"
+            }
         }
     }
 }
