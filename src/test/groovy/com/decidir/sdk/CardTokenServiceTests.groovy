@@ -7,8 +7,8 @@ import spock.lang.Specification
  */
 class CardTokenServiceTests extends Specification {
 
-    public static final String secretAccessToken = '00111115_private'//'4cf891e492384cdeadf211564aa87007'
-    public static final String apiUrl = "http://localhost:9002"
+    public static final String secretAccessToken = '660b244e41bf404b821789c0113c6337'//'4cf891e492384cdeadf211564aa87007'
+    public static final String apiUrl = "http://localhost:10002/api/v2/"
 
     def decidir
 
@@ -18,7 +18,7 @@ class CardTokenServiceTests extends Specification {
 
     def "test list cardTokens"() {
         setup:
-        def userSiteId = 'ivalek'
+        def userSiteId = 'morton3'
         def bin = null
         def lastFourDigits = null
         def expirationMonth = null

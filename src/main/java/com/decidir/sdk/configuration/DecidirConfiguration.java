@@ -38,8 +38,8 @@ public class DecidirConfiguration {
                 Request request = chain.request().newBuilder()
                         .header(CACHE_CONTROL, MAX_AGE_0)
                         .header(APIKEY, secretAccessToken)
-                        .header("X-Consumer-Username", secretAccessToken+"_private")
-                        //.header("X-Consumer-Username", secretAccessToken+"_pci")
+//                        .header("X-Consumer-Username", secretAccessToken+"_private")
+//                        .header("X-Consumer-Username", secretAccessToken+"_pci")
                         .header(USER_AGENT, getUserAgent())
                         .build();
 
