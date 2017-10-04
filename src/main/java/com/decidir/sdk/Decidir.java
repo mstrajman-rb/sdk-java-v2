@@ -11,6 +11,7 @@ import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePayment;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
@@ -684,5 +685,45 @@ public final class Decidir {
 		return paymentsService.offlinePayment(offlinePayment);
 	}
 
-
+	/**
+	 * Executes a new offline payment using a generated payment token
+	 *
+	 * @param offlinePCIPayment
+	 *            {@link OfflinePaymentRequestPCI} request
+	 * @return a {@link DecidirResponse} with the approved {@link OfflinePayment}
+	 * @throws PaymentException
+	 *             when the payment was rejected
+	 * @throws DecidirException
+	 *             when an error occurs
+	 * <br>
+	 * <br>
+	 * <strong>Usage example</strong>
+	 * <pre>
+	 * {@code ...
+	 * Decidir decidir = new Decidir("f9c44926d1584f2d9b90e7c1d102cbe0");
+	 * OfflinePaymentRequestPCI offlinePaymentRequestPCI = new OfflinePaymentRequestPCI();
+	 * //Fill payment request data - i.e. see {@link OfflinePaymentRequestPCI}
+	 * ...
+	 * try {
+	 *	DecidirResponse<OfflinePaymentResponse> offlinePaymentResponse = decidir.offlinePCIPayment(offlinePaymentRequestPCI);
+	 *	//process offline payment response - see {@link DecidirResponse}
+	 *	...
+	 *	} catch (PaymentException pe) {
+	 *	 //Handle rejected payment - see {@link PaymentException}
+	 *	 ...
+	 *	} catch (DecidirException de) {
+	 *	 //Handle returned api exception - see {@link DecidirException}
+	 *	 ...
+	 *	} catch (Exception e) {
+	 *	 //Handle exception
+	 *	 ...
+	 *	}
+	 *	...
+	 * }
+	 * </pre>
+	 */
+	public DecidirResponse<OfflinePaymentResponse> offlinePCIPayment(OfflinePaymentRequestPCI offlinePCIPayment)
+			throws PaymentException, DecidirException {
+		return paymentsService.offlinePCIPayment(offlinePCIPayment);
+	}
 }

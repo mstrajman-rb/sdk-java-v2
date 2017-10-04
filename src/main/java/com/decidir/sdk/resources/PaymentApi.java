@@ -8,6 +8,7 @@ import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
@@ -38,6 +39,9 @@ public interface PaymentApi {
 
   @POST("payments")
   Call<OfflinePaymentResponse> payOffline(@Body OfflinePaymentRequest offlinePayment);
+
+  @POST("payments")
+  Call<OfflinePaymentResponse> payOfflinePCI(@Body OfflinePaymentRequestPCI offlinePCIPayment);
 
   @POST("payments")
   Call<GDSPaymentResponse> payGdsNoPci(@Body GDSPaymentRequestNoPCI gdsPayment);
