@@ -12,6 +12,7 @@ import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
+import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
@@ -131,6 +132,15 @@ public class PaymentsService {
     public DecidirResponse<AgroPaymentResponse> agroPaymentRequestNoPCI(AgroPaymentRequestNoPCI agroPaymentRequestNoPCI) {
         try {
             Response<AgroPaymentResponse> response = this.paymentApi.payAgroNoPci(agroPaymentRequestNoPCI).execute();
+            return paymentConverter.convertOrThrowError(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<OfflinePaymentResponse> offlinePCIPayment(OfflinePaymentRequestPCI offlinePaymentRequestPCI) {
+        try {
+            Response<OfflinePaymentResponse> response = this.paymentApi.payOfflinePCI(offlinePaymentRequestPCI).execute();
             return paymentConverter.convertOrThrowError(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
