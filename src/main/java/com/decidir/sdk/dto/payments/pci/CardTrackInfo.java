@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by gustavo on 7/26/17.
  */
 public class CardTrackInfo implements Serializable {
-    private static final long serialVersionUID = 3396057338629553508L;
 
     private String card_track_1;
     private String card_track_2;
