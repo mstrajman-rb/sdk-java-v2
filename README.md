@@ -236,6 +236,7 @@ paymentRequest.setAmount(23250L);//Valor en centavos: $232.50
 paymentRequest.setCurrency(Currency.ARS);
 paymentRequest.setInstallments(1);
 paymentRequest.setPayment_type(PaymentType.SINGLE); //Tipo de pago simple
+paymentRequest.setFirst_installment_expiration_date("2018-05-15"); // Llenar en caso de una compra con tarjeta NacionPyme
 List<SubPayment> sub_payments = new ArrayList<SubPayment>(); // Llenar en caso de transaccion distribuida por monto
 paymentRequest.setSub_payments(sub_payments); //Debe enviarse una lista vacia
 
