@@ -16,6 +16,7 @@ public abstract class Payment implements Serializable {
 	private Currency currency;
 	private Long amount;
 	private int installments;
+	private String first_installment_expiration_date;
 	private String site_transaction_id;
 	private String bin;
 	private Integer payment_method_id;
@@ -68,6 +69,13 @@ public abstract class Payment implements Serializable {
 		this.installments = installments;
 	}
 
+	public String getFirst_installment_expiration_date() {
+		return first_installment_expiration_date;
+	}
+
+	public void setFirst_installment_expiration_date(String first_installment_expiration_date) {
+		this.first_installment_expiration_date = first_installment_expiration_date;
+	}
 	public PaymentType getPayment_type() {
 		return payment_type;
 	}
