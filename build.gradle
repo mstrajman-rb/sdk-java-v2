@@ -51,8 +51,10 @@ dependencies {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        mavenJar(MavenPublication) {
+           artifact releaseJar
+           artifactId 'decidir2-sdk-java7'
+           version project.version
         }
     }
 }
