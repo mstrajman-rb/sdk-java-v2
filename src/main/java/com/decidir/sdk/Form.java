@@ -13,7 +13,7 @@ import com.decidir.sdk.services.FormService;
  */
 public class Form {
 
-    private static String apiUrl = "https://live.decidir.com/web";
+    private static String apiUrl = "https://live.decidir.com/web/";
     private static Integer timeOut = 5;
     private FormService formService;
 

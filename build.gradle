@@ -4,7 +4,7 @@ apply plugin: 'groovy'
 apply plugin: "maven-publish"
 apply plugin: 'eclipse'
 
-version = '1.5.9-SNAPSHOT'
+version = '2.1.0'
 group = 'com.decidir.api'
 
 sourceCompatibility = 1.7
@@ -45,8 +45,8 @@ dependencies {
   testCompile "org.codehaus.groovy:groovy-all:2.4.6"
   testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 
-  compile "com.squareup.retrofit2:retrofit:2.0.2"
-  compile "com.squareup.retrofit2:converter-jackson:2.0.2"
+  compile "com.squareup.retrofit2:retrofit:2.3.0"
+  compile "com.squareup.retrofit2:converter-jackson:2.3.0"
 }
 
 publishing {

@@ -37,7 +37,7 @@ import com.decidir.sdk.services.RefundsService;
 
 public final class Decidir {
 
-	private static String apiUrl = "https://live.decidir.com/api/v2";
+	private static String apiUrl = "https://live.decidir.com/api/v2/";
 	private static Integer timeOut = 79;
 	private PaymentsService paymentsService;
 	private RefundsService refundsService;
