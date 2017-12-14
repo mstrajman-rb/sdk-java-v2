@@ -22,7 +22,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class DecidirConfiguration {
 
-    static private final String version = "2.1.0";
+    static private final String version = "2.1.1";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
     public static final String USER_AGENT = "User-Agent";
