@@ -5,7 +5,7 @@ apply plugin: "maven-publish"
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.6
-version = '2.1.0'
+version = '2.1.1'
 group = 'com.decidir.api'
 
 jar {
@@ -25,7 +25,7 @@ task releaseJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Java SDK for Decidir', 'Implementation-Version': version
     }
-    archiveName 'decidir-v'+ version +'.jar'
+    archiveName 'decidir-v'+ version +'-java6.jar'
     destinationDir project.file('dist')		
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
