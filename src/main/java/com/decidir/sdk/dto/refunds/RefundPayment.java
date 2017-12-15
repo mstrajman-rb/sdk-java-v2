@@ -1,15 +1,13 @@
 package com.decidir.sdk.dto.refunds;
 
-import com.decidir.sdk.dto.payments.pci.CardTrackInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.decidir.sdk.dto.payments.pci.CardTrackInfo;
 
 /**
  * Created by biandra on 05/10/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefundPayment implements Serializable {
 
     private Long amount;

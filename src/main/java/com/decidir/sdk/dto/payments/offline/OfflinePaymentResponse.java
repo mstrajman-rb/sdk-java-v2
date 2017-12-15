@@ -2,15 +2,12 @@ package com.decidir.sdk.dto.payments.offline;
 
 import java.io.Serializable;
 
-import com.decidir.sdk.dto.CardError;
 import com.decidir.sdk.dto.Status;
 import com.decidir.sdk.dto.StatusDetails;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * DTO Offline Payment response used to communicate with Decidir's Payment Service
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class OfflinePaymentResponse extends OfflinePayment implements Serializable {
 
     private String token;

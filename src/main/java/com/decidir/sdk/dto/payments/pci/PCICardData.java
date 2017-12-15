@@ -2,15 +2,11 @@ package com.decidir.sdk.dto.payments.pci;
 
 import java.io.Serializable;
 
-import com.decidir.sdk.dto.payments.pci.CardFraudDetectionData;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * Abstract card data DTO with common values for PCI payments
  * @author ivalek
  *
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class PCICardData implements Serializable {
 
 	private String security_code;
