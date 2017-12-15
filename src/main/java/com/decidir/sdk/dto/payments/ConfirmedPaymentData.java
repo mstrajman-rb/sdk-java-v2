@@ -1,13 +1,10 @@
 package com.decidir.sdk.dto.payments;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 
 /**
  * Created by biandra on 25/11/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConfirmedPaymentData implements Serializable {
 
     private Long id;

@@ -1,15 +1,13 @@
 package com.decidir.sdk.dto.refunds;
 
+import java.io.Serializable;
+
 import com.decidir.sdk.dto.CardError;
 import com.decidir.sdk.dto.Status;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.io.Serializable;
 
 /**
  * Created by biandra on 22/09/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefundSubPaymentResponse implements Serializable {
 
     private Long id;

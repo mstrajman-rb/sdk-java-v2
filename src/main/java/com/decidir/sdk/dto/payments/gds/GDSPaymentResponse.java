@@ -1,10 +1,9 @@
 package com.decidir.sdk.dto.payments.gds;
 
-import com.decidir.sdk.dto.payments.PaymentResponse;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+import com.decidir.sdk.dto.payments.PaymentResponse;
+
 public class GDSPaymentResponse extends PaymentResponse implements Serializable{
     private String nro_location;
     private String iata_code;

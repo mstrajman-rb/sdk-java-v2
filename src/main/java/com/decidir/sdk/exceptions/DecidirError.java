@@ -1,20 +1,14 @@
 package com.decidir.sdk.exceptions;
 
-import com.decidir.sdk.exceptions.ValidateError;
-import com.decidir.sdk.exceptions.ApiError;
-import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.exceptions.NotFoundError;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * Created by biandra on 06/07/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,

@@ -1,13 +1,10 @@
 package com.decidir.sdk.dto.refunds;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 
 /**
  * Created by biandra on 05/10/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefundSubPayment implements Serializable {
 
     private Long id;
