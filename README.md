@@ -134,39 +134,21 @@ Se puede realizar la integración a través de un manager de dependencias, o bie
  
 ### Java 7+
 #### Manager de dependencias
-``` groovy
-apply plugin: 'com.android.application'
++  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
++  __groupId:__ _com.decidir.api_
++  __artifactId:__ _decidir2-sdk-java7_
++  __version:__ _2.1.1_
 
-repositories {
-    mavenCentral()
-    maven {
-        url "http://repo.dev.redbee.io/content/repositories/decidir-sdk/"
-    }
-}
-
-dependencies {
-	compile 'com.decidir.api:decidir2-sdk-java7:2.1.1'
-}
-```
 #### Descarga manual
 [Versi&oacute;n 2.1.1](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.1.1-java7.jar)
 
 ### Java 6
 #### Manager de dependencias
-``` groovy
-apply plugin: 'com.android.application'
++  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
++  __groupId:__ _com.decidir.api_
++  __artifactId:__ _decidir2-sdk-java6_
++  __version:__ _2.1.1_
 
-repositories {
-    mavenCentral()
-    maven {
-        url "http://repo.dev.redbee.io/content/repositories/decidir-sdk/"
-    }
-}
-
-dependencies {
-	compile 'com.decidir.api:decidir2-sdk-java6:2.1.1'
-}
-```
 #### Descarga manual
 [Versi&oacute;n 2.1.1](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.1.1-java6.jar)
 
