@@ -12,7 +12,6 @@ public class RefundPayment implements Serializable {
 
     private Long amount;
     private List<RefundSubPayment> sub_payments;
-    private CardTrackInfo card_track_info;
 
     public Long getAmount() {
         return amount;
@@ -30,11 +29,4 @@ public class RefundPayment implements Serializable {
         this.sub_payments = sub_payments;
     }
 
-    public CardTrackInfo getCard_track_info() {
-        return card_track_info;
-    }
-
-    public void setCard_track_info(CardTrackInfo card_track_info) {
-        this.card_track_info = card_track_info;
-    }
 }
