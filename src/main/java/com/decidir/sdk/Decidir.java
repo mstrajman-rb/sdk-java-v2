@@ -15,6 +15,7 @@ import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
+import com.decidir.sdk.dto.refunds.RefundMPOSPayment;
 import com.decidir.sdk.dto.refunds.RefundPayment;
 import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
@@ -563,6 +564,23 @@ public final class Decidir {
 	 * @see #getPayments(Integer, Integer, String, String)
 	 */
 	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment, String user)
+			throws RefundException, DecidirException {
+		return refundsService.refundPayment(paymentId, refundPayment, user);
+	}
+
+	/**
+	 * Method from MPOS
+	 * @param paymentId
+	 * @param refundPayment
+	 * @return
+	 * @throws DecidirException when an error occurs
+	 *
+	 * @see #cancelRefund(Long, Long, String)
+	 * @see #getRefunds(Long)
+	 * @see #getPayment(Long)
+	 * @see #getPayments(Integer, Integer, String, String)
+	 */
+	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundMPOSPayment refundPayment, String user)
 			throws RefundException, DecidirException {
 		return refundsService.refundPayment(paymentId, refundPayment, user);
 	}
