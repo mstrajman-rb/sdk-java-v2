@@ -4,7 +4,7 @@ apply plugin: 'groovy'
 apply plugin: "maven-publish"
 apply plugin: 'eclipse'
 
-version = '2.1.2-SNAPSHOT'
+version = '2.1.2'
 group = 'com.decidir.api'
 
 sourceCompatibility = 1.7
