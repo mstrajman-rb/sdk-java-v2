@@ -1,13 +1,10 @@
 package com.decidir.sdk.dto.tokens;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 
 /**
  * Created by biandra on 22/09/16.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class CardToken implements Serializable {
 
     private String token;
