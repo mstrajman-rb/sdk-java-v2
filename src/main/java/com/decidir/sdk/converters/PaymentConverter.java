@@ -3,7 +3,6 @@ package com.decidir.sdk.converters;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.exceptions.responses.ResponseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Response;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -14,7 +13,7 @@ import com.decidir.sdk.dto.payments.PaymentResponse;
 /**
  * Created by biandra on 08/07/16.
  */
-public class PaymentConverter {
+public class PaymentConverter extends DecidirConverter {
     public static final int HTTP_402 = 402;
 
     public <A> DecidirResponse<A>  convert(Response<A> response, A body) {
@@ -30,8 +29,7 @@ public class PaymentConverter {
             return this.convert(response, response.body());
         } else {
             if (response.code() == HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
-                throw new PaymentException(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), PaymentResponse.class));
+                throw new PaymentException(response.code(), response.message(), super.convert(response.errorBody().bytes(), PaymentResponse.class));
             } else {
                 DecidirResponse<DecidirError> error = this.convertError(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
@@ -40,8 +38,7 @@ public class PaymentConverter {
     }
 
     public DecidirResponse<DecidirError> convertError(Response response) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        DecidirError decidirError = objectMapper.readValue(response.errorBody().string(), DecidirError.class);
+        DecidirError decidirError = super.convert(response.errorBody().bytes(), DecidirError.class);
         return this.convert(response,decidirError);
     }
 
@@ -51,9 +48,8 @@ public class PaymentConverter {
             return this.convert(response, response.body());
         } else {
             if (response.code() == HTTP_402){
-                ObjectMapper objectMapper = new ObjectMapper();
                 Constructor<E> ctor = specError.getConstructor();
-                throw ctor.newInstance(response.code(), response.message(), objectMapper.readValue(response.errorBody().string(), responseErr));
+                throw ctor.newInstance(response.code(), response.message(), super.convert(response.errorBody().bytes(), responseErr));
             } else {
                 DecidirResponse<DecidirError> error = this.convertError(response);
                 throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
