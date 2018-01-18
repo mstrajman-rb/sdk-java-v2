@@ -7,7 +7,7 @@ import retrofit2.Response;
 /**
  * Created by biandra on 22/09/16.
  */
-public class CardTokenConverter {
+public class CardTokenConverter extends DecidirConverter {
 
     public DecidirResponse<CardTokens> convert(Response<CardTokens> response, CardTokens cardTokens) {
         DecidirResponse<CardTokens> dResponse = new DecidirResponse();

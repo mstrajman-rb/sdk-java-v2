@@ -7,7 +7,7 @@ import retrofit2.Response;
 /**
  * Created by biandra on 19/06/17.
  */
-public class FormConverter {
+public class FormConverter extends DecidirConverter {
 
     public DecidirResponse<FormResponse> convert(Response<FormResponse> response, FormResponse formResponse){
         DecidirResponse<FormResponse> dResponse = new DecidirResponse();

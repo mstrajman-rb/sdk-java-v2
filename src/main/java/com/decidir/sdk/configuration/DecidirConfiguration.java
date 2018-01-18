@@ -1,17 +1,11 @@
 package com.decidir.sdk.configuration;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
+
 import java.util.concurrent.TimeUnit;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
+import com.decidir.sdk.converters.DecidirConverter;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +16,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class DecidirConfiguration {
 
-    static private final String version = "2.1.1";
+    static private final String version = "2.1.3";
     public static final String CACHE_CONTROL = "Cache-Control";
     public static final String MAX_AGE_0 = "max-age=0";
     public static final String USER_AGENT = "User-Agent";
@@ -51,19 +45,10 @@ public class DecidirConfiguration {
                 return chain.proceed(request);
             }
         });
-        
-        ObjectMapper jacksonConverter = new ObjectMapper().addHandler(new DeserializationProblemHandler() {
-            @Override
-            public boolean handleUnknownProperty(DeserializationContext ctxt, JsonParser jp, JsonDeserializer<?> deserializer, Object beanOrClass, String propertyName) throws IOException, JsonProcessingException {
-                return true;
-            }
-        });
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		jacksonConverter.setDateFormat(dateFormat);
+
 		retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
                 .baseUrl(apiUrl)
-                .addConverterFactory(JacksonConverterFactory.create(jacksonConverter))
+                .addConverterFactory(JacksonConverterFactory.create(new DecidirConverter().getObjectMapper()))
                 .client(httpClient.build())
                 .build();
 
