@@ -4,6 +4,7 @@ import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.*;
 import com.decidir.sdk.dto.annullment.AnnulRefundResponse;
+import com.decidir.sdk.dto.refunds.RefundMPOSPayment;
 import com.decidir.sdk.dto.refunds.RefundPayment;
 import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
@@ -54,6 +55,15 @@ public class RefundsService {
     public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundPayment refundPayment, String user) {
         try {
             Response<RefundPaymentResponse> response = this.refundApi.refundPayment(user, paymentId, refundPayment).execute();
+            return processRefundPaymentResponse(response);
+        } catch(IOException ioe) {
+            throw new DecidirException(HTTP_500, ioe.getMessage());
+        }
+    }
+
+    public DecidirResponse<RefundPaymentResponse> refundMPOSPayment(Long paymentId, RefundMPOSPayment refundPayment, String user) {
+        try {
+            Response<RefundPaymentResponse> response = this.refundApi.refundMPOSPayment(user, paymentId, refundPayment).execute();
             return processRefundPaymentResponse(response);
         } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());

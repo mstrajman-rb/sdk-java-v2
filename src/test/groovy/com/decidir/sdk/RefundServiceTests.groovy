@@ -1,6 +1,7 @@
 package com.decidir.sdk
 
 import com.decidir.sdk.dto.payments.pci.CardTrackInfo
+import com.decidir.sdk.dto.refunds.RefundMPOSPayment
 import com.decidir.sdk.dto.refunds.RefundPayment
 import com.decidir.sdk.dto.refunds.RefundSubPayment
 import com.decidir.sdk.exceptions.responses.RefundException
@@ -89,7 +90,7 @@ class RefundServiceTests extends Specification {
   def "test payment refunded with card track info"() {
     setup:
     def paymentId = 10642
-    def refundPayment = new RefundPayment()
+    def refundPayment = new RefundMPOSPayment()
     def user = "ccopello"
     refundPayment.amount = 3
 
