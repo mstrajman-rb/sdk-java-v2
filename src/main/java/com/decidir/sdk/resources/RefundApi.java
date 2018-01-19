@@ -1,6 +1,7 @@
 package com.decidir.sdk.resources;
 
 import com.decidir.sdk.dto.annullment.AnnulRefundResponse;
+import com.decidir.sdk.dto.refunds.RefundMPOSPayment;
 import com.decidir.sdk.dto.refunds.RefundPayment;
 import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
 import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
@@ -17,6 +18,9 @@ public interface RefundApi {
 
     @POST("payments/{paymentId}/refunds")
     Call<RefundPaymentResponse> refundPayment(@Header("User") String user,@Path("paymentId") Long paymentId, @Body RefundPayment refundPayment);
+
+    @POST("payments/{paymentId}/refunds")
+    Call<RefundPaymentResponse> refundMPOSPayment(@Header("User") String user, @Path("paymentId") Long paymentId, @Body RefundMPOSPayment refundPayment);
 
     @DELETE("payments/{paymentId}/refunds/{refundId}")
     Call<AnnulRefundResponse> cancelRefund(@Header("User") String user, @Path("paymentId") Long paymentId, @Path("refundId") Long refundId);

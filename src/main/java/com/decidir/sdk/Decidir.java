@@ -582,7 +582,7 @@ public final class Decidir {
 	 */
 	public DecidirResponse<RefundPaymentResponse> refundPayment(Long paymentId, RefundMPOSPayment refundPayment, String user)
 			throws RefundException, DecidirException {
-		return refundsService.refundPayment(paymentId, refundPayment, user);
+		return refundsService.refundMPOSPayment(paymentId, refundPayment, user);
 	}
 
 	/**
