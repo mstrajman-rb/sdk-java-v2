@@ -40,11 +40,11 @@ import spock.lang.Specification
  */
 class PaymentServiceTests extends Specification {
 
-    public static final String secretAccessToken = '781d3b4ed99d4ef6ab94a2f5d923d401'//'4cf891e492384cdeadf211564aa87007'
+    public static final String secretAccessToken = '00111115'; //'781d3b4ed99d4ef6ab94a2f5d923d401'//'4cf891e492384cdeadf211564aa87007'
     public static final String token = "0748b6e8-e2aa-4d9c-b303-a67ce2c2b4d0"
     public static final String valid_bin = "450979"
     public static final String user_id = "decidir_test"
-    public static final String apiUrl = "https://developers.decidir.com/api/v2/"
+    public static final String apiUrl = "http://localhost:9002/"
 
 
     def decidir
