@@ -295,6 +295,7 @@ PaymentPciRequest paymentPciRequest = new PaymentPciRequest();
 CardData cardData = new CardData();
 cardData.setCard_expiration_month("12");
 cardData.setCard_expiration_year("20");
+cardData.setIp_address("192.168.1.10"); // Customer IP, en caso de usar Cybersource se usa en el campo CSBTIPADDRESS 
 
 IdentificationType type = IdentificationType.fromId(1); //tipo de documento, ejemplo dni
 String number = "23968498"; // nro de documento
@@ -419,6 +420,7 @@ GDSPaymentRequestPCI gdsPaymentRequest = new GDSPaymentRequestPCI();
 CardData cardData = new CardData();
 cardData.setCard_expiration_month("12");
 cardData.setCard_expiration_year("20");
+cardData.setIp_address("192.168.1.10"); // Customer IP, en caso de usar Cybersource se usa en el campo CSBTIPADDRESS
 
 IdentificationType type = IdentificationType.fromId(1);
 String number = "23968498";
