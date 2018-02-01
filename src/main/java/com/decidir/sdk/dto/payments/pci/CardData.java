@@ -44,11 +44,9 @@ public class CardData extends PCICardData {
 	public void setCard_holder_identification(Identification card_holder_identification) {
 		this.card_holder_identification = card_holder_identification;
 	}
-
 	public CardTrackInfo getCard_track_info() {
 		return card_track_info;
 	}
-
 	public void setCard_track_info(CardTrackInfo card_track_info) {
 		this.card_track_info = card_track_info;
 	}
