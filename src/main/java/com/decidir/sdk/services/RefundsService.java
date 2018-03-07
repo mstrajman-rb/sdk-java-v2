@@ -11,6 +11,7 @@ import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
 import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
+import com.decidir.sdk.exceptions.responses.RefundException;
 import com.decidir.sdk.resources.RefundApi;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -72,7 +73,14 @@ public class RefundsService {
 
     private DecidirResponse<RefundPaymentResponse> processRefundPaymentResponse(Response<RefundPaymentResponse> response)
             throws IOException, JsonParseException, JsonMappingException {
-        return this.paymentConverter.convertOrThrowError(response);
+        DecidirResponse<RefundPaymentResponse> ret = null;
+
+        try {
+            ret = this.paymentConverter.convertOrThrowSpecError(response, RefundException.class, RefundPaymentResponse.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, String user) {
