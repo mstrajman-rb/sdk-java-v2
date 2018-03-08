@@ -1,6 +1,7 @@
 package com.decidir.sdk.services;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
@@ -8,6 +9,7 @@ import com.decidir.sdk.dto.confirms.ConfirmPaymentAmount;
 import com.decidir.sdk.dto.DecidirResponse;
 import com.decidir.sdk.dto.payments.PaymentResponse;
 import com.decidir.sdk.exceptions.DecidirException;
+import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -39,14 +41,14 @@ public class PaymentConfirmService {
         try {
             Response<PaymentResponse> response = this.paymentApi.paymentConfirm(user, paymentId, new ConfirmPaymentAmount(amount)).execute();
             return processPaymentResponse(response);
-        } catch(IOException ioe) {
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
 
     private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
-            throws IOException, JsonParseException, JsonMappingException {
-        return this.paymentConverter.convertOrThrowError(response);
+            throws IOException, JsonParseException, JsonMappingException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        return this.paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
     }
 
 }

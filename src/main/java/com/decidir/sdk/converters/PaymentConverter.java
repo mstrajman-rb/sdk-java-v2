@@ -24,19 +24,6 @@ public class PaymentConverter extends DecidirConverter {
         return dResponse;
     }
 
-    public <A> DecidirResponse<A> convertOrThrowError(Response<A> response) throws IOException {
-        if (response.isSuccessful()) {
-            return this.convert(response, response.body());
-        } else {
-            if (response.code() == HTTP_402){
-                throw new PaymentException(response.code(), response.message(), super.convert(response.errorBody().bytes(), PaymentResponse.class));
-            } else {
-                DecidirResponse<DecidirError> error = this.convertError(response);
-                throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
-            }
-        }
-    }
-
     public DecidirResponse<DecidirError> convertError(Response response) throws IOException {
         DecidirError decidirError = super.convert(response.errorBody().bytes(), DecidirError.class);
         return this.convert(response,decidirError);
@@ -48,7 +35,7 @@ public class PaymentConverter extends DecidirConverter {
             return this.convert(response, response.body());
         } else {
             if (response.code() == HTTP_402){
-                Constructor<E> ctor = specError.getConstructor();
+                Constructor<E> ctor = specError.getConstructor(int.class, String.class, responseErr);
                 throw ctor.newInstance(response.code(), response.message(), super.convert(response.errorBody().bytes(), responseErr));
             } else {
                 DecidirResponse<DecidirError> error = this.convertError(response);
