@@ -1,16 +1,15 @@
 package com.decidir.sdk.converters;
 
-import com.decidir.sdk.Decidir;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 /**
  * Created by ivalek on 1/18/18.
@@ -25,6 +24,7 @@ public class DecidirConverter {
         objectMapper = new ObjectMapper().addHandler(new DeserializationProblemHandler() {
             @Override
             public boolean handleUnknownProperty(DeserializationContext ctxt, JsonParser jp, JsonDeserializer<?> deserializer, Object beanOrClass, String propertyName) throws IOException, JsonProcessingException {
+            	jp.skipChildren();
                 return true;
             }
         });
