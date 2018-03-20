@@ -128,19 +128,34 @@ A continuación, se presenta un diagrama con el Flujo de un Pago.
 [<sub>Volver a inicio</sub>](#inicio)
 
 <a name="instalacion"></a>
-## Instalación
-Se debe descargar la última versión del SDK desde el botón Download ZIP del branch master.
-Una vez descargado y descomprimido, se debe agregar la librería `decidir.jar` que se encuentra dentro de la carpeta `./dist/`, a las librerías del proyecto y en el codigo se debe agregar siguiente import.
+## Instalaci&oacute;n
+Se encuentran disponibles *2* implementaciones para la &uacute;ltima versi&oacute;n. Una es compatible con __Java7__ _(o superior)_ y la otra con __Java6__ _(o superior)_.
+Se puede realizar la integración a través de un manager de dependencias, o bien manualmente descargando el _JAR_ desde [Github](https://github.com).
+ 
+### Java 7+
+#### Manager de dependencias
++  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
++  __groupId:__ _com.decidir.api_
++  __artifactId:__ _decidir2-sdk-java7_
++  __version:__ _2.1.4_
 
-```java
-import com.decidir.sdk.Decidir;
-import com.decidir.sdk.dto.*;
-import com.decidir.sdk.exceptions.*;
-```
+#### Descarga manual
+[Versi&oacute;n 2.1.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.1.4-java7.jar)
+
+### Java 6
+#### Manager de dependencias
++  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
++  __groupId:__ _com.decidir.api_
++  __artifactId:__ _decidir2-sdk-java6_
++  __version:__ _2.1.4_
+
+#### Descarga manual
+[Versi&oacute;n 2.1.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.1.4-java6.jar)
+
 
 <a name="versionesdejavasoportadas"></a>
 ### Versiones de Java soportadas
-La versi&oacute;n implementada de la SDK, est&aacute; testeada para versiones desde Java 1.7
+La versi&oacute;n implementada de la SDK, est&aacute; testeada para versiones a partir de **Java 1.6**
 
 [<sub>Volver a inicio</sub>](#inicio)
 
@@ -280,6 +295,7 @@ PaymentPciRequest paymentPciRequest = new PaymentPciRequest();
 CardData cardData = new CardData();
 cardData.setCard_expiration_month("12");
 cardData.setCard_expiration_year("20");
+cardData.setIp_address("192.168.1.10"); // Customer IP, en caso de usar Cybersource se usa en el campo CSBTIPADDRESS 
 
 IdentificationType type = IdentificationType.fromId(1); //tipo de documento, ejemplo dni
 String number = "23968498"; // nro de documento
@@ -404,6 +420,7 @@ GDSPaymentRequestPCI gdsPaymentRequest = new GDSPaymentRequestPCI();
 CardData cardData = new CardData();
 cardData.setCard_expiration_month("12");
 cardData.setCard_expiration_year("20");
+cardData.setIp_address("192.168.1.10"); // Customer IP, en caso de usar Cybersource se usa en el campo CSBTIPADDRESS
 
 IdentificationType type = IdentificationType.fromId(1);
 String number = "23968498";

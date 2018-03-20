@@ -1,6 +1,6 @@
 package com.decidir.sdk.services;
 
-import java.io.IOException;
+import java.lang.Exception;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
@@ -20,6 +20,7 @@ import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.exceptions.DecidirException;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentResponse;
+import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
 
 import retrofit2.Response;
@@ -54,7 +55,7 @@ public class PaymentsService {
             DecidirResponse<DecidirError> error = errorConverter.convert(response);
             throw DecidirException.wrap(error.getStatus(), error.getMessage(), error.getResult());
 
-        } catch(IOException ioe) {
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -62,24 +63,24 @@ public class PaymentsService {
     public DecidirResponse<PaymentResponse> paymentNoPci(PaymentRequest payment) {
         try {
             Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
     public DecidirResponse<PaymentResponse> paymentPciCard(PaymentPciRequest payment) {
         try {
             Response<PaymentResponse> response = this.paymentApi.payPciCard(payment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
     public DecidirResponse<PaymentResponse> paymentPciToken(PaymentPciTokenRequest payment) {
         try {
             Response<PaymentResponse> response = this.paymentApi.payPciToken(payment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -87,8 +88,8 @@ public class PaymentsService {
     public DecidirResponse<PaymentResponse> getPayment(Long paymentId) {
         try {
             Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -96,8 +97,8 @@ public class PaymentsService {
     public DecidirResponse<OfflinePaymentResponse> offlinePayment(OfflinePaymentRequest offlinePayment) {
         try {
             Response<OfflinePaymentResponse> response = this.paymentApi.payOffline(offlinePayment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -105,8 +106,8 @@ public class PaymentsService {
     public DecidirResponse<GDSPaymentResponse> gdsPaymentNoPci(GDSPaymentRequestNoPCI gdsPayment) {
         try {
             Response<GDSPaymentResponse> response = this.paymentApi.payGdsNoPci(gdsPayment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -114,8 +115,8 @@ public class PaymentsService {
     public DecidirResponse<GDSPaymentResponse> gdsPaymentPciCard(GDSPaymentRequestPCI gdsPayment) {
         try {
             Response<GDSPaymentResponse> response = this.paymentApi.payGdsPci(gdsPayment).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -123,8 +124,8 @@ public class PaymentsService {
     public DecidirResponse<BSAPaymentResponse> bsaPaymentRequestPCI(BSAPaymentRequestPCI bsaPaymentRequestPCI) {
         try {
             Response<BSAPaymentResponse> response = this.paymentApi.payBsaPci(bsaPaymentRequestPCI).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -132,8 +133,8 @@ public class PaymentsService {
     public DecidirResponse<AgroPaymentResponse> agroPaymentRequestNoPCI(AgroPaymentRequestNoPCI agroPaymentRequestNoPCI) {
         try {
             Response<AgroPaymentResponse> response = this.paymentApi.payAgroNoPci(agroPaymentRequestNoPCI).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -141,8 +142,8 @@ public class PaymentsService {
     public DecidirResponse<OfflinePaymentResponse> offlinePCIPayment(OfflinePaymentRequestPCI offlinePaymentRequestPCI) {
         try {
             Response<OfflinePaymentResponse> response = this.paymentApi.payOfflinePCI(offlinePaymentRequestPCI).execute();
-            return paymentConverter.convertOrThrowError(response);
-        } catch(IOException ioe) {
+            return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
+        } catch(Exception ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
