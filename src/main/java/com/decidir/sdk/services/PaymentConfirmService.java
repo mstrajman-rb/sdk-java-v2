@@ -37,14 +37,14 @@ public class PaymentConfirmService {
         return new PaymentConfirmService(paymentApi, new PaymentConverter(), new ErrorConverter());
     }
 
-    public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount, String user) {
-        try {
-            Response<PaymentResponse> response = this.paymentApi.paymentConfirm(user, paymentId, new ConfirmPaymentAmount(amount)).execute();
-            return processPaymentResponse(response);
-        } catch(Exception ioe) {
-            throw new DecidirException(HTTP_500, ioe.getMessage());
-        }
-    }
+	public DecidirResponse<PaymentResponse> paymentConfirm(Long paymentId, Long amount, String user) {
+		try {
+			Response<PaymentResponse> response = this.paymentApi.paymentConfirm(user, paymentId, new ConfirmPaymentAmount(amount)).execute();
+			return processPaymentResponse(response);
+		} catch (IOException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+			throw new DecidirException(HTTP_500, e.getMessage());
+		}
+	}
 
     private DecidirResponse<PaymentResponse> processPaymentResponse(Response<PaymentResponse> response)
             throws IOException, JsonParseException, JsonMappingException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
