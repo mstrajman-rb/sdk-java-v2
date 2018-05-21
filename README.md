@@ -137,10 +137,10 @@ Se puede realizar la integración a través de un manager de dependencias, o bie
 +  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
 +  __groupId:__ _com.decidir.api_
 +  __artifactId:__ _decidir2-sdk-java7_
-+  __version:__ _2.1.4_
++  __version:__ _2.2_
 
 #### Descarga manual
-[Versi&oacute;n 2.1.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.1.4-java7.jar)
+[Versi&oacute;n 2.2](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.2-java7.jar)
 
 ### Java 6
 #### Manager de dependencias
@@ -858,7 +858,7 @@ int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 long idPago = 000123L; //ID devuelto por la operacion de pago (NO CONFUNDIR con site_transaction_id asignado por el comercio)
-String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
+String usuario = "usuario_que_realiza_la_accion"; //OPCIONAL NULLABLE, Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 RefundPayment refundPayment = new RefundPayment(); //Se instancia sin datos
 try {
 	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario);
@@ -893,7 +893,7 @@ int timeout = 10; // 10 segundos de timeout
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 long idPago = 000123L;//ID devuelto por la operacion de pago (NO CONFUNDIR con site_transaction_id asignado por el comercio)
 long idDevolucion = 00012L;//ID devuelto por la operacion de devolucion
-String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
+String usuario = "usuario_que_realiza_la_accion"; //OPCIONAL NULLABLE, Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 
 try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir. cancelRefund(idPago, idDevolucion, usuario)
@@ -928,7 +928,7 @@ int timeout = 10; // 10 segundos de timeout
 //Ejemplo para el ambiente Sandbox
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 long idPago = 000123L; //ID devuelto por la operacion de pago (NO CONFUNDIR con site_transaction_id asignado por el comercio)
-String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
+String usuario = "usuario_que_realiza_la_accion"; //OPCIONAL NULLABLE, Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 long  montoDevolucion = 1250L // Expresado en centavos
 
 RefundPayment refundPayment = new RefundPayment();
@@ -967,7 +967,7 @@ int timeout = 10; // 10 segundos de timeout
 Decidir decidir = new Decidir(privateApiKey, urlSandbox, timeout);
 long idPago = 000123L;//ID devuelto por la operacion de pago (NO CONFUNDIR con site_transaction_id asignado por el comercio)
 long idDevolucion = 00012L;//ID devuelto por la operacion de devolucion
-String usuario = "usuario_que_realiza_la_accion"; //Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
+String usuario = "usuario_que_realiza_la_accion"; //OPCIONAL NULLABLE, Usuario habilitado para realizar la anulacion/devolucion. Se utiliza para matener un registro de quien realiza la operacion
 try {
 	DecidirResponse<AnnulRefundResponse> anulacion = decidir.cancelRefund(idPago, idDevolucion, usuario)
 	// Procesamiento de respuesta de anulacion de devolucion
