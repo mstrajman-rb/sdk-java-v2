@@ -10,24 +10,41 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Channel {
 
-    WEB("Web");
+	WEB("Web"),
+	MOBILE("Mobile"),
+	TEL("Telefonica");
 
-    private final String  channelId;
+	private final String channelId;
 
-    Channel (String channelId) {
+	Channel(String channelId) {
 
-        this.channelId = channelId;
-    }
+		this.channelId = channelId;
+	}
 
-    @JsonCreator
-    public static Channel forValue(String value) {
+	public String getValue() {
+		return this.channelId;
+	}
 
-        return Channel.WEB;
-    }
+	public boolean isChannel(String c) {
+		return this.channelId.equals(c);
+	}
 
-    @JsonValue
-    public String toValue() {
+	@JsonCreator
+	public static Channel forValue(String value) {
+		Channel[] values = values();
+		Channel result = null;
 
-        return Channel.WEB.name();
-    }
+		for (int i = 0; i < values.length; i++) {
+			if (values[i].isChannel(value)) {
+				result = values[i];
+			}
+		}
+		return result;
+	}
+
+	@JsonValue
+	public String toValue() {
+
+		return Channel.WEB.getValue();
+	}
 }
