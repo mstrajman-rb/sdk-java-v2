@@ -20,6 +20,7 @@ public class PaymentResponse extends Payment implements Serializable {
 	private StatusDetails status_details;
 	private ConfirmedPaymentData confirmed;
 	private String pan;
+	private String customer_token;
 
 	public String getToken() {
 		return token;
@@ -92,4 +93,13 @@ public class PaymentResponse extends Payment implements Serializable {
 	public void setPan(String pan) {
 		this.pan = pan;
 	}
+
+	public String getCustomer_token() {
+		return customer_token;
+	}
+
+	public void setCustomer_token(String customer_token) {
+		this.customer_token = customer_token;
+	}
+
 }
