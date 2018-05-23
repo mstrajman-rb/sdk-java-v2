@@ -3,8 +3,9 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: "maven-publish"
 apply plugin: 'eclipse'
+apply plugin: "maven"
 
-version = '2.2'
+version = '2.3'
 group = 'com.decidir.api'
 
 sourceCompatibility = 1.7
