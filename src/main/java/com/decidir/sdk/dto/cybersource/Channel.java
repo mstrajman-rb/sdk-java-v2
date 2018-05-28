@@ -21,10 +21,6 @@ public enum Channel {
 		this.channelId = channelId;
 	}
 
-	public String getValue() {
-		return this.channelId;
-	}
-
 	public boolean isChannel(String c) {
 		return this.channelId.equals(c);
 	}
@@ -45,6 +41,6 @@ public enum Channel {
 	@JsonValue
 	public String toValue() {
 
-		return Channel.WEB.getValue();
+		return this.channelId;
 	}
 }
