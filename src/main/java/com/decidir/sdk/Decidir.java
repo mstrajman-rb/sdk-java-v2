@@ -599,6 +599,21 @@ public final class Decidir {
 	}
 
 	/**
+	 *
+	 * @param paymentId
+	 * @param refundId
+	 * @param rollbackPayment
+	 * @return
+	 * @throws DecidirException when an error occurs
+	 *
+	 * @see #getRefunds(Long)
+	 * @see #refundPayment(Long, RefundPayment, String)
+	 */
+	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, RollbackMPOSPayment rollbackPayment, String user) throws AnnulRefundException, DecidirException {
+		return refundsService.cancelRefund(paymentId, refundId, user);
+	}
+
+	/**
 	 * Lists user's card tokens
 	 * 
 	 * @param userSiteId
