@@ -28,8 +28,8 @@ public class OfflinePaymentRequest extends Offline {
     private String email;
     private String invoice_expiration;
     private String second_invoice_expiration;
-//    private String cod_p1;
-//    private String cod_p2;
+    private String cod_p1;
+    private String cod_p2;
     private String cod_p3;
     private String cod_p4;
     private String client;
@@ -71,21 +71,21 @@ public class OfflinePaymentRequest extends Offline {
         this.second_invoice_expiration = second_invoice_expiration;
     }
 
-//    public String getCod_p1() {
-//        return cod_p1;
-//    }
-//
-//    public void setCod_p1(String cod_p1) {
-//        this.cod_p1 = cod_p1;
-//    }
-//
-//    public String getCod_p2() {
-//        return cod_p2;
-//    }
-//
-//    public void setCod_p2(String cod_p2) {
-//        this.cod_p2 = cod_p2;
-//    }
+    public String getCod_p1() {
+        return cod_p1;
+    }
+
+    public void setCod_p1(String cod_p1) {
+        this.cod_p1 = cod_p1;
+    }
+
+    public String getCod_p2() {
+        return cod_p2;
+    }
+
+    public void setCod_p2(String cod_p2) {
+        this.cod_p2 = cod_p2;
+    }
 
     public String getCod_p3() {
         return cod_p3;
