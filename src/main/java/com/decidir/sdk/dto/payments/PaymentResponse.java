@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.decidir.sdk.dto.Status;
 import com.decidir.sdk.dto.StatusDetails;
+import com.decidir.sdk.dto.payments.card.CardData;
 import com.decidir.sdk.payments.Payment;
 
 /**
@@ -21,6 +22,7 @@ public class PaymentResponse extends Payment implements Serializable {
 	private ConfirmedPaymentData confirmed;
 	private String pan;
 	private String customer_token;
+	private CardData card_data;
 
 	public String getToken() {
 		return token;
@@ -100,6 +102,14 @@ public class PaymentResponse extends Payment implements Serializable {
 
 	public void setCustomer_token(String customer_token) {
 		this.customer_token = customer_token;
+	}
+
+	public CardData getCard_data() {
+		return card_data;
+	}
+
+	public void setCard_data(CardData card_data) {
+		this.card_data = card_data;
 	}
 
 }

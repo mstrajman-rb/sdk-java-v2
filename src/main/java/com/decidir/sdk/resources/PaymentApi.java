@@ -25,7 +25,7 @@ public interface PaymentApi {
                          @Query("siteOperationId") String siteOperationId,
                          @Query("siteId") String merchantId);
 
-  @GET("payments/{paymentId}")
+  @GET("payments/{paymentId}?expand=card_data")
   Call<PaymentResponse> getPayment(@Path("paymentId") Long id);
 
   @POST("payments")

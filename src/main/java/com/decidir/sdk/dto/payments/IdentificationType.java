@@ -33,4 +33,12 @@ public enum IdentificationType {
 		}
 		return IdentificationType.NO_DOC;
 	}
+
+	@JsonCreator
+	public static IdentificationType fromId(String id) {
+		for (IdentificationType element : IdentificationType.values()) {
+			if(element.value.equals(id)) return element;
+		}
+		return IdentificationType.NO_DOC;
+	}
 }
