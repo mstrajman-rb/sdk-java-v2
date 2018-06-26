@@ -16,7 +16,6 @@ import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
 import com.decidir.sdk.dto.refunds.*;
-import com.decidir.sdk.dto.reverse.ReversePaymentResponse;
 import com.decidir.sdk.dto.tokens.CardTokens;
 import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
@@ -28,7 +27,6 @@ import com.decidir.sdk.payments.Payment;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
 import com.decidir.sdk.resources.RefundApi;
-import com.decidir.sdk.resources.ReversalApi;
 import com.decidir.sdk.services.*;
 
 
@@ -40,7 +38,6 @@ public final class Decidir {
 	private RefundsService refundsService;
 	private CardTokenService cardTokenService;
 	private PaymentConfirmService paymentConfirmService;
-	private ReversalService reversalService;
 
 	/**
 	 * Creates a new instance to communicate with Decidir Api.  
@@ -111,8 +108,6 @@ public final class Decidir {
 				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, CardTokenApi.class));
 		this.paymentConfirmService = PaymentConfirmService.getInstance(
 				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, PaymentApi.class));
-		this.reversalService = ReversalService.getInstance(
-				DecidirConfiguration.initRetrofit(secretAccessToken, this.apiUrl, this.timeOut, ReversalApi.class));
 	}
 	
 	/**
@@ -757,21 +752,6 @@ public final class Decidir {
 	public DecidirResponse<OfflinePaymentResponse> offlinePCIPayment(OfflinePaymentRequestPCI offlinePCIPayment)
 			throws PaymentException, DecidirException {
 		return paymentsService.offlinePCIPayment(offlinePCIPayment);
-	}
-
-	/**
-	 * Executes a reversal of payment.
-	 *
-	 * @param paymentId
-	 * @return
-	 * @throws DecidirException when an error occurs
-	 *
-	 * @see #getPayment(Long)
-	 * @see #getPayments(Integer, Integer, String, String)
-	 */
-	public DecidirResponse<ReversePaymentResponse> reversePayment(Long paymentId, String user)
-			throws RefundException, DecidirException {
-		return reversalService.refundPayment(user, paymentId);
 	}
 
 }
