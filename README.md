@@ -137,10 +137,10 @@ Se puede realizar la integración a través de un manager de dependencias, o bie
 +  __repositoryUrl:__ _http://repo.dev.redbee.io/content/repositories/decidir-sdk/_
 +  __groupId:__ _com.decidir.api_
 +  __artifactId:__ _decidir2-sdk-java7_
-+  __version:__ _2.4_
++  __version:__ _2.5_
 
 #### Descarga manual
-[Versi&oacute;n 2.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.4-java7.jar)
+[Versi&oacute;n 2.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.5-java7.jar)
 
 ### Java 6
 #### Manager de dependencias
