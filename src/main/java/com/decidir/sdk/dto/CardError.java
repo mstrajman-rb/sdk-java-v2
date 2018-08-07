@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class CardError implements Serializable{
 
-    private CardErrorCode type;
+    private String type;
     private CardErrorReason reason;
 
-    public CardErrorCode getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(CardErrorCode type) {
+    public void setType(String type) {
         this.type = type;
     }
 
