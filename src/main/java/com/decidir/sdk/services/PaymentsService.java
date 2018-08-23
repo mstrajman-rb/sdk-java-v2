@@ -1,18 +1,20 @@
 package com.decidir.sdk.services;
 
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.reflect.InvocationTargetException;
 
 import com.decidir.sdk.converters.ErrorConverter;
 import com.decidir.sdk.converters.PaymentConverter;
-import com.decidir.sdk.dto.*;
-import com.decidir.sdk.dto.payments.*;
+import com.decidir.sdk.dto.DecidirResponse;
+import com.decidir.sdk.dto.payments.Page;
+import com.decidir.sdk.dto.payments.PaymentRequest;
+import com.decidir.sdk.dto.payments.PaymentResponse;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentRequestNoPCI;
 import com.decidir.sdk.dto.payments.agro.AgroPaymentResponse;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentRequestPCI;
 import com.decidir.sdk.dto.payments.bsa.BSAPaymentResponse;
 import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestNoPCI;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestPCI;
+import com.decidir.sdk.dto.payments.gds.GDSPaymentResponse;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequest;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
@@ -20,8 +22,6 @@ import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
 import com.decidir.sdk.exceptions.DecidirError;
 import com.decidir.sdk.exceptions.DecidirException;
-import com.decidir.sdk.dto.payments.gds.GDSPaymentRequestPCI;
-import com.decidir.sdk.dto.payments.gds.GDSPaymentResponse;
 import com.decidir.sdk.exceptions.responses.PaymentException;
 import com.decidir.sdk.resources.PaymentApi;
 
@@ -65,7 +65,7 @@ public class PaymentsService {
 		try {
 			Response<PaymentResponse> response = this.paymentApi.payNoPci(payment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -74,7 +74,7 @@ public class PaymentsService {
 		try {
 			Response<PaymentResponse> response = this.paymentApi.payPciCard(payment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -83,7 +83,7 @@ public class PaymentsService {
 		try {
 			Response<PaymentResponse> response = this.paymentApi.payPciToken(payment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -92,7 +92,7 @@ public class PaymentsService {
 		try {
 			Response<PaymentResponse> response = this.paymentApi.getPayment(paymentId).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -101,7 +101,7 @@ public class PaymentsService {
 		try {
 			Response<OfflinePaymentResponse> response = this.paymentApi.payOffline(offlinePayment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -110,7 +110,7 @@ public class PaymentsService {
 		try {
 			Response<GDSPaymentResponse> response = this.paymentApi.payGdsNoPci(gdsPayment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -119,7 +119,7 @@ public class PaymentsService {
 		try {
 			Response<GDSPaymentResponse> response = this.paymentApi.payGdsPci(gdsPayment).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -128,7 +128,7 @@ public class PaymentsService {
 		try {
 			Response<BSAPaymentResponse> response = this.paymentApi.payBsaPci(bsaPaymentRequestPCI).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -138,7 +138,7 @@ public class PaymentsService {
 		try {
 			Response<AgroPaymentResponse> response = this.paymentApi.payAgroNoPci(agroPaymentRequestNoPCI).execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}
@@ -149,7 +149,7 @@ public class PaymentsService {
 			Response<OfflinePaymentResponse> response = this.paymentApi.payOfflinePCI(offlinePaymentRequestPCI)
 					.execute();
 			return paymentConverter.convertOrThrowSpecError(response, PaymentException.class, PaymentResponse.class);
-		} catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+		} catch (IOException  ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 	}

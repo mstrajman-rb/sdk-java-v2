@@ -1,7 +1,6 @@
 package com.decidir.sdk.services;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import com.decidir.sdk.converters.PaymentConverter;
 import com.decidir.sdk.dto.DecidirResponse;
@@ -38,7 +37,7 @@ public class RefundsService {
             Response<RefundPaymentHistoryResponse> response = this.refundApi.getRefunds(paymentId).execute();
 
             return this.paymentConverter.convertOrThrowSpecError(response, RefundException.class, DecidirError.class);
-        } catch(IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+        } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -48,7 +47,7 @@ public class RefundsService {
             Response<RefundPaymentResponse> response = this.refundApi.refundPayment(user, paymentId, refundPayment).execute();
 
             return this.paymentConverter.convertOrThrowSpecError(response, RefundException.class, RefundPaymentResponse.class);
-        } catch(IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+        } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -58,7 +57,7 @@ public class RefundsService {
             Response<RefundPaymentResponse> response = this.refundApi.refundMPOSPayment(user, paymentId, refundPayment).execute();
 
             return this.paymentConverter.convertOrThrowSpecError(response, RefundException.class, RefundPaymentResponse.class);
-        } catch(IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ioe) {
+        } catch(IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
     }
@@ -69,7 +68,7 @@ public class RefundsService {
 			Response<AnnulRefundResponse> response = this.refundApi.cancelRefund(user, paymentId, refundId).execute();
 
 			result = this.paymentConverter.convertOrThrowSpecError(response, AnnulRefundException.class, AnnulRefundResponse.class);
-		} catch (IOException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ioe) {
+		} catch (IOException ioe) {
 			throw new DecidirException(HTTP_500, ioe.getMessage());
 		}
 		return result;
