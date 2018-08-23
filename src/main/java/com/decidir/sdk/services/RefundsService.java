@@ -80,7 +80,7 @@ public class RefundsService {
             Response<AnnulRefundResponse> response = this.refundApi.cancelMPOSRefund(user, paymentId, refundId, rollbackMPOSPayment).execute();
 
             result = this.paymentConverter.convertOrThrowSpecError(response, AnnulRefundException.class, AnnulRefundResponse.class);
-        } catch (IOException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ioe) {
+        } catch (IOException ioe) {
             throw new DecidirException(HTTP_500, ioe.getMessage());
         }
         return result;
