@@ -140,7 +140,7 @@ Se puede realizar la integración a través de un manager de dependencias, o bie
 +  __version:__ _2.6_
 
 #### Descarga manual
-[Versi&oacute;n 2.4](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.6-java7.jar)
+[Versi&oacute;n 2.6](https://github.com/decidir/sdk-java-v2/blob/master/dist/decidir-v2.6-java7.jar)
 
 ### Java 6
 #### Manager de dependencias
