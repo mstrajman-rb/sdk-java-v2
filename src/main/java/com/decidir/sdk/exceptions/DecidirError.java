@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @Type(value = ApiError.class, name = "api_error"),
         @Type(value = ApiError.class, name = "rate_limit_error"),
         @Type(value = NotFoundError.class, name = "not_found_error"),
+        @Type(value = ValidateStatusError.class, name = "invalid_status_error"),
         @Type(value = ValidateError.class, name = "invalid_request_error") })
 public class DecidirError implements Serializable {
 
