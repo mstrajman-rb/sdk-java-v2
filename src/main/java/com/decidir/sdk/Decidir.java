@@ -15,10 +15,7 @@ import com.decidir.sdk.dto.payments.offline.OfflinePaymentRequestPCI;
 import com.decidir.sdk.dto.payments.offline.OfflinePaymentResponse;
 import com.decidir.sdk.dto.payments.pci.PaymentPciRequest;
 import com.decidir.sdk.dto.payments.pci.PaymentPciTokenRequest;
-import com.decidir.sdk.dto.refunds.RefundMPOSPayment;
-import com.decidir.sdk.dto.refunds.RefundPayment;
-import com.decidir.sdk.dto.refunds.RefundPaymentHistoryResponse;
-import com.decidir.sdk.dto.refunds.RefundPaymentResponse;
+import com.decidir.sdk.dto.refunds.*;
 import com.decidir.sdk.dto.tokens.CardTokens;
 import com.decidir.sdk.exceptions.responses.AnnulRefundException;
 import com.decidir.sdk.exceptions.DecidirException;
@@ -30,10 +27,7 @@ import com.decidir.sdk.payments.Payment;
 import com.decidir.sdk.resources.CardTokenApi;
 import com.decidir.sdk.resources.PaymentApi;
 import com.decidir.sdk.resources.RefundApi;
-import com.decidir.sdk.services.CardTokenService;
-import com.decidir.sdk.services.PaymentConfirmService;
-import com.decidir.sdk.services.PaymentsService;
-import com.decidir.sdk.services.RefundsService;
+import com.decidir.sdk.services.*;
 
 
 public final class Decidir {
@@ -600,6 +594,21 @@ public final class Decidir {
 	}
 
 	/**
+	 *
+	 * @param paymentId
+	 * @param refundId
+	 * @param rollbackPayment
+	 * @return
+	 * @throws DecidirException when an error occurs
+	 *
+	 * @see #getRefunds(Long)
+	 * @see #refundPayment(Long, RefundPayment, String)
+	 */
+	public DecidirResponse<AnnulRefundResponse> cancelRefund(Long paymentId, Long refundId, RollbackMPOSPayment rollbackPayment, String user) throws AnnulRefundException, DecidirException {
+		return refundsService.cancelRefund(paymentId, refundId, user);
+	}
+
+	/**
 	 * Lists user's card tokens
 	 * 
 	 * @param userSiteId
@@ -744,4 +753,5 @@ public final class Decidir {
 			throws PaymentException, DecidirException {
 		return paymentsService.offlinePCIPayment(offlinePCIPayment);
 	}
+
 }
