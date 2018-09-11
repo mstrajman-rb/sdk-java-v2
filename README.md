@@ -49,6 +49,7 @@ Modulo para conexión con gateway de pago DECIDIR2
   + [Manejo de Excepciones](#manejoExceptions)
     + [PaymentException](#paymentException)
     + [DecidirException](#decidirException)
+    	+ [ValidateStatusException](#validateStatusException)
       + [ValidateException](#validateException)
       + [ApiException](#apiException)
       + [NotFoundException](#notFoundException)
