@@ -864,6 +864,10 @@ try {
 	DecidirResponse<RefundPaymentResponse> devolucion = decidir.refundPayment(idPago, refundPayment, usuario);
 	// Procesamiento de respuesta de la devolucion de pago
 	// ...codigo...
+} catch (ValidateStatusException vse) {
+    // Manejo de excepcion en devolucion
+    String status = vse.getErrorDetail().getValidation_errors().getStatus();
+    vse.printStackTrace();	
 } catch (RefundException re) {
     // Manejo de excepcion en devolucion
     re.printStackTrace();
@@ -903,6 +907,10 @@ try {
     are.printStackTrace();
     // Manejo de excepcion de anulacion de devolucion
     // ...codigo...
+} catch (ValidateStatusException vse) {
+    // Manejo de excepcion en devolucion
+    String status = vse.getErrorDetail().getValidation_errors().getStatus();
+    vse.printStackTrace();	
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -941,6 +949,10 @@ try {
 } catch (RefundException re) {
     // Manejo de excepcion en devolucion
     re.printStackTrace();
+} catch (ValidateStatusException vse) {
+    // Manejo de excepcion en devolucion
+    String status = vse.getErrorDetail().getValidation_errors().getStatus();
+    vse.printStackTrace();	
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -976,6 +988,10 @@ try {
     are.printStackTrace();
     // Manejo de excepcion de anulacion de devolucion
     // ...codigo...
+} catch (ValidateStatusException vse) {
+    // Manejo de excepcion en devolucion
+    String status = vse.getErrorDetail().getValidation_errors().getStatus();
+    vse.printStackTrace();	
 } catch (DecidirException de) {
 	// Manejo de excepcion  de Decidir
 	 // ...codigo...
@@ -1634,6 +1650,7 @@ Las Excepciones tienen dos naturalezas:
     * [PaymentException](#paymentException)
     * [RefundException](#refundException)
     * [AnnulRefundException](#annulRefundException)
+	* [ValidateStatusException](#validateStatusException)    
 * Errores en el proceso de Transacción y Operaciones:
     * [DecidirException](#decidirException)
         * [ValidateException](#validateException)
@@ -1706,6 +1723,33 @@ try {
 
     // Detalle de error en DECIDIR
     ValidateError errorDetail = ve.getErrorDetail();
+}
+```
+
+<a name="validateStatusException"></a>
+#### ValidateStatusException
+
+Es lanzado cuando DECIDIR intenta realizar operaciones con estados no esperados.
+
+#### Atributos
+    - status: int
+    - message: String
+    - errorDetail: ValidateStatusError
+*Ver los valores posibles en la tabla de [Atributos de Excepciones](#atributosExcepciones)*
+
+Ejemplo de cómo capturar el <code>ValidateStatusException</code>:
+```java
+try {
+    // ...codigo...
+    // Pago enviado a DECIDIR
+    // ...codigo...
+} catch (ValidateStatusException ve) {
+    // Estado general de la Excepción
+    int httpStatus = ve.getStatus();
+    String exceptionMessage = ve.getMessage();
+
+    // Detalle de error en DECIDIR
+    ValidateStatusError errorDetail = ve.getErrorDetail().getValidation_errors().getStatus();
 }
 ```
 
@@ -2046,9 +2090,11 @@ la distribución de pagos se realiza estáticamente.
 |status           |int                  |Estado HTTP                     |Todas                                                                                                      |
 |message          |String               |Descripción del Estado HTTP     |Todas                                                                                                      |
 |errorDetail      |ValidateError        |Descripción del error           |[ValidateException](#validateException)                                                                    |
+|errorDetail      |ValidateStatusError  |Descripción del error           |[ValidateStatusException](#validateStatusException)                                                                    |
 |errorDetail      |ApiError             |Descripción del error           |[ApiException](#apiException)                                                                              |
 |errorDetail      |NotFoundError        |Descripción del error           |[NotFoundException](#notFoundException)                                                                    |
 |validation_errors|List<ValidationError>|Lista de Errores de validación  |[ValidateError](#validateException)                                                                        |
+|validation_errors|ValidationStatus     |Validación del estado erróneo   |[ValidateStatusError](#validateStatusException)                                                                        |
 |code             |String               |Código de error                 |[ValidationError](#validateException)<br/>[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)|
 |param            |String               |Parámetro involucrado           |[ValidationError](#validateException)                                                                      |
 |message          |String               |Descripción del error           |[ApiError](#apiException)<br/>[NotFoundError](#notFoundException)                                          |
