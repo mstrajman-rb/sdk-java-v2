@@ -22,6 +22,7 @@ public class Aggregator implements Serializable {
 	private String merchant_email;
 	private String merchant_phone;
 	private SubAgrupator sub_agrupator;
+	private String product;
 
 	public String getIndicator() {
 		return indicator;
@@ -166,4 +167,13 @@ public class Aggregator implements Serializable {
 	public void setSub_agrupator(SubAgrupator sub_agrupator) {
 		this.sub_agrupator = sub_agrupator;
 	}
+
+	public String getProduct() {
+		return this.product;
+	}
+
+	public void setProduct(String product) {
+		this.product = product;
+	}
+
 }
