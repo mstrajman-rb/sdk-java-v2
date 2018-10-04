@@ -18,6 +18,7 @@ public class PaymentForm implements Serializable {
     private Integer payment_method_id;
     private PaymentType payment_type; // single / distributed
     private List<SubPayment> sub_payments;
+    private String bin;
 
     public Currency getCurrency() {
         return currency;
@@ -66,4 +67,13 @@ public class PaymentForm implements Serializable {
     public void setSub_payments(List<SubPayment> sub_payments) {
         this.sub_payments = sub_payments;
     }
+
+    public String getBin() {
+        return bin;
+    }
+
+    public void setBin(String bin) {
+        this.bin = bin;
+    }
+
 }

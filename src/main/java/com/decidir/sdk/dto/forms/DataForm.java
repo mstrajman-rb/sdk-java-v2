@@ -1,5 +1,6 @@
 package com.decidir.sdk.dto.forms;
 
+import com.decidir.sdk.dto.cybersource.FraudDetectionData;
 import com.decidir.sdk.dto.payments.Customer;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class DataForm implements Serializable {
     private PaymentForm payment;
     private String success_url;
     private String cancel_url;
+    private FraudDetectionData fraud_detection;
 
     public SiteForm getSite() {
         return site;
@@ -54,4 +56,13 @@ public class DataForm implements Serializable {
     public void setCancel_url(String cancel_url) {
         this.cancel_url = cancel_url;
     }
+
+    public FraudDetectionData getFraud_detection() {
+        return fraud_detection;
+    }
+
+    public void setFraud_detection(FraudDetectionData fraud_detection) {
+        this.fraud_detection = fraud_detection;
+    }
+
 }
