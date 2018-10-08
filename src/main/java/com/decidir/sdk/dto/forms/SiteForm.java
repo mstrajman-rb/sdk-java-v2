@@ -9,6 +9,7 @@ public class SiteForm implements Serializable {
 
     private String id;
     private String transaction_id;
+    private TemplateForm template;
 
     public String getId() {
         return id;
@@ -25,4 +26,13 @@ public class SiteForm implements Serializable {
     public void setTransaction_id(String transaction_id) {
         this.transaction_id = transaction_id;
     }
+
+    public TemplateForm getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(TemplateForm template) {
+        this.template = template;
+    }
+
 }
